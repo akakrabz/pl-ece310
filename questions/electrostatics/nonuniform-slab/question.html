@@ -1,0 +1,43 @@
+<pl-question-panel>
+  <p>
+    An infinite slab of charge occupies $-a < x < a$ (with $a = {{params.a_mm}}\ \mathrm{mm}$) and extends without limit in $y$ and $z$.
+    Its volume charge density is
+    $$\rho(x) = \begin{cases}\rho_0\,\left|\dfrac{x}{a}\right|^{ {{params.k}} }, & |x| < a\\[6pt] 0, & |x| > a\end{cases}
+    \qquad \rho_0 = {{params.rho0_nC}}\ \mathrm{nC/m^3}.$$
+    Use $\epsilon_0 = 8.854\times10^{-12}\ \mathrm{F/m}$.
+  </p>
+</pl-question-panel>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(a)</b> Total charge per unit area of the slab (per unit area parallel to the $yz$-plane):</p>
+<pl-number-input answers-name="sigma" label="$\rho_s^{\text{tot}} =$" suffix="$\mathrm{nC/m^2}$" comparison="relabs" rtol="0.01" atol="1e-9"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(b)</b> Using Gauss's law, find the magnitude of $\mathbf{E}$ at the interior point $x = \tfrac{ {{params.xin_num}} }{ {{params.xin_den}} }a$, and at any exterior point $x > a$.</p>
+<pl-number-input answers-name="E_in" label="$|\mathbf{E}(x = \tfrac{ {{params.xin_num}} }{ {{params.xin_den}} }a)| =$" suffix="$\mathrm{V/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="E_out" label="$|\mathbf{E}(x > a)| =$" suffix="$\mathrm{V/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(c)</b> Taking $V(0) = 0$, find the potential at $x = b = {{params.b_over_a}}a$.</p>
+<pl-number-input answers-name="V_b" label="$V(b) =$" suffix="$\mathrm{V}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Symmetry and the pillbox">
+    $\rho$ is even in $x$, so $E_x$ is odd and $E_x(0)=0$. Use a pillbox with caps at $\pm x$: <em>both</em> caps carry flux, and $Q_{\text{enc}}$ is an integral because $\rho$ varies.
+  </pl-hint>
+  <pl-hint hint-name="Potential" show-after-submission="1">
+    $V(b) = -\int_0^b E_x\,dx$; split the integral at $x = a$ where the form of $E_x$ changes.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> $\rho_s^{\text{tot}} = \int_{-a}^{a}\rho\,dx = \dfrac{2\rho_0 a}{ {{params.k1}} } = {{params.sigma_nC}}\ \mathrm{nC/m^2}$.</p>
+  <p><b>(b)</b> Pillbox with caps at $\pm x$: $2\epsilon_0 E_x A = A\int_{-x}^{x}\rho\,dx'$, so inside
+    $E_x = \dfrac{\rho_0\,x^{ {{params.k1}} }}{ {{params.k1}} \,\epsilon_0\,a^{ {{params.k}} }}$, giving ${{params.E_in_str}}\ \mathrm{V/m}$ at the requested point;
+    outside the pillbox encloses everything, $E_x = \dfrac{\rho_0 a}{ {{params.k1}} \,\epsilon_0} = {{params.E_out_str}}\ \mathrm{V/m}$ — the field of a sheet carrying $\rho_s^{\text{tot}}$.</p>
+  <p><b>(c)</b> $V(a) = -\dfrac{\rho_0 a^2}{ {{params.k1}} \cdot {{params.k2}} \,\epsilon_0}$ and $V(b) - V(a) = -\dfrac{\rho_0 a (b-a)}{ {{params.k1}} \,\epsilon_0}$, so
+    $V(b) = \dfrac{\rho_0 a^2}{ {{params.k2}} \,\epsilon_0} - \dfrac{\rho_0 a b}{ {{params.k1}} \,\epsilon_0} = {{params.V_b_str}}\ \mathrm{V}$ (negative: the potential falls moving away from positive charge).</p>
+</pl-answer-panel>

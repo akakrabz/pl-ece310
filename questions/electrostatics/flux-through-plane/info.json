@@ -1,0 +1,15 @@
+{
+  "uuid": "5b12b68e-77b8-4625-ac3a-7cb7644025b5",
+  "title": "Flux through a plane from two point charges",
+  "topic": "Electrostatics",
+  "tags": [
+    "exam1",
+    "flux",
+    "MC",
+    "concept"
+  ],
+  "type": "v3",
+  "gradingMethod": "Internal",
+  "singleVariant": false,
+  "showCorrectAnswer": true
+}

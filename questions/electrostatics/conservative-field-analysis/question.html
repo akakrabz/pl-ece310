@@ -1,0 +1,60 @@
+<pl-question-panel>
+  <p>
+    An electric field in free space is
+    $$\mathbf{E} = E_0\left( {{{params.field_tex}}} \right)\ \left[\tfrac{\mathrm{V}}{\mathrm{m}}\right],$$
+    where $E_0$ is a positive constant (with units such that $\mathbf{E}$ is in V/m when the coordinates are in metres).
+  </p>
+</pl-question-panel>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(a)</b> The $\hat{z}$-component of $\nabla\times\mathbf{E}$ is:</p>
+<pl-multiple-choice answers-name="curlz" order="fixed" hide-letter-keys="true">
+  {{#params.curl_choices}}
+  <pl-answer correct="{{correct}}">{{{text}}}</pl-answer>
+  {{/params.curl_choices}}
+</pl-multiple-choice>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(b)</b> Find the electrostatic potential $V(x,y,z)$ with the reference $V(0,0,0)=0$.
+  Use the symbols <code>x</code>, <code>y</code>, <code>z</code> and <code>E0</code>; write products explicitly (e.g. <code>2*x**2*y</code>).</p>
+<pl-symbolic-input answers-name="V" variables="x, y, z, E0" label="$V(x,y,z) =$" display="block" size="60"></pl-symbolic-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(c)</b> Find the volume charge density $\rho(x,y,z)$ that produces this field. Use <code>epsilon</code> for $\epsilon_0$.</p>
+<pl-symbolic-input answers-name="rho" variables="x, y, z, E0, epsilon" label="$\rho(x,y,z) =$" display="block" size="60"></pl-symbolic-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(d)</b> Evaluate $\displaystyle\int_A^B \mathbf{E}\cdot d\mathbf{l}$ from $A=(0,0,0)$ to $B={{{params.B_tex}}}$ (coordinates in metres). Give the numerical coefficient of $E_0$ (i.e. your answer in units of $E_0\cdot\mathrm{m}^{ {{params.p}} }$).</p>
+<pl-number-input answers-name="lineint" label="$\int_A^B \mathbf{E}\cdot d\mathbf{l} = $" suffix="$\times E_0$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Where to start">
+    Look at which coordinates each component depends on before expanding the curl determinant — most partial derivatives vanish by inspection.
+  </pl-hint>
+  <pl-hint hint-name="Potential" show-after-submission="1">
+    $dV = -\mathbf{E}\cdot d\mathbf{l}$. Either spot the exact differential, or integrate along the axis-parallel path $(0,0,0)\to(x,0,0)\to(x,y,0)\to(x,y,z)$ — never antidifferentiate the three components separately and add.
+  </pl-hint>
+  <pl-hint hint-name="Line integral" show-after-submission="2">
+    For a conservative field, $\int_A^B\mathbf{E}\cdot d\mathbf{l} = V(A) - V(B)$. Mind the order.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    <b>(a)</b> $E_x$ and $E_y$ do not depend on $z$ and $E_z$ depends only on $z$, so only the $\hat{z}$ component can be nonzero:
+    $(\nabla\times\mathbf{E})_z = \partial_x E_y - \partial_y E_x = 0$. The field is curl-free (conservative), so a potential exists.
+  </p>
+  <p>
+    <b>(b)</b> $V = {{{params.V_tex}}}$ — check: $-\nabla V$ returns $\mathbf{E}$.
+  </p>
+  <p>
+    <b>(c)</b> $\rho = \epsilon_0\nabla\cdot\mathbf{E} = {{{params.rho_tex}}}$. Curl-free does not mean charge-free: curl and divergence answer different questions.
+  </p>
+  <p>
+    <b>(d)</b> $\int_A^B\mathbf{E}\cdot d\mathbf{l} = V(A)-V(B) = 0 - V(B) = {{params.lineint_val}}\,E_0$ (the potential <em>drops</em> along $\mathbf{E}$).
+  </p>
+</pl-answer-panel>

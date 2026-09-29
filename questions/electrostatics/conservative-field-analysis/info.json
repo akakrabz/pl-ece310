@@ -1,0 +1,16 @@
+{
+  "uuid": "eab54abe-7184-4772-89fe-262a17e61676",
+  "title": "Conservative field: curl, potential, charge density, line integral",
+  "topic": "Electrostatics",
+  "tags": [
+    "exam1",
+    "potential",
+    "symbolic",
+    "numeric",
+    "MC"
+  ],
+  "type": "v3",
+  "gradingMethod": "Internal",
+  "singleVariant": false,
+  "showCorrectAnswer": true
+}

@@ -1,0 +1,67 @@
+{
+  "name": "ECE 329",
+  "title": "Fields and Waves I",
+  "timezone": "America/Chicago",
+  "assessmentSets": [
+    {
+      "abbreviation": "PR",
+      "name": "Practice",
+      "heading": "Practice sets",
+      "color": "green2"
+    }
+  ],
+  "topics": [
+    {
+      "name": "Electrostatics",
+      "color": "blue3",
+      "description": "Coulomb, Gauss, potential, dielectrics, capacitance (Lectures 1-11)"
+    },
+    {
+      "name": "Magnetostatics",
+      "color": "green3",
+      "description": "Biot-Savart, Ampere, Faraday, inductance (Lectures 12-15)"
+    },
+    {
+      "name": "Waves",
+      "color": "purple2",
+      "description": "Maxwell's equations, plane waves, reflection (Lectures 16-26)"
+    },
+    {
+      "name": "Transmission lines",
+      "color": "orange2",
+      "description": "Bounce diagrams, input impedance, Smith chart (Lectures 27-38)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "exam1",
+      "color": "red2",
+      "description": "In scope for Exam 1 (Lectures 1-10)"
+    },
+    {
+      "name": "gauss",
+      "color": "blue1",
+      "description": "Uses Gauss's law"
+    },
+    {
+      "name": "potential",
+      "color": "blue2",
+      "description": "Electrostatic potential"
+    },
+    {
+      "name": "boundary-conditions",
+      "color": "turquoise2",
+      "description": "Interface conditions on E and D"
+    },
+    {
+      "name": "capacitance",
+      "color": "yellow2",
+      "description": "Capacitance calculations"
+    },
+    {
+      "name": "flux",
+      "color": "pink2",
+      "description": "Electric flux through surfaces"
+    }
+  ]
+}

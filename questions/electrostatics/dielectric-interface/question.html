@@ -1,0 +1,44 @@
+<pl-question-panel>
+  <p>
+    Two perfect dielectrics meet at the plane $z = 0$, with no free charge on the interface:
+    $$\epsilon_1 = {{params.er1}}\,\epsilon_0\ \ (z > 0),\qquad \epsilon_2 = {{params.er2}}\,\epsilon_0\ \ (z < 0).$$
+    Immediately above the interface the field is measured to be
+    $$\mathbf{E}_1 = {{{params.E1_tex}}}\ \left[\tfrac{\mathrm{V}}{\mathrm{m}}\right].$$
+    Give all answers as plain numbers; quantities marked "$/\epsilon_0$" are to be given as the coefficient of $\epsilon_0$ (e.g. enter <code>-20</code> for $-20\,\epsilon_0\ \mathrm{C/m^2}$).
+  </p>
+</pl-question-panel>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(a)</b> The field $\mathbf{E}_2$ immediately below the interface:</p>
+<pl-number-input answers-name="E2x" label="$E_{2x} =$" suffix="$\mathrm{V/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="E2z" label="$E_{2z} =$" suffix="$\mathrm{V/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(b)</b> The electric flux density on each side:</p>
+<pl-number-input answers-name="D1z" label="$D_{1z}/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="D2x" label="$D_{2x}/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(c)</b> The polarization on each side, and the bound surface charge on the interface (take the interface normal $\hat{n} = +\hat{z}$, pointing from medium 2 into medium 1):</p>
+<pl-number-input answers-name="P1x" label="$P_{1x}/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="P2z" label="$P_{2z}/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="rho_sb" label="$\rho_{sb}/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Which components are continuous">
+    Tangential $\mathbf{E}$ is continuous ($E_{2x} = E_{1x}$); normal $\mathbf{D}$ is continuous when there is no free surface charge ($\epsilon_1 E_{1z} = \epsilon_2 E_{2z}$). Not the other way round.
+  </pl-hint>
+  <pl-hint hint-name="Polarization" show-after-submission="1">
+    $\mathbf{P} = \mathbf{D} - \epsilon_0\mathbf{E} = (\epsilon_r - 1)\,\epsilon_0\mathbf{E}$ in each medium. Bound surface charge: $\rho_{sb} = -\hat{n}\cdot(\mathbf{P}_1 - \mathbf{P}_2) = P_{2z} - P_{1z}$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> $E_{2x} = E_{1x} = {{params.E1x}}$; $E_{2z} = \dfrac{\epsilon_1}{\epsilon_2}E_{1z} = \dfrac{ {{params.er1}} }{ {{params.er2}} }\times({{params.E1z}}) = {{params.E2z}}\ \mathrm{V/m}$.</p>
+  <p><b>(b)</b> $D_{1z} = {{params.er1}}\,\epsilon_0 E_{1z} = {{params.D1z}}\,\epsilon_0$ (and $D_{2z}$ is the same — normal $\mathbf{D}$ is continuous); $D_{2x} = {{params.er2}}\,\epsilon_0 E_{2x} = {{params.D2x}}\,\epsilon_0$ (tangential $\mathbf{D}$ jumps).</p>
+  <p><b>(c)</b> $P_{1x} = ({{params.er1}}-1)\,\epsilon_0 E_{1x} = {{params.P1x}}\,\epsilon_0$; $P_{2z} = ({{params.er2}}-1)\,\epsilon_0 E_{2z} = {{params.P2z}}\,\epsilon_0$;
+    $\rho_{sb} = P_{2z} - P_{1z} = {{params.rho_sb}}\,\epsilon_0\ \mathrm{C/m^2}$, which equals $\epsilon_0(E_{1z}-E_{2z})$: the bound charge alone accounts for the jump in $\epsilon_0 E_z$, since there is no free charge on the interface.</p>
+</pl-answer-panel>

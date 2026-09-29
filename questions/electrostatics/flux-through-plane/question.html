@@ -1,0 +1,27 @@
+<pl-question-panel>
+  <p>
+    A point charge ${{{params.q_above_tex}}}$ sits at $(0,0,+h)$ and a point charge ${{{params.q_below_tex}}}$ sits at $(0,0,-h)$, in free space.
+    Take the normal of the entire $z = 0$ plane to be $\hat{n} = {{{params.normal_tex}}}$.
+  </p>
+  <p>What is the electric flux $\displaystyle\psi_E = \int_{z=0}\mathbf{D}\cdot\hat{n}\,dS$ through the whole plane?</p>
+</pl-question-panel>
+
+<pl-multiple-choice answers-name="flux" order="fixed" hide-letter-keys="true">
+  {{#params.choices}}
+  <pl-answer correct="{{correct}}">{{{text}}}</pl-answer>
+  {{/params.choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="The half-space argument">
+    A point charge's field lines spread uniformly in all directions, so exactly half of them cross any infinite plane that does not contain the charge: the flux has magnitude $|q|/2$. The sign depends on whether those lines cross <em>along</em> or <em>against</em> $\hat{n}$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    With $\hat{n} = {{{params.normal_tex}}}$: the charge above the plane contributes ${{{params.contrib_above}}}$ (a positive charge above pushes lines <em>down</em> through the plane), the charge below contributes ${{{params.contrib_below}}}$ (a positive charge below pushes lines <em>up</em> through it).
+    Total: $\psi_E = {{{params.psi_tex}}}$.
+  </p>
+  <p>Flipping $\hat{n}$ flips every sign. A <em>closed</em> surface around both charges would instead give $Q_{\text{enc}} = {{{params.q_above_tex}}} {{{params.q_below_tex}}}$ regardless of geometry.</p>
+</pl-answer-panel>
