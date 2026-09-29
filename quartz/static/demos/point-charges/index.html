@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Point charges and Gauss's law — interactive</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --fg: #23211d; --muted: #7a766e; --line: #e0ddd5; --panel: #f1efe9;
+    --accent: #1f5f8b; --accent2: #3c8c6a; --hi: #d1495b; --loop: #8a5a00;
+  }
+  :root[data-theme="dark"] {
+    --bg: #161719; --fg: #eceef1; --muted: #9a9ea6; --line: #2f3238; --panel: #1f2125;
+    --accent: #7fb3d9; --accent2: #7fcaa8; --hi: #f0907c; --loop: #e6b85c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.4 "Source Sans 3", system-ui, sans-serif; }
+  .wrap { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 8px; }
+  canvas { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); touch-action: none; cursor: grab; }
+  .bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  button, select { font: inherit; padding: 4px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--fg); cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  .readout { margin-left: auto; padding: 4px 10px; border-radius: 6px; background: var(--panel); font-variant-numeric: tabular-nums; }
+  .readout b { color: var(--loop); }
+  .hint { color: var(--muted); font-size: 12.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <button id="addP">+ charge</button>
+    <button id="addN">− charge</button>
+    <button id="clear">clear</button>
+    <select id="mode" title="what to draw">
+      <option value="lines">field lines</option>
+      <option value="vectors">unit vectors</option>
+    </select>
+    <label><input type="checkbox" id="loop" checked> Gaussian loop</label>
+    <div class="readout" id="readout"></div>
+  </div>
+  <canvas id="c" width="960" height="600"></canvas>
+  <div class="hint">Drag charges. Drag the dashed loop by its centre, resize it by its edge handle. Charges are line charges seen end-on (2-D), so |E| ∝ 1/r and the flux through the loop equals 2π × (enclosed charge) — move the loop around: the flux does not care <em>where</em> outside charges are, only what is inside.</div>
+</div>
+<script>
+(() => {
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  const state = {
+    charges: [ {x: 330, y: 300, q: 2}, {x: 630, y: 300, q: -1} ],
+    loop: { x: 480, y: 300, r: 120 },
+    mode: 'lines', showLoop: true, drag: null,
+  };
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+  // ---- theme: follow the embedding Quartz page if same-origin, else the OS
+  function syncTheme() {
+    let t = null;
+    try { t = window.parent && window.parent !== window ? window.parent.document.documentElement.getAttribute('saved-theme') : null; } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (document.documentElement.getAttribute('data-theme') !== t) document.documentElement.setAttribute('data-theme', t);
+  }
+  syncTheme();
+  try {
+    if (window.parent && window.parent !== window) {
+      new MutationObserver(syncTheme).observe(window.parent.document.documentElement, { attributes: true, attributeFilter: ['saved-theme'] });
+    }
+  } catch (e) {}
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
+
+  // ---- physics (2-D: line charges seen end-on, E ∝ q r̂ / r)
+  // soft=true adds a tiny core (2 px) so drawn arrows stay finite next to a charge;
+  // the flux readout uses the exact 1/r field (soft=false).
+  function field(x, y, soft = true) {
+    let ex = 0, ey = 0;
+    for (const c of state.charges) {
+      const dx = x - c.x, dy = y - c.y, r2 = dx*dx + dy*dy + (soft ? 4 : 0);
+      if (r2 === 0) continue;
+      ex += c.q * dx / r2; ey += c.q * dy / r2;
+    }
+    return [ex, ey];
+  }
+  function fluxThroughLoop() {
+    const { x, y, r } = state.loop; let f = 0; const N = 720;
+    for (let i = 0; i < N; i++) {
+      const th = 2*Math.PI*i/N, nx = Math.cos(th), ny = Math.sin(th);
+      const [ex, ey] = field(x + r*nx, y + r*ny, false);
+      f += (ex*nx + ey*ny) * (2*Math.PI*r/N);
+    }
+    return f / (2*Math.PI);
+  }
+  function enclosed() {
+    const { x, y, r } = state.loop;
+    return state.charges.filter(c => Math.hypot(c.x - x, c.y - y) < r).reduce((s, c) => s + c.q, 0);
+  }
+
+  // ---- drawing
+  function arrow(x1, y1, x2, y2, col, w) {
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    const a = Math.atan2(y2 - y1, x2 - x1), s = 3 + 1.5*w;
+    ctx.beginPath(); ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - s*Math.cos(a - 0.45), y2 - s*Math.sin(a - 0.45));
+    ctx.lineTo(x2 - s*Math.cos(a + 0.45), y2 - s*Math.sin(a + 0.45));
+    ctx.closePath(); ctx.fill();
+  }
+  function traceLine(x, y, dir) {
+    const pts = [[x, y]];
+    for (let i = 0; i < 1500; i++) {
+      let [ex, ey] = field(x, y); let n = Math.hypot(ex, ey); if (n < 1e-9) break;
+      const h = 3*dir; const xm = x + 0.5*h*ex/n, ym = y + 0.5*h*ey/n;
+      [ex, ey] = field(xm, ym); n = Math.hypot(ex, ey); if (n < 1e-9) break;
+      x += h*ex/n; y += h*ey/n; pts.push([x, y]);
+      if (x < -20 || x > W+20 || y < -20 || y > H+20) break;
+      if (state.charges.some(c => Math.hypot(c.x - x, c.y - y) < 9)) break;
+    }
+    return pts;
+  }
+  function draw() {
+    const fg = css('--fg'), muted = css('--muted'), accent = css('--accent'), hi = css('--hi'), loopc = css('--loop'), accent2 = css('--accent2');
+    ctx.clearRect(0, 0, W, H);
+    // field
+    if (state.mode === 'vectors') {
+      for (let gx = 30; gx < W; gx += 36) for (let gy = 30; gy < H; gy += 36) {
+        if (state.charges.some(c => Math.hypot(c.x - gx, c.y - gy) < 16)) continue;
+        const [ex, ey] = field(gx, gy), n = Math.hypot(ex, ey); if (n < 1e-9) continue;
+        arrow(gx, gy, gx + 15*ex/n, gy + 15*ey/n, muted, 1.2);
+      }
+    } else {
+      ctx.lineWidth = 1.3; ctx.strokeStyle = accent;
+      const total = state.charges.reduce((s, c) => s + Math.abs(c.q), 0);
+      for (const c of state.charges) {
+        const n = Math.max(6, Math.round(16*Math.abs(c.q)));
+        for (let k = 0; k < n; k++) {
+          const th = 2*Math.PI*k/n + 0.2;
+          const pts = traceLine(c.x + 11*Math.cos(th), c.y + 11*Math.sin(th), c.q > 0 ? 1 : -1);
+          if (pts.length < 3) continue;
+          ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+          for (const p of pts) ctx.lineTo(p[0], p[1]);
+          ctx.stroke();
+          // one arrowhead mid-line, pointing along E
+          const m = pts[Math.floor(pts.length/2)], m2 = pts[Math.min(pts.length-1, Math.floor(pts.length/2)+1)];
+          if (c.q > 0) arrow(m[0], m[1], m2[0], m2[1], accent, 1.3); else arrow(m2[0], m2[1], m[0], m[1], accent, 1.3);
+        }
+      }
+      if (total === 0) { ctx.fillStyle = muted; ctx.fillText('add a charge', 20, 30); }
+    }
+    // loop
+    if (state.showLoop) {
+      const { x, y, r } = state.loop;
+      ctx.setLineDash([8, 6]); ctx.strokeStyle = loopc; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 2*Math.PI); ctx.stroke(); ctx.setLineDash([]);
+      // outward normals
+      for (let k = 0; k < 8; k++) { const th = 2*Math.PI*k/8; arrow(x + r*Math.cos(th), y + r*Math.sin(th), x + (r+18)*Math.cos(th), y + (r+18)*Math.sin(th), loopc, 1.4); }
+      ctx.fillStyle = loopc; ctx.beginPath(); ctx.arc(x, y, 5, 0, 2*Math.PI); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + r, y, 7, 0, 2*Math.PI); ctx.fill();
+      ctx.font = '12px sans-serif'; ctx.fillText('n̂', x + r + 22, y - 8);
+    }
+    // charges
+    for (const c of state.charges) {
+      ctx.fillStyle = c.q > 0 ? hi : accent2;
+      ctx.beginPath(); ctx.arc(c.x, c.y, 11, 0, 2*Math.PI); ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(c.x - 5, c.y); ctx.lineTo(c.x + 5, c.y); ctx.stroke();
+      if (c.q > 0) { ctx.beginPath(); ctx.moveTo(c.x, c.y - 5); ctx.lineTo(c.x, c.y + 5); ctx.stroke(); }
+      ctx.fillStyle = fg; ctx.font = 'bold 17px sans-serif';
+      ctx.fillText((c.q > 0 ? '+' : '\u2212') + Math.abs(c.q) + 'Q', c.x + 15, c.y - 14);
+    }
+    // readout
+    const fl = fluxThroughLoop(), enc = enclosed();
+    document.getElementById('readout').innerHTML = state.showLoop
+      ? `enclosed charge: <b>${enc >= 0 ? '+' : ''}${enc}Q</b> &nbsp;·&nbsp; ∮E·n̂ dl / 2π = <b>${fl.toFixed(2)}Q</b>`
+      : 'turn on the loop to see Gauss’s law';
+  }
+
+  // ---- interaction
+  function pos(e) { const r = cv.getBoundingClientRect(); const t = e.touches ? e.touches[0] : e; return [(t.clientX - r.left) * W / r.width, (t.clientY - r.top) * H / r.height]; }
+  function down(e) {
+    const [x, y] = pos(e); const L = state.loop;
+    for (let i = state.charges.length - 1; i >= 0; i--) { const c = state.charges[i]; if (Math.hypot(c.x - x, c.y - y) < 16) { state.drag = { kind: 'charge', i, dx: c.x - x, dy: c.y - y }; e.preventDefault(); return; } }
+    if (state.showLoop) {
+      if (Math.hypot(L.x + L.r - x, L.y - y) < 14 || Math.abs(Math.hypot(L.x - x, L.y - y) - L.r) < 10) { state.drag = { kind: 'radius' }; e.preventDefault(); return; }
+      if (Math.hypot(L.x - x, L.y - y) < L.r) { state.drag = { kind: 'loop', dx: L.x - x, dy: L.y - y }; e.preventDefault(); return; }
+    }
+  }
+  function move(e) {
+    if (!state.drag) return; const [x, y] = pos(e); const d = state.drag, L = state.loop;
+    if (d.kind === 'charge') { state.charges[d.i].x = x + d.dx; state.charges[d.i].y = y + d.dy; }
+    else if (d.kind === 'loop') { L.x = x + d.dx; L.y = y + d.dy; }
+    else if (d.kind === 'radius') { L.r = Math.max(25, Math.hypot(x - L.x, y - L.y)); }
+    e.preventDefault(); draw();
+  }
+  function up() { state.drag = null; }
+  cv.addEventListener('mousedown', down); cv.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  cv.addEventListener('touchstart', down, { passive: false }); cv.addEventListener('touchmove', move, { passive: false }); window.addEventListener('touchend', up);
+  const rnd = () => [120 + Math.random()*(W-240), 80 + Math.random()*(H-160)];
+  document.getElementById('addP').onclick = () => { const [x, y] = rnd(); state.charges.push({ x, y, q: 1 }); draw(); };
+  document.getElementById('addN').onclick = () => { const [x, y] = rnd(); state.charges.push({ x, y, q: -1 }); draw(); };
+  document.getElementById('clear').onclick = () => { state.charges = []; draw(); };
+  document.getElementById('mode').onchange = e => { state.mode = e.target.value; draw(); };
+  document.getElementById('loop').onchange = e => { state.showLoop = e.target.checked; draw(); };
+  draw();
+  // redraw when the theme flips (colours are read from CSS variables at draw time)
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
+</script>
+</body>
+</html>

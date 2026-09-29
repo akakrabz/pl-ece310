@@ -1,0 +1,146 @@
+@use "./variables.scss" as *;
+
+// =============================================================================
+//  ECE 329 · Fields & Waves — site-specific styles
+// =============================================================================
+
+// ---- Custom callouts used throughout the notes ------------------------------
+//   > [!key]     the result to remember (boxed law / formula)
+//   > [!recipe]  a step-by-step procedure ("how to actually do it")
+//   > [!trap]    a common mistake and how to avoid it
+//   > [!exam]    how the idea shows up on exams
+//   > [!intuition]  the picture / analogy behind the math
+//   > [!derivation]- a foldable derivation (collapsed by default via "-")
+.callout {
+  --callout-icon-key: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>');
+  --callout-icon-recipe: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>');
+  --callout-icon-trap: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>');
+  --callout-icon-exam: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M9 15l2 2 4-4"></path></svg>');
+  --callout-icon-intuition: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path></svg>');
+  --callout-icon-derivation: url('data:image/svg+xml; utf8, <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16"></path><path d="M4 20h16"></path><path d="M6 4l6 8-6 8"></path></svg>');
+
+  &[data-callout="key"] {
+    --color: #1f5f8b;
+    --border: #1f5f8b55;
+    --bg: #1f5f8b12;
+    --callout-icon: var(--callout-icon-key);
+  }
+  &[data-callout="recipe"] {
+    --color: #2e7d4f;
+    --border: #2e7d4f55;
+    --bg: #2e7d4f12;
+    --callout-icon: var(--callout-icon-recipe);
+  }
+  &[data-callout="trap"] {
+    --color: #b3402b;
+    --border: #b3402b55;
+    --bg: #b3402b12;
+    --callout-icon: var(--callout-icon-trap);
+  }
+  &[data-callout="exam"] {
+    --color: #8a5a00;
+    --border: #8a5a0055;
+    --bg: #8a5a0012;
+    --callout-icon: var(--callout-icon-exam);
+  }
+  &[data-callout="intuition"] {
+    --color: #6a4fa3;
+    --border: #6a4fa355;
+    --bg: #6a4fa312;
+    --callout-icon: var(--callout-icon-intuition);
+  }
+  &[data-callout="derivation"] {
+    --color: #55606c;
+    --border: #55606c55;
+    --bg: #55606c10;
+    --callout-icon: var(--callout-icon-derivation);
+  }
+}
+
+:root[saved-theme="dark"] .callout {
+  &[data-callout="key"] { --color: #7fb3d9; --border: #7fb3d955; --bg: #7fb3d914; }
+  &[data-callout="recipe"] { --color: #7fcaa8; --border: #7fcaa855; --bg: #7fcaa814; }
+  &[data-callout="trap"] { --color: #f0907c; --border: #f0907c55; --bg: #f0907c14; }
+  &[data-callout="exam"] { --color: #e6b85c; --border: #e6b85c55; --bg: #e6b85c14; }
+  &[data-callout="intuition"] { --color: #b9a5e6; --border: #b9a5e655; --bg: #b9a5e614; }
+  &[data-callout="derivation"] { --color: #aab4be; --border: #aab4be55; --bg: #aab4be12; }
+}
+
+// ---- Figures (inline SVG, theme-aware via currentColor / CSS variables) -----
+figure.ece-fig {
+  margin: 1.5rem auto;
+  max-width: 100%;
+  text-align: center;
+
+  svg {
+    max-width: 100%;
+    height: auto;
+    color: var(--darkgray);        // strokes/text use currentColor
+    --accent: var(--secondary);
+    --accent2: var(--tertiary);
+    --muted: var(--gray);
+    --paper: var(--light);
+    --hi: #d1495b;                  // "hot" accent (charges, forces) — readable on both themes
+  }
+
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-top: 0.4rem;
+    text-align: left;
+    line-height: 1.4;
+
+    strong { color: var(--darkgray); }
+  }
+}
+
+// ---- Embedded interactive demos ------------------------------------------------
+.ece-demo {
+  margin: 1.25rem 0;
+  border: 1px solid var(--lightgray);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--light);
+
+  iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+  }
+}
+
+// ---- Page "meta line" under lecture titles -----------------------------------
+.ece-meta {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin: -0.5rem 0 1.25rem 0;
+  border-left: 3px solid var(--lightgray);
+  padding-left: 0.75rem;
+}
+
+// ---- Compact reference tables ----------------------------------------------------
+table.ece-ref {
+  font-size: 0.92rem;
+  th, td { padding: 0.3rem 0.6rem; }
+}
+
+// ---- Boxed equation (KaTeX display inside a "key" callout gets breathing room) -----
+.callout[data-callout="key"] .katex-display {
+  margin: 0.6rem 0;
+}
+
+// ---- "Status" chip used on the home page and section indexes ---------------------
+.ece-chip {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--lightgray);
+  color: var(--gray);
+  vertical-align: middle;
+  margin-left: 0.3rem;
+}
+.ece-chip.done { color: var(--tertiary); border-color: var(--tertiary); }

@@ -1,0 +1,53 @@
+.DS_Store
+.gitignore
+node_modules
+public
+prof
+tsconfig.tsbuildinfo
+.obsidian
+.quartz-cache
+private/
+.replit
+replit.nix
+.quartz/
+quartz/cli/tui/dist/
+.turbo/
+
+
+# gradle
+.gradle/
+**/build/
+!**/src/**/build
+
+# misplaced test artifacts
+derby.log
+logs/
+tmp/
+
+# IntelliJ IDEA noise
+out/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse IDE noise
+.settings/
+.project
+.classpath
+
+# NetBeans noise
+nbproject/
+
+# Other Editor's noise
+*~
+*.swp
+
+# MacOSX noise
+.DS_Store
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
