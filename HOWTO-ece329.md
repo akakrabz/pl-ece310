@@ -46,6 +46,15 @@ Apache: `Options -MultiViews` plus `RewriteEngine On; RewriteCond %{REQUEST_FILE
 
 Copy `public/` to the web root (or the sub-path). Opening `public/index.html` directly from disk (file://) does not work — search, graph and page previews fetch JSON over HTTP.
 
+### Docker / Portainer (the current hosting)
+
+`docker-compose.yml` in this folder is a self-contained stack for Docker standalone (Proxmox → Portainer): a `builder` container (`node:22`) clones `https://github.com/akakrabz/quartz-329`, checks it every 5 minutes and rebuilds the site into a shared volume whenever `master` moves; an nginx container serves that volume on port **8329** with the `try_files` rule above. Builds go to a staging directory and are renamed into place, so the old site keeps serving during a build and after a failed one.
+
+- Deploy: Portainer › Stacks › Add stack › Web editor, paste the file (or `docker compose up -d`). Point the reverse proxy for `pl-ece329.vops.ch` at port 8329. No secrets — the repo is public.
+- Publish a change: `git push`. The site follows within `SYNC_INTERVAL` (first start ≈ 2 min for `npm ci`; content-only rebuilds ≈ 15 s; `npm ci` only reruns when `package.json`/`package-lock.json` changed).
+- Logs (builder): one `[sync …]` line per event — `new commit … building`, `site updated to …`, or `BUILD FAILED …` followed by the build error. A broken commit is not retried until the next push, so fix and push again.
+- To point at a different repository, change `REPO_URL` and delete the `repo` volume; a different `BRANCH` needs no volume reset.
+
 External requests the site makes at page load: Google Fonts (theme fonts) and jsdelivr (KaTeX CSS, loaded by the latex plugin). Analytics are disabled. To go fully self-hosted later, set `theme.fontOrigin: local` and vendor the KaTeX CSS.
 
 ## 4. Writing conventions (so new pages match)
