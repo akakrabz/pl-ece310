@@ -1,0 +1,15 @@
+{
+  "uuid": "0e3fb6f4-df91-4607-8cc5-e43f0f9cf4a5",
+  "title": "Two parallel current sheets: superposition and force",
+  "topic": "Magnetostatics",
+  "tags": [
+    "ampere",
+    "numeric",
+    "MC",
+    "calculate"
+  ],
+  "type": "v3",
+  "gradingMethod": "Internal",
+  "singleVariant": false,
+  "showCorrectAnswer": true
+}

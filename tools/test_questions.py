@@ -133,8 +133,123 @@ def phys_flux(d):
     check(abs(val - psi) < 1e-9, f"flux: correct choice {correct} != {psi}")
 
 
+def _one_correct(ch, name):
+    check(sum(c["correct"] == "true" for c in ch) == 1, f"{name}: MC needs exactly one correct")
+    check(len({c["text"] for c in ch}) == len(ch), f"{name}: duplicate MC choices")
+
+
+def phys_two_layer(d):
+    p = d["params"]; c = d["correct_answers"]; er1, er2, dd, t2 = p["er1"], p["er2"], p["d"], p["t2"]
+    check(abs(er1*p["E1z"] - er2*c["E2z"]) < 1e-9, "two-layer: D_z continuity")
+    check(float(c["E2z"]).is_integer() and p["E1z"] < 0, "two-layer: E2z integer / E1z sign")
+    n = (dd + t2)*10000; h = (dd + t2)/n; zm = (np.arange(n) + 0.5)*h; Ez = np.where(zm < dd, p["E1z"], c["E2z"])   # midpoint rule, cells aligned to z = d
+    check(abs(-np.sum(Ez)*h - c["Vp"]) < 1e-9*abs(c["Vp"]), "two-layer: Vp = -int E dz")
+    check(abs(c["Vd"] + p["E1z"]*dd) < 1e-9 and c["Vp"] > c["Vd"] > 0, "two-layer: V(d), monotone potential")
+    check(abs(c["rho_top"] + er2*c["E2z"]) < 1e-9 and c["rho_top"] > 0, "two-layer: top plate charge")
+    C_series = 1/(dd/(er1*EPS0) + t2/(er2*EPS0))
+    check(abs(C_series*1e12 - c["C_per_A"]) < 1e-6*C_series*1e12, "two-layer: C/A series")
+    check(abs(c["rho_top"]*EPS0/c["Vp"] - C_series) < 1e-9*C_series, "two-layer: C/A = rho_s/Vp")
+
+
+def phys_sheet(d):
+    p = d["params"]; c = d["correct_answers"]; er1, er2, dd, t2, s = p["er1"], p["er2"], p["d"], p["t2"], p["s"]
+    check(abs(er2*c["E2z"] - er1*c["E1z"] - s) < 1e-9, "sheet: D jump = rho_s")
+    check(abs(c["E1z"]*dd + c["E2z"]*t2) < 1e-9, "sheet: V(z0) = 0 (int E over both regions)")
+    check(abs(-c["E1z"]*dd - c["V0"]) < 1e-9, "sheet: V0 = -E1z d")
+    check(abs(c["rho_0"] + c["rho_z0"] + s) < 1e-9, "sheet: plate charges sum to -rho_s")
+    check(abs(c["rho_0"] - er1*c["E1z"]) < 1e-9 and abs(c["rho_z0"] + er2*c["E2z"]) < 1e-9, "sheet: plate BCs")
+    check(np.sign(c["V0"]) == np.sign(s), "sheet: sign of V0")
+
+
+def phys_insertion(d):
+    p = d["params"]; c = d["correct_answers"]; er, E0 = p["er"], p["E0"]
+    if p["mode"] == "Q":
+        check(c["D"] == E0 and abs(c["E"] - E0/er) < 1e-12 and abs(c["Wratio"] - 1/er) < 1e-12, "insertion Q: D fixed")
+    else:
+        check(c["E"] == E0 and c["D"] == er*E0 and c["Wratio"] == er, "insertion V: E fixed")
+    check(abs(c["P"] - (c["D"] - c["E"])) < 1e-9, "insertion: P = D - eps0 E")
+    check(abs(c["D"] - er*c["E"]) < 1e-9, "insertion: D = eps E")
+    check(abs(c["Wratio"] - (c["D"]*c["E"])/(E0*E0)) < 1e-9, "insertion: energy ratio = DE/D0E0")
+    _one_correct(p["choices"], "insertion")
+    correct = [x["text"] for x in p["choices"] if x["correct"] == "true"][0]
+    check(("= 0$" in correct) == (p["mode"] == "Q"), "insertion: MC correct choice does not match the mode")
+
+
+def phys_lossy(d):
+    p = d["params"]; c = d["correct_answers"]; eps = p["er"]*EPS0; sig = p["sigma"]
+    g = p["geometry"]
+    if g == "plates":
+        area = lambda x: p["A_cm2"]*1e-4 + 0*x; lo, hi = 0.0, p["d_mm"]*1e-3
+    elif g == "coax":
+        area = lambda r: 2*math.pi*r*p["L_m"]; lo, hi = p["a_mm"]*1e-3, p["b_mm"]*1e-3
+    else:
+        area = lambda r: 4*math.pi*r*r; lo, hi = p["a_cm"]*1e-2, p["b_cm"]*1e-2
+    xs = np.linspace(lo, hi, 400001)
+    inv_area = 1/area(xs)
+    R = np.trapezoid(inv_area/sig, xs)          # sum of shell resistances dR = dr/(sigma area)
+    Vunit = np.trapezoid(inv_area/eps, xs)      # V for unit charge, from D = Q/area
+    check(abs(1/Vunit*1e12 - c["C"]) < 1e-4*c["C"], f"lossy {g}: C by integration {1/Vunit*1e12} vs {c['C']}")
+    check(abs(1/R*1e9 - c["G"]) < 1e-4*c["G"], f"lossy {g}: G by shell resistances")
+    check(abs(c["tau"] - eps/sig*1e6) < 1e-9*c["tau"] and abs(c["C"]*1e-12/(c["G"]*1e-9) - eps/sig) < 1e-9*eps/sig, "lossy: tau = C/G = eps/sigma")
+    check(abs(c["Qt"] - p["Q0"]*math.exp(-p["t1"]/c["tau"])) < 1e-9, "lossy: Q(t1)")
+    check(abs(c["I0"] - p["Q0"]*1e-9/(c["tau"]*1e-6)*1e6) < 1e-9*c["I0"], "lossy: I0 = Q0/tau")
+
+
+def phys_ampere_coax(d):
+    p = d["params"]; c = d["correct_answers"]; a, b, cc = p["a_mm"]*1e-3, p["b_mm"]*1e-3, p["c_mm"]*1e-3; I = p["I"]
+    Ja, Jb = I/(math.pi*a*a), -I/(math.pi*(cc*cc - b*b))
+    def Ienc(r):        # integrate J(r') 2 pi r' dr' by the midpoint rule; cells (1 um) align with a, b, c (integer mm)
+        n = int(round(r/1e-6)); h = r/n; rm = (np.arange(n) + 0.5)*h; J = np.where(rm < a, Ja, np.where((rm > b) & (rm < cc), Jb, 0.0))
+        return np.sum(J*2*math.pi*rm)*h
+    for key, r in (("H1", a/2), ("H2", (a+b)/2), ("H3", (b+cc)/2), ("H4", 2*cc)):
+        H = Ienc(r)/(2*math.pi*r)
+        check(abs(H - c[key]) < 1e-6*I/(2*math.pi*r), f"ampere-coax: {key} {H} vs {c[key]}")
+    check(abs(c["H4same"] - 2*I/(2*math.pi*2*cc)) < 1e-9, "ampere-coax: H4same")
+    check(c["H1"] > 0 and c["H2"] > c["H3"] > 0 and c["H4"] == 0, "ampere-coax: ordering")
+
+
+def phys_sheets(d):
+    p = d["params"]; c = d["correct_answers"]; J1, J2 = p["Js1"], p["Js2"]; MU0 = 4e-7*math.pi
+    for key, x in (("Hleft", -1.0), ("Hmid", p["d"]/2), ("Hright", p["d"] + 1.0)):
+        H = 0.5*J1*np.sign(x) + 0.5*J2*np.sign(x - p["d"])      # H = 1/2 Js x n per sheet
+        check(abs(H - c[key]) < 1e-9, f"sheets: {key}")
+    f = np.cross(np.array([0, 0, J2]), np.array([0, MU0*J1/2, 0]))   # Js2 x B1(x=d)
+    check(abs(f[0]*1e6 - c["fx"]) < 1e-9 and abs(f[1]) + abs(f[2]) < 1e-15, "sheets: force")
+    check((c["fx"] < 0) == (J1*J2 > 0), "sheets: parallel currents attract")
+    check(("+" in p["dir_correct"]) == (J1 > 0), "sheets: direction MC")
+
+
+def phys_solenoid(d):
+    p = d["params"]; c = d["correct_answers"]; MU0 = 4e-7*math.pi
+    n = p["N"]/(p["L_cm"]*1e-2); A = math.pi*(p["a_mm"]*1e-3)**2
+    check(abs(c["H"] - n*p["I"]) < 1e-9, "solenoid: H")
+    check(abs(c["Psi"] - MU0*n*p["I"]*A*1e6) < 1e-9, "solenoid: Psi")
+    check(abs(c["Lind"] - p["N"]*c["Psi"]*1e-6/p["I"]*1e6) < 1e-9, "solenoid: L = N Psi / I")
+    check(abs(c["W"] - 0.5*MU0*c["H"]**2*A*p["L_cm"]*1e-2*1e6) < 1e-6*c["W"], "solenoid: W = energy density x volume")
+    check(abs(c["tau"] - c["Lind"]/p["R"]) < 1e-9, "solenoid: tau = L/R")
+    check(p["a_mm"]*1e-3 <= p["L_cm"]*1e-2/5, "solenoid: not long")
+
+
+def phys_faraday(d):
+    p = d["params"]; c = d["correct_answers"]; A = p["a_cm"]*p["b_cm"]*1e-4
+    Psi = lambda t: (p["B0"] + p["k"]*t)*A
+    h = 1e-4
+    check(abs(c["Psi"] - Psi(p["t1"])*1e3) < 1e-9, "faraday: Psi(t1)")
+    check(abs(c["emf"] + p["N"]*(Psi(0.5+h) - Psi(0.5-h))/(2*h)) < 1e-6, "faraday: emf = -N dPsi/dt")
+    check(abs(c["I"] - c["emf"]/p["R"]*1e3) < 1e-9, "faraday: I = emf/R")
+    _one_correct(p["sense_choices"], "faraday sense"); _one_correct(p["lenz_choices"], "faraday lenz")
+    sense = [x["text"] for x in p["sense_choices"] if x["correct"] == "true"][0]
+    lenz = [x["text"] for x in p["lenz_choices"] if x["correct"] == "true"][0]
+    check(sense.startswith("counterclockwise") == (c["emf"] > 0), "faraday: sense MC vs sign of emf")
+    check(("+" in lenz) == (p["k"] < 0), "faraday: Lenz — induced field +z iff flux decreasing")
+
+
 PHYS = {"conservative-field-analysis": phys_conservative, "nonuniform-slab": phys_slab,
-        "dielectric-interface": phys_interface, "coax-two-layer": phys_coax, "flux-through-plane": phys_flux}
+        "dielectric-interface": phys_interface, "coax-two-layer": phys_coax, "flux-through-plane": phys_flux,
+        "two-layer-parallel-plates": phys_two_layer, "sheet-between-grounded-plates": phys_sheet,
+        "dielectric-insertion": phys_insertion, "lossy-capacitor-relaxation": phys_lossy,
+        "ampere-coax-fields": phys_ampere_coax, "current-sheets-superposition": phys_sheets,
+        "solenoid-inductance-energy": phys_solenoid, "faraday-loop-emf": phys_faraday}
 
 for topic in sorted(os.listdir(QDIR)):
     for q in sorted(os.listdir(os.path.join(QDIR, topic))):
@@ -144,6 +259,9 @@ for topic in sorted(os.listdir(QDIR)):
         html = open(os.path.join(qpath, "question.html")).read()
         stripped = re.sub(r"\{\{\{\s*[A-Za-z0-9_.]+\s*\}\}\}|\{\{[#/^]?\s*[A-Za-z0-9_.]+\s*\}\}", "", html)
         check("{{" not in stripped, f"{q}: stray Mustache braces after removing valid tags (LaTeX brace collision?)")
+        for block in re.findall(r"<pl-multiple-choice.*?</pl-multiple-choice>", html, re.S):
+            if "{{#params" not in block:      # static choices: exactly one must be marked correct
+                check(block.count('correct="true"') == 1, f"{q}: static multiple-choice block needs exactly one correct answer")
         refs, loops, names, choice_names = mustache_refs(html)
         mod = load(qpath)
         variants = set()

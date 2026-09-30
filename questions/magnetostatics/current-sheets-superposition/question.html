@@ -1,0 +1,55 @@
+<pl-question-panel>
+  <p>
+    Two infinite plane current sheets are parallel to the $yz$ plane in free space:
+    $$\mathbf{J}_{s1} = {{params.Js1}}\,\hat{z}\ \mathrm{A/m}\ \text{ on } x = 0,\qquad \mathbf{J}_{s2} = {{params.Js2}}\,\hat{z}\ \mathrm{A/m}\ \text{ on } x = d = {{params.d}}\ \mathrm{m}.$$
+    Give the signed $y$-component of the total field $\mathbf{H}$ in each region (it has no other components).
+  </p>
+</pl-question-panel>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(a)</b> To the left of both sheets, $x < 0$:</p>
+<pl-number-input answers-name="Hleft" label="$H_y =$" suffix="$\mathrm{A/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(b)</b> Between the sheets, $0 < x < d$:</p>
+<pl-number-input answers-name="Hmid" label="$H_y =$" suffix="$\mathrm{A/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(c)</b> To the right of both sheets, $x > d$:</p>
+<pl-number-input answers-name="Hright" label="$H_y =$" suffix="$\mathrm{A/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(d)</b> The magnetic force per unit area on sheet 2 (signed $x$-component; use $\mu_0 = 4\pi\times10^{-7}\ \mathrm{H/m}$):</p>
+<pl-number-input answers-name="fx" label="$f_x =$" suffix="$\mu\mathrm{N/m^2}$" comparison="relabs" rtol="0.01" atol="1e-9"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(e)</b> Consider sheet 1 alone. On the side $x > 0$ its field points along</p>
+<pl-multiple-choice answers-name="dir1" hide-letter-keys="true">
+  <pl-answer correct="true">{{{params.dir_correct}}}</pl-answer>
+  <pl-answer correct="false">{{{params.dir_wrong}}}</pl-answer>
+  <pl-answer correct="false">$+\hat{x}$ (away from the sheet)</pl-answer>
+  <pl-answer correct="false">$\hat{z}$ (parallel to the current)</pl-answer>
+</pl-multiple-choice>
+</div></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One sheet">
+    Ampère's law on a rectangle straddling a single sheet $\mathbf{J}_s = J_s\hat{z}$ at $x = 0$ gives $\mathbf{H} = \tfrac12 J_s\,\hat{y}\,\mathrm{sgn}(x)$: a uniform field of magnitude $J_s/2$ on either side, reversing across the sheet. In general $\mathbf{H} = \tfrac12\mathbf{J}_s\times\hat{n}$ with $\hat{n}$ the unit normal from the sheet toward the field point.
+  </pl-hint>
+  <pl-hint hint-name="Two sheets, and the force" show-after-submission="1">
+    Superpose the two half-fields region by region, minding the sign of each $\mathrm{sgn}(\cdot)$. Sheet 2 feels only the field of sheet 1: $\mathbf{f} = \mathbf{J}_{s2}\times\mathbf{B}_1(x = d)$, force per unit area.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Each sheet contributes $\tfrac12 J_s\,\mathrm{sgn}(x - x_{\text{sheet}})\,\hat{y}$:</p>
+  <p><b>(a)</b> $x < 0$: both signs negative, $H_y = -\tfrac12({{params.Js1}}) - \tfrac12({{params.Js2}}) = {{params.Hleft_str}}\ \mathrm{A/m}$.</p>
+  <p><b>(b)</b> $0 < x < d$: $H_y = +\tfrac12({{params.Js1}}) - \tfrac12({{params.Js2}}) = {{params.Hmid_str}}\ \mathrm{A/m}$.</p>
+  <p><b>(c)</b> $x > d$: $H_y = +\tfrac12({{params.Js1}}) + \tfrac12({{params.Js2}}) = {{params.Hright_str}}\ \mathrm{A/m}$. (For $\mathbf{J}_{s2} = -\mathbf{J}_{s1}$ the field would be confined between the sheets — the "parallel-plate" inductor of Lecture 15.)</p>
+  <p><b>(d)</b> Sheet 1 produces $\mathbf{B}_1 = \tfrac12\mu_0({{params.Js1}})\,\hat{y}$ at $x = d$. Then $\mathbf{f} = \mathbf{J}_{s2}\times\mathbf{B}_1 = ({{params.Js2}})\hat{z}\times\tfrac12\mu_0({{params.Js1}})\hat{y} = -\tfrac12\mu_0({{params.Js1}})({{params.Js2}})\,\hat{x}$, i.e. $f_x = {{params.fx_str}}\ \mu\mathrm{N/m^2}$: {{{params.force_words}}}</p>
+  <p><b>(e)</b> $\hat{z}\times\hat{x} = \hat{y}$, so with ${{params.Js1}}\,\hat{z}$ the field at $x > 0$ is along {{{params.dir_correct}}} — the right-hand rule applied to every filament of the sheet.</p>
+</pl-answer-panel>

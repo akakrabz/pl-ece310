@@ -1,0 +1,53 @@
+<pl-question-panel>
+  <p>
+    Two perfectly conducting plates at $z = 0$ and $z = z_0 = {{params.z0}}\ \mathrm{m}$ are both grounded ($V = 0$).
+    On the plane $z = d = {{params.d}}\ \mathrm{m}$ between them sits a uniform, static free surface charge
+    $$\rho_s = {{params.s}}\,\epsilon_0\ \mathrm{C/m^2}.$$
+    The permittivity is $\epsilon_1 = {{params.er1}}\,\epsilon_0$ below the sheet ($0 < z < d$) and $\epsilon_2 = {{params.er2}}\,\epsilon_0$ above it ($d < z < z_0$).
+    Let $V_0$ denote the potential of the charged plane. Enter charge densities as coefficients of $\epsilon_0$.
+  </p>
+</pl-question-panel>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(a)</b> The potential $V_0$ of the sheet at $z = d$:</p>
+<pl-number-input answers-name="V0" label="$V_0 =$" suffix="$\mathrm{V}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(b)</b> The electric field below and above the sheet:</p>
+<pl-number-input answers-name="E1z" label="$E_z\,(0 < z < d) =$" suffix="$\mathrm{V/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="E2z" label="$E_z\,(d < z < z_0) =$" suffix="$\mathrm{V/m}$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(c)</b> The induced surface charge densities on the two plates:</p>
+<pl-number-input answers-name="rho_0" label="$\rho_s(z{=}0)/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+<pl-number-input answers-name="rho_z0" label="$\rho_s(z{=}z_0)/\epsilon_0 =$" comparison="relabs" rtol="0.01" atol="1e-6"></pl-number-input>
+</div></div>
+
+<div class="card my-3"><div class="card-body">
+<p><b>(d)</b> Without redoing the calculation: the <em>sum</em> of the induced charge densities on the two plates is</p>
+<pl-multiple-choice answers-name="total" hide-letter-keys="true">
+  <pl-answer correct="true">$-\rho_s$, because the field vanishes inside both conductors, so a Gaussian pillbox spanning the whole structure encloses zero net charge.</pl-answer>
+  <pl-answer correct="false">$+\rho_s$, because induced charge always has the same sign as the charge that induces it.</pl-answer>
+  <pl-answer correct="false">$0$, because the two grounded plates are at the same potential.</pl-answer>
+  <pl-answer correct="false">$-\rho_s/2$ on each plate, regardless of $d$ and the permittivities.</pl-answer>
+</pl-multiple-choice>
+</div></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Set it up with V_0">
+    With no volume charge, $V(z)$ is linear in each region and pinned to $0$ at both plates and to $V_0$ at the sheet: $V = V_0\,z/d$ below and $V = V_0\,(z_0 - z)/(z_0 - d)$ above. Then $E_z = -dV/dz$ in each region.
+  </pl-hint>
+  <pl-hint hint-name="Fixing V_0" show-after-submission="1">
+    The free charge on the sheet is the jump in normal $\mathbf{D}$: $\rho_s = D_z(d^+) - D_z(d^-) = \epsilon_2 E_{2z} - \epsilon_1 E_{1z}$. Solve this for $V_0$. On each plate, $\rho_s = \hat{n}\cdot\mathbf{D}$ with $\hat{n}$ pointing out of the conductor into the gap.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(b)</b> first: $E_{1z} = -V_0/d$ below the sheet and $E_{2z} = +V_0/(z_0 - d)$ above it (the field points away from a positive sheet, toward a negative one).</p>
+  <p><b>(a)</b> The jump condition at $z = d$: $\rho_s = \epsilon_2 E_{2z} - \epsilon_1 E_{1z} = \epsilon_0 V_0\left(\dfrac{ {{params.er2}} }{ {{params.t2}} } + \dfrac{ {{params.er1}} }{ {{params.d}} }\right)$, so
+    $V_0 = \dfrac{ {{params.s}} }{ {{params.er1}}/{{params.d}} + {{params.er2}}/{{params.t2}} } = {{params.V0_str}}\ \mathrm{V}$, giving $E_{1z} = {{params.E1z_str}}\ \mathrm{V/m}$ and $E_{2z} = {{params.E2z_str}}\ \mathrm{V/m}$.</p>
+  <p><b>(c)</b> Bottom plate, $\hat{n} = +\hat{z}$: $\rho_s(0) = \epsilon_1 E_{1z} = {{params.rho0_str}}\,\epsilon_0$. Top plate, $\hat{n} = -\hat{z}$: $\rho_s(z_0) = -\epsilon_2 E_{2z} = {{params.rhoz0_str}}\,\epsilon_0$. The plate nearer the sheet (through the thinner, or higher-$\epsilon$, layer) takes the larger share.</p>
+  <p><b>(d)</b> They add to $-\rho_s = {{params.neg_s}}\,\epsilon_0$: outside the plates $\mathbf{E} = 0$, so a pillbox enclosing everything sees zero total charge. Check: ${{params.rho0_str}} + ({{params.rhoz0_str}}) = {{params.neg_s}}$.</p>
+</pl-answer-panel>

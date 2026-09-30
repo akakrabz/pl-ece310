@@ -62,6 +62,56 @@
       "name": "flux",
       "color": "pink2",
       "description": "Electric flux through surfaces"
+    },
+    {
+      "name": "hw4",
+      "color": "red3",
+      "description": "Modelled on Fall 2026 Homework 4 (Lectures 8-10)"
+    },
+    {
+      "name": "conductance",
+      "color": "yellow3",
+      "description": "Conductance, leakage current and RC relaxation"
+    },
+    {
+      "name": "ampere",
+      "color": "green1",
+      "description": "Uses Ampere's law"
+    },
+    {
+      "name": "faraday",
+      "color": "green2",
+      "description": "Faraday's law and Lenz's rule"
+    },
+    {
+      "name": "inductance",
+      "color": "green3",
+      "description": "Flux linkage, inductance, magnetic energy"
+    },
+    {
+      "name": "numeric",
+      "color": "gray1",
+      "description": "Has numeric-input parts"
+    },
+    {
+      "name": "symbolic",
+      "color": "gray2",
+      "description": "Has symbolic-input parts"
+    },
+    {
+      "name": "MC",
+      "color": "gray3",
+      "description": "Has multiple-choice parts"
+    },
+    {
+      "name": "calculate",
+      "color": "brown1",
+      "description": "Computation-focused"
+    },
+    {
+      "name": "concept",
+      "color": "brown2",
+      "description": "Concept check"
     }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "uuid": "61bb2eab-67ea-49d5-8f28-26323c81e0fd",
+  "title": "Two dielectric layers between parallel plates",
+  "topic": "Electrostatics",
+  "tags": [
+    "hw4",
+    "boundary-conditions",
+    "potential",
+    "capacitance",
+    "numeric",
+    "calculate"
+  ],
+  "type": "v3",
+  "gradingMethod": "Internal",
+  "singleVariant": false,
+  "showCorrectAnswer": true
+}

@@ -1,0 +1,65 @@
+{
+  "uuid": "3859bd99-bc9a-4159-8f58-be9b95ac3906",
+  "type": "Homework",
+  "title": "Dielectrics and lossy capacitors — HW4-style practice (Lectures 8–10)",
+  "set": "Practice",
+  "number": "2",
+  "comment": "Layered dielectrics, induced plate charge, fixed-Q vs fixed-V insertion, and the RC self-discharge of a lossy capacitor.",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-09-20T00:00:01"
+        },
+        "due": {
+          "date": "2026-12-20T23:59:59"
+        },
+        "afterLastDeadline": {
+          "allowSubmissions": true,
+          "credit": 0
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Layered dielectrics between plates",
+      "questions": [
+        {
+          "id": "electrostatics/two-layer-parallel-plates",
+          "autoPoints": 5,
+          "maxAutoPoints": 15,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "electrostatics/sheet-between-grounded-plates",
+          "autoPoints": 5,
+          "maxAutoPoints": 15,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Inserting a dielectric — what is held fixed?",
+      "questions": [
+        {
+          "id": "electrostatics/dielectric-insertion",
+          "autoPoints": 4,
+          "maxAutoPoints": 12,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Lossy capacitors",
+      "questions": [
+        {
+          "id": "electrostatics/lossy-capacitor-relaxation",
+          "autoPoints": 5,
+          "maxAutoPoints": 15,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "uuid": "eae18933-2f85-460b-b723-005349b501d3",
+  "title": "Lossy capacitor: capacitance, conductance and self-discharge",
+  "topic": "Electrostatics",
+  "tags": [
+    "hw4",
+    "capacitance",
+    "conductance",
+    "numeric",
+    "calculate"
+  ],
+  "type": "v3",
+  "gradingMethod": "Internal",
+  "singleVariant": false,
+  "showCorrectAnswer": true
+}

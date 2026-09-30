@@ -1,0 +1,17 @@
+{
+  "uuid": "5044c52f-7ca4-48ca-876d-4e590f69d9b7",
+  "title": "Charge sheet between two grounded plates",
+  "topic": "Electrostatics",
+  "tags": [
+    "hw4",
+    "boundary-conditions",
+    "potential",
+    "numeric",
+    "MC",
+    "calculate"
+  ],
+  "type": "v3",
+  "gradingMethod": "Internal",
+  "singleVariant": false,
+  "showCorrectAnswer": true
+}

@@ -1,0 +1,65 @@
+{
+  "uuid": "e25a3647-783c-4033-8bed-976a3ac17b34",
+  "type": "Homework",
+  "title": "Magnetostatics — Ampère, Faraday and inductance (Lectures 12–15)",
+  "set": "Practice",
+  "number": "3",
+  "comment": "Ampère's law in coax and current-sheet geometries, the solenoid as an inductor, and Faraday's law with Lenz's rule for the sign.",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-09-28T00:00:01"
+        },
+        "due": {
+          "date": "2026-12-20T23:59:59"
+        },
+        "afterLastDeadline": {
+          "allowSubmissions": true,
+          "credit": 0
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Ampère's law",
+      "questions": [
+        {
+          "id": "magnetostatics/ampere-coax-fields",
+          "autoPoints": 5,
+          "maxAutoPoints": 15,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "magnetostatics/current-sheets-superposition",
+          "autoPoints": 5,
+          "maxAutoPoints": 15,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Inductance and stored energy",
+      "questions": [
+        {
+          "id": "magnetostatics/solenoid-inductance-energy",
+          "autoPoints": 5,
+          "maxAutoPoints": 15,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Faraday's law",
+      "questions": [
+        {
+          "id": "magnetostatics/faraday-loop-emf",
+          "autoPoints": 4,
+          "maxAutoPoints": 12,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}
