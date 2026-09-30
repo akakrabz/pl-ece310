@@ -9,18 +9,19 @@ Requirements: Node ≥ 22, npm ≥ 10.9 (you have Node 22.23), internet access f
 
 ```bash
 cd "~/Nextcloud/Notes/ECE 329/quartz"
-npm ci                        # Quartz's own dependencies
-npx quartz plugin install     # clones + builds the @quartz-community plugins listed in quartz.config.yaml
+npm ci                        # Quartz's own dependencies (includes the @quartz-community npm plugins)
+npm run install-plugins       # generates .quartz/plugins/index.ts from quartz.config.yaml — required once, and after editing the plugin list
 npx quartz build --serve      # http://localhost:8080  (rebuilds on save)
 ```
 
 `npx quartz build` alone writes the static site to `public/`.
 
-If the plugin step complains about a plugin failing to build on a fresh clone, run `npx quartz plugin install --latest` (it rewrites `quartz.lock.json`).
+Note: `npx quartz plugin install` is only for plugins fetched from Git; it does *not* regenerate the index for npm plugins
+(it just says "No quartz.lock.json found"). If the build fails with `Could not resolve "./.quartz/plugins"`, run `npm run install-plugins`.
 
 ## 2. Before hosting
 
-Edit `quartz.config.yaml` → `configuration.baseUrl` (currently `CHANGE-ME.example.com/ece329`): your host plus any sub-path, no protocol, no trailing slash. It only affects the sitemap and social-preview URLs, but set it.
+`configuration.baseUrl` in `quartz.config.yaml` is set to `pl-ece329.vops.ch` (host plus any sub-path, no protocol, no trailing slash). It only affects the sitemap and social-preview URLs.
 
 If the site lives under a sub-path (e.g. `example.com/ece329/`), build with `npx quartz build --baseDir /ece329`.
 
@@ -54,7 +55,7 @@ External requests the site makes at page load: Google Fonts (theme fonts) and js
 - Link with full paths: `[[concepts/gauss-law|Gauss's law]]`, `[[1-electrostatics/03-gauss-law-at-work#3-the-three-symmetries|Lecture 3 §3]]`. Inside tables escape the pipe: `[[page\|text]]`.
 - Math: `$…$` inline, `$$…$$` on its own lines (every line prefixed with `> ` inside a callout). Use `\lvert x\rvert` instead of `|x|` inside tables. No custom macros — the vault must also render in Obsidian.
 - Callouts: the standard Obsidian types plus this site's own `key`, `recipe`, `trap`, `exam`, `intuition`, `derivation` (styled in `quartz/styles/custom.scss`). Append `-` to the type to fold by default.
-- Figures: inline `<figure class="ece-fig">…SVG…</figure>` blocks with **no blank lines inside**; strokes use `currentColor` and the CSS variables `--accent`, `--accent2`, `--hi`, `--muted` so they follow dark mode. The generator for the existing figures is in `tools/figs.py`.
+- Figures: inline `<figure class="ece-fig">…SVG…</figure>` blocks with **no blank lines inside** and **a blank line after** (an HTML block runs until a blank line — without one, the next callout or equation is swallowed as raw HTML and the build fails); strokes use `currentColor` and the CSS variables `--accent`, `--accent2`, `--hi`, `--muted` so they follow dark mode. The generator for the existing figures is in `tools/figs.py`.
 - Demos: standalone HTML in `quartz/static/demos/<name>/index.html`, embedded with `<iframe src="/static/demos/<name>/">` inside `<div class="ece-demo">`.
 - Explorer order comes from file names (numeric prefixes), see `quartz.ts`; titles stay clean.
 
