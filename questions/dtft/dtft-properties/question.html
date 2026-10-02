@@ -1,0 +1,46 @@
+<pl-question-panel>
+  <p>
+    The sequence $x[n] = {{params.x_tex}}${{#params.is_fin}} (the arrow marks $n = 0$){{/params.is_fin}} has the DTFT
+    $$X_d(\omega) = {{params.X_tex}}.$$
+    Let $y[n] = {{params.y_tex}}$, with DTFT $Y_d(\omega)$.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Which expression is $Y_d(\omega)$?</p>
+<pl-multiple-choice answers-name="yd" hide-letter-keys="true">
+  {{#params.yd_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.yd_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(b)</b> {{#params.has_suffix}}Enter the integral as a multiple of $\pi$. {{/params.has_suffix}}Enter exact
+  values: fractions such as <code>12/7</code> are accepted; decimals need 4 significant digits.</p>
+{{#params.has_suffix}}
+<pl-number-input answers-name="num" label="${{params.num_label}} =$" suffix="${{params.num_suffix}}$"
+  comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.has_suffix}}
+{{^params.has_suffix}}
+<pl-number-input answers-name="num" label="${{params.num_label}} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.has_suffix}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Use the property table">
+    Lecture 14, Table 2: $x[n-k] \leftrightarrow e^{-jk\omega}X_d(\omega)$; $e^{j\omega_0 n}x[n] \leftrightarrow X_d(\omega-\omega_0)$;
+    $x[n]\cos(\omega_0 n) \leftrightarrow \tfrac{1}{2}X_d(\omega-\omega_0) + \tfrac{1}{2}X_d(\omega+\omega_0)$;
+    $x[-n] \leftrightarrow X_d(-\omega)$; $x[n]*h[n] \leftrightarrow X_d(\omega)H_d(\omega)$. Then substitute the given $X_d$.
+  </pl-hint>
+  <pl-hint hint-name="Evaluating the result" show-after-submission="1">
+    $(-1)^n = e^{j\pi n}$. To evaluate $Y_d$ at one frequency, apply the property first and then substitute, e.g. a shifted
+    signal has $Y_d(\pi) = e^{-jk\pi}X_d(\pi)$. Parseval: $\int_{-\pi}^{\pi} |Y_d(\omega)|^2\,d\omega = 2\pi\sum_n |y[n]|^2$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Modelled on {{{params.source_html}}}.</p>
+  <p>
+    (a) $$ {{params.prop_tex}}, $$
+    so
+    $$Y_d(\omega) = {{params.Y_tex}}.$$
+  </p>
+  <p>
+    (b) $$ {{params.num_work_tex}}. $$
+  </p>
+</pl-answer-panel>

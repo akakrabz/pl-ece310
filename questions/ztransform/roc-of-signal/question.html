@@ -1,0 +1,46 @@
+<pl-question-panel>
+  <p>
+    Consider the signal
+    $$x[n] = {{params.x_tex}}.$$
+    What is the region of convergence (ROC) of its z-transform $X(z)$?
+  </p>
+</pl-question-panel>
+
+<pl-multiple-choice answers-name="roc">
+  {{#params.roc_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.roc_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One piece at a time">
+    Find the ROC of each piece separately; the ROC of the sum is their intersection.
+    Right-sided exponential: outside the circle through its pole. Left-sided: inside it.
+    Finite stretch: the whole plane except possibly $z = 0$ and $z = \infty$.
+  </pl-hint>
+  <pl-hint hint-name="Watch the end points" show-after-submission="1">
+    Samples at $n \gt 0$ contribute negative powers $z^{-n}$, which blow up at $z = 0$; samples at $n \lt 0$
+    contribute positive powers, which blow up at $z = \infty$. That also applies to a right-sided piece that starts
+    at a negative index (e.g. $u[n+2]$) and to a left-sided piece that ends at a positive index (e.g. $u[-n+1]$).
+    If the pieces' ROCs do not overlap, the z-transform does not exist.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>ROC of each piece:</p>
+  <ul>
+    {{#params.pieces}}
+    <li>$\displaystyle {{x_tex}}$: $\;{{roc_tex}}$ ({{note}}).</li>
+    {{/params.pieces}}
+  </ul>
+  {{#params.empty}}
+  <p>The sum needs every piece to converge at the same $z$, but {{params.why_tex}}. The intersection is empty, so
+    <b>the z-transform does not exist</b> (one of the two sums diverges at every radius).</p>
+  {{/params.empty}}
+  {{^params.empty}}
+  <p>The intersection of these regions is
+    $$\text{ROC: } {{params.roc_tex}}.$$
+  </p>
+  {{/params.empty}}
+  <p class="text-muted small">ROC rules from Lecture 6 and Lecture 7 &sect;1 (right-, left-sided and finite signals,
+    0 and $\infty$); modelled on HW3 #1 and the Midterm 1 family "z-transform with ROC" (e.g. FA2025 #5a, SP2025 #5b, FA2024 #5c),
+    plus the True/False statement SP2025 #1c (an empty ROC).</p>
+</pl-answer-panel>

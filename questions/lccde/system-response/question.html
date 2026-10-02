@@ -1,0 +1,58 @@
+<pl-question-panel>
+  <p>
+    {{#params.given_lccde}}A causal LTI system is described by the difference equation
+    $$ {{params.eq_tex}} $$
+    with zero initial conditions.{{/params.given_lccde}}
+    {{#params.given_H}}A causal LTI system has transfer function
+    $$ H(z) = {{params.H_tex}} .$${{/params.given_H}}
+    The input is $x[n] = {{params.x_tex}}$.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Find the output $y[n]$ for $n \ge 0$ (it is zero for $n \lt 0$). Enter it as an expression in
+  <code>n</code> without $u[n]$, using fractions, e.g. <code>3*(1/2)^n - 2*(-1/3)^n</code>.</p>
+<pl-symbolic-input answers-name="y" variables="n" label="$y[n] =$" size="45" weight="2"></pl-symbolic-input>
+
+<p class="mt-3"><b>(b)</b> The first two output samples. Enter exact values: fractions such as <code>-7/3</code> are accepted;
+  decimals need 4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="y0" label="$y[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="y1" label="$y[1] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Work in the z-domain">
+    $Y(z) = H(z)X(z)$ with $X(z) = {{params.X_tex}}$, ${{params.Xroc_tex}}$. Factor the numerator and the
+    denominator of $H(z)$, and before you expand, check whether a factor of the numerator of $H$ cancels a pole
+    of $H$ or the pole of $X(z)$.
+  </pl-hint>
+  <pl-hint hint-name="Partial fractions" show-after-submission="1">
+    After cancelling, $Y(z)$ is proper. Cover-up: $A_k = \big[Y(z)(1 - p_kz^{-1})\big]_{z = p_k}$; the causal
+    output is $y[n] = \sum_k A_k\,p_k^n\,u[n]$. Check $y[0]$ and $y[1]$ against the recursion.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    {{#params.given_lccde}}Transforming the difference equation (Lecture 9) gives $H(z) = {{params.H_tex}}$, and in{{/params.given_lccde}}
+    {{#params.given_H}}In{{/params.given_H}}
+    factored form
+    $$ H(z) = {{params.Hfact_tex}}, \qquad X(z) = {{params.X_tex}},\quad {{params.Xroc_tex}} . $$
+    {{#params.xcancel}}The zero factor ${{params.cancel_tex}}$ of $H$ sits on the pole of the input and cancels in
+    $Y = HX$ (the input's mode never appears in the output; compare FA2023 #7):{{/params.xcancel}}
+    {{#params.hcancel}}Numerator and denominator of $H$ share the factor ${{params.cancel_tex}}$, which cancels
+    (as in HW4 #6), so the system is really of lower order:{{/params.hcancel}}
+    {{#params.nocancel}}Nothing cancels, so $Y = HX$ keeps every pole:{{/params.nocancel}}
+    $$ Y(z) = H(z)X(z) = {{params.Y_tex}}, \qquad {{params.Yroc_tex}} . $$
+    $Y(z)$ is proper, so the cover-up method applies directly:
+    $$ {{params.cover_tex}} $$
+    $$ Y(z) = {{params.pfe_tex}} . $$
+    Causal system and right-sided input give a right-sided output:
+    $$ y[n] = {{params.y_tex}} . $$
+    Check: $y[0] = {{params.y0sum_tex}} = {{params.y0_tex}}$ and $y[1] = {{params.y1sum_tex}} = {{params.y1_tex}}$,
+    the same values as running the recursion from rest.
+  </p>
+  <p class="small text-muted">
+    Modelled on Lecture 9 §1 and Lecture 10 (system response by $Y = HX$ and partial fractions), HW4 #6(c), and the
+    past-exam parts FA2023 #7(b) (a zero of $H$ cancels the input pole), FA2025 #6(b) and SP2025 #8(b)
+    (cancel before you expand).
+  </p>
+</pl-answer-panel>

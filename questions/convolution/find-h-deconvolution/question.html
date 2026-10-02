@@ -1,0 +1,81 @@
+<pl-question-panel>
+  <p>
+    An LTI system with impulse response $h[n]$ responds to the input $x[n]$ with the output $y[n]$, where
+    {{#params.is_fir}}
+    $$x[n] = {{params.x_tex}}, \qquad y[n] = {{params.y_tex}},$$
+    the arrow marks the sample at $n = 0$ and all samples not shown are zero.
+    {{/params.is_fir}}
+    {{#params.is_geo}}
+    $$x[n] = {{params.x_tex}}, \qquad y[n] = {{params.y_tex}}$$
+    (the arrow marks the sample at $n = 0$; all samples of $y$ not shown are zero).
+    {{/params.is_geo}}
+    Find $h[n]$.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The index of the first nonzero sample of $h[n]$:</p>
+<pl-integer-input answers-name="nh" label="$n_{\text{first}} =$"></pl-integer-input>
+
+<p class="mt-3"><b>(b)</b> The samples of $h[n]$ from its first to its last nonzero sample, as a row vector
+  (for example <code>[1, -2, 0, 5]</code>):</p>
+<pl-matrix-input answers-name="h" label="$h =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input>
+
+<pl-hidden-hints>
+  {{#params.is_fir}}
+  <pl-hint hint-name="Bookkeeping">
+    Convolution adds start indices and lengths: start of $y$ = start of $x$ + start of $h$, and
+    $L_y = L_x + L_h - 1$. Run both rules backwards.
+  </pl-hint>
+  <pl-hint hint-name="Peel off one sample at a time" show-after-submission="1">
+    The first sample of $y$ is (first sample of $x$)$\cdot$(first sample of $h$). Subtract that scaled, shifted copy of $x$
+    from $y$ and repeat with what is left; this is long division of polynomials in $z^{-1}$. Check: $x * h$ must give $y$.
+  </pl-hint>
+  {{/params.is_fir}}
+  {{#params.is_geo}}
+  <pl-hint hint-name="Build a delta from the input">
+    Find a combination of $x[n]$ and a delayed copy $x[n-1]$ that equals $\delta[n]$. By linearity and time invariance
+    the same combination of $y[n]$ and $y[n-1]$ equals $h[n]$.
+  </pl-hint>
+  <pl-hint hint-name="Line up the samples" show-after-submission="1">
+    Write $y[n]$ and the scaled copy of $y[n-1]$ under each other, aligned by $n$, and add column by column.
+    $h$ is one sample longer than $y$.
+  </pl-hint>
+  {{/params.is_geo}}
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.is_fir}}
+  <p>
+    <b>Bookkeeping.</b> $x$ occupies ${{params.nx}} \le n \le {{params.nx_last}}$ ($L_x = {{params.lx}}$) and
+    $y$ occupies ${{params.ny}} \le n \le {{params.ny_last}}$ ($L_y = {{params.ly}}$). Since starts add under convolution,
+    $h$ starts at $n = {{params.nh_tex}} = {{correct_answers.nh}}$ and has $L_y - L_x + 1 = {{params.lh}}$ samples.
+  </p>
+  <p>
+    <b>Peel off the samples</b> (long division): each sample of $y$ is $\sum_k x[k]\,h[n-k]$, so
+    $$ {{params.peel_tex}} $$
+    giving
+    $$h[n] = {{params.h_tex}}.$$
+  </p>
+  <p><b>Check</b> by convolving back (one row per sample of $h$):</p>
+  {{{params.table_html}}}
+  <p>The column sums reproduce $y[n]$, and every later sample matches (zero remainder).</p>
+  <p class="text-muted"><small>Modelled on SP2025 #3, FA2024 #3 and FA2019 #3 (deconvolving short sequences);
+    Lecture 4 (LTI systems and convolution).</small></p>
+  {{/params.is_fir}}
+  {{#params.is_geo}}
+  <p>
+    <b>Build a delta.</b>
+    $${{params.comb_tex}} = {{params.xa_tex}} {{#params.is_step}}-{{/params.is_step}}{{^params.is_step}}- {{params.a_tex}}\cdot{{/params.is_step}} {{params.xa1_tex}} = \delta[n],$$
+    because the two terms agree for every $n \ge 1$ and only the sample at $n = 0$ survives.
+    By linearity and time invariance the same combination of outputs is the response to $\delta[n]$:
+    $$h[n] = {{params.hcomb_tex}}.$$
+  </p>
+  {{{params.table_html}}}
+  <p>
+    $$h[n] = {{params.h_tex}},$$
+    so $h$ starts at $n = {{correct_answers.nh}}$ (the start of $y$) and has one sample more than $y$.
+  </p>
+  <p class="text-muted"><small>Modelled on FA2023 #4 (impulse response from a step response, $h[n] = g[n] - g[n-1]$) and
+    on HW2 #3&ndash;#4 and SP2023 #4 (combine shifted inputs into $\delta[n]$, then combine the outputs the same way).</small></p>
+  {{/params.is_geo}}
+</pl-answer-panel>

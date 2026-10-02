@@ -1,0 +1,33 @@
+<pl-question-panel>
+  <p>Decide whether each statement is <b>True</b> or <b>False</b>. (On the exam: +2 correct, &minus;1 wrong, 0 blank; no justification needed.)</p>
+</pl-question-panel>
+
+{{#params.statements}}
+<p class="mt-3"><b>({{label}})</b> {{{stmt_html}}}</p>
+<pl-multiple-choice answers-name="{{name}}" order="fixed" display="inline" hide-letter-keys="true">
+  {{#choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/choices}}
+</pl-multiple-choice>
+{{/params.statements}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Hunt for one counterexample">
+    Most statements with "always", "never", "must" or "cannot" are False and die to one counterexample:
+    $h = u[n]$ (bounded but unstable), $h = \delta[n] - \delta[n-1]$ (undoes $u[n]$), $h = (\tfrac12)^{\lvert n\rvert}$
+    (two-sided and stable), $y = n\,x[n]$ (causal, time-varying, $h = 0$), $y = x^2[n]$ (nonlinear with $h = \delta[n]$).
+  </pl-hint>
+  <pl-hint hint-name="Poles and ROCs" show-after-submission="1">
+    A stable LTI system's ROC contains $\lvert z\rvert = 1$, and that decides the sidedness: poles inside the unit circle give
+    right-sided terms, poles outside give left-sided terms. If no ROC is given, you may choose it. A pole on the unit circle rules
+    out stability.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <ul>
+    {{#params.statements}}
+    <li class="mb-2"><b>({{label}}) {{ans}}.</b> {{why}} <span class="text-muted"><small>(Modelled on {{src}}.)</small></span></li>
+    {{/params.statements}}
+  </ul>
+  <p class="text-muted"><small>Statements from the past Midterm 1 True/False problems (problem 1 on every exam, FA2019&ndash;FA2025),
+    some with randomized parameters; background in Lectures 3, 4, 6 and 9&ndash;11.</small></p>
+</pl-answer-panel>

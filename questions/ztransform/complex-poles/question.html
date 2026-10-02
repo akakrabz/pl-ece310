@@ -1,0 +1,47 @@
+<pl-question-panel>
+  <p>
+    A <b>causal</b> LTI system has the transfer function
+    $$H(z) = {{params.H_tex}},\qquad {{params.roc_tex}}.$$
+    Its poles are a complex-conjugate pair.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The first samples of the impulse response. Enter exact values: fractions such as <code>-7/3</code> are
+  accepted; decimals need 4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="h0" label="$h[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h1" label="$h[1] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h2" label="$h[2] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> A closed form of $h[n]$ for $n \ge 0$, as an expression in $n$, in the format of
+  <code>(1/2)^n*(3*cos(pi*n/4) - 2*sqrt(2)*sin(pi*n/4))</code> (you may use <code>cos</code>, <code>sin</code>,
+  <code>pi</code>, <code>sqrt</code>; angles in radians; use fractions, not decimals):</p>
+<pl-symbolic-input answers-name="hn" variables="n" label="$h[n] =$" suffix="$\text{for } n \ge 0$" size="50"></pl-symbolic-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Match the standard pairs">
+    Write the denominator as $1 - 2r\cos\theta\,z^{-1} + r^2 z^{-2}$ (poles $r e^{\pm j\theta}$) and use
+    $$r^n\cos(\theta n)u[n] \leftrightarrow \dfrac{1 - r\cos\theta\,z^{-1}}{1 - 2r\cos\theta\,z^{-1} + r^2z^{-2}},\qquad
+      r^n\sin(\theta n)u[n] \leftrightarrow \dfrac{r\sin\theta\,z^{-1}}{1 - 2r\cos\theta\,z^{-1} + r^2z^{-2}}.$$
+  </pl-hint>
+  <pl-hint hint-name="Samples from the recursion" show-after-submission="1">
+    Cross-multiply $H(z)$: ${{params.lfilt_tex}}$, run forward from rest. Your closed form must reproduce these samples.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>Poles.</b> ${{params.den_tex}} = 1 - 2r\cos\theta\,z^{-1} + r^2 z^{-2}$ with $r^2 = {{params.r2_tex}}$, so
+    $r = {{params.r_tex}}$, and $2r\cos\theta = {{params.twor_cos_tex}}$ gives $\cos\theta = {{params.cos_th_tex}}$,
+    $\theta = {{params.th_tex}}$: the poles are ${{params.r_tex}}\,e^{\pm j{{params.th_tex}}}$ (inside the ROC
+    ${{params.roc_tex}}$).</p>
+  <p><b>Match the numerator.</b> With $r\cos\theta = {{params.rcos_tex}}$ and $r\sin\theta = {{params.rsin_tex}}$,
+    $$A\left(1 - r\cos\theta\,z^{-1}\right) + B\,r\sin\theta\,z^{-1} = {{params.b_tex_num}}.$$
+    Constant terms: $A = {{params.A_tex}}$. Terms in $z^{-1}$:
+    $B\,r\sin\theta = {{params.b1_tex}} + A\,r\cos\theta = {{params.Brsin_tex}}$, so $B = {{params.B_tex}}$.
+    Hence
+    $$h[n] = {{params.closed_tex}}\,u[n].$$</p>
+  <p><b>Samples.</b> $h[0] = {{params.h0_tex}}$, $h[1] = {{params.h1_tex}}$, $h[2] = {{params.h2_tex}}$; the recursion
+    ${{params.lfilt_tex}}$ gives the same: $h[0] = {{params.h0_tex}}$, ${{params.rec1_tex}}$, ${{params.rec2_tex}}$.</p>
+  <p class="text-muted small">Modelled on Lecture 8, Exercise 2 (conjugate poles $e^{\pm j\pi/3}$,
+    $h[n] = 3\cos(\tfrac{\pi}{3}n)u[n]$) and SP2021 Midterm 1 #5(a) ($\dfrac{3z^{-1}}{1+z^{-2}}$, $\lvert z\rvert \gt 1$:
+    $h[n] = 3\sin(\tfrac{\pi}{2}n)u[n]$). Any expression equal to $h[n]$ for every $n \ge 0$ is accepted (it is checked at $n = 0, \dots, 11$), e.g. $M r^n\cos(\theta n - \varphi)$.</p>
+</pl-answer-panel>

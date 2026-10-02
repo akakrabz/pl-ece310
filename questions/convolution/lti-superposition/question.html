@@ -1,0 +1,63 @@
+<pl-question-panel>
+  <p>
+    An LTI system responds to the input $x_1[n]$ with the output $y_1[n]$:
+    $$x_1[n] = {{params.x1_tex}} \quad\longmapsto\quad y_1[n] = {{params.y1_tex}}$$
+    (the $\uparrow$ under a sample marks $n = 0$; all samples not shown are zero).
+    {{#params.is_formula}}
+    Find the response $y_2[n]$ of the same system to the input
+    $$x_2[n] = {{params.x2f_tex}}.$$
+    {{/params.is_formula}}
+    {{#params.is_seq}}
+    Find the response $y_2[n]$ of the same system to the input
+    $$x_2[n] = {{params.x2_tex}}.$$
+    {{/params.is_seq}}
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The index of the first nonzero sample of $y_2[n]$:</p>
+<pl-integer-input answers-name="ny2" label="$n_{\text{first}} =$"></pl-integer-input>
+
+<p class="mt-3"><b>(b)</b> The samples of $y_2[n]$ from its first to its last nonzero sample, as a row vector
+  (for example <code>[1, -2, 0, 5]</code>):</p>
+<pl-matrix-input answers-name="y2" label="$y_2 =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input>
+
+<pl-hidden-hints>
+  {{#params.is_seq}}
+  <pl-hint hint-name="Decompose the input">
+    $x_2[n]$ is made of scaled, shifted copies of $x_1[n]$. Find each copy: its scale factor and the index where it starts.
+  </pl-hint>
+  {{/params.is_seq}}
+  {{#params.is_formula}}
+  <pl-hint hint-name="Linearity and time invariance">
+    Time invariance: $x_1[n - d] \mapsto y_1[n - d]$. Linearity: scale factors and sums carry over to the outputs.
+  </pl-hint>
+  {{/params.is_formula}}
+  <pl-hint hint-name="Superpose the outputs" show-after-submission="1">
+    Write each scaled, shifted copy of $y_1$ in its own row, aligned by $n$ (a delay by $d$ moves a sequence $d$ samples
+    to the right), and add the columns. You never need $h[n]$ itself.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.is_seq}}
+  <p>
+    <b>Decompose the input.</b> $x_2$ consists of two non-overlapping scaled copies of $x_1$:
+  </p>
+  {{{params.xtable_html}}}
+  <p>so $x_2[n] = {{params.x2f_tex}}$.</p>
+  {{/params.is_seq}}
+  <p>
+    <b>Superpose.</b> By time invariance a delayed input gives the equally delayed output, and by linearity the scale
+    factors and the sum carry over:
+    $$y_2[n] = {{params.y2f_tex}}.$$
+  </p>
+  {{{params.ytable_html}}}
+  <p>
+    $$y_2[n] = {{params.y2_tex}},$$
+    which starts at $n = {{params.start_tex}} = {{correct_answers.ny2}}$ (start of $y_1$ plus the smaller delay) and ends
+    at $n = {{params.y2_last}}$.
+  </p>
+  <p class="text-muted"><small>Modelled on HW2 #4 and SP2023 #4 (combine shifted copies of a known input&ndash;output pair by
+    linearity and time invariance, there to build $h[n]$), Lecture 3 (superposition) and Lecture 4 &sect;1.2
+    (response of an LTI system).</small></p>
+</pl-answer-panel>

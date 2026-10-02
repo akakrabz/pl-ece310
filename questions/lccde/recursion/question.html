@@ -1,0 +1,78 @@
+<pl-question-panel>
+  <p>
+    A causal LTI system is described by the difference equation
+    $$ {{params.eq_tex}} $$
+    and is at initial rest (zero initial conditions: $x[n] = y[n] = 0$ for $n \lt 0$).
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Compute the first four samples of the impulse response $h[n]$.
+  Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="h0" label="$h[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h1" label="$h[1] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h2" label="$h[2] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h3" label="$h[3] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> Is the impulse response of this system finite (FIR) or infinite (IIR)?</p>
+<pl-multiple-choice answers-name="firiir" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.firiir_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.firiir_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Feed in an impulse">
+    The impulse response is the output for $x[n] = \delta[n]$. Replace every $x[n-k]$ by $\delta[n-k]$
+    and every $y[n-k]$ by $h[n-k]$, solve for the newest sample $h[n]$, and run it for $n = 0, 1, 2, 3$
+    starting from $h[-1] = h[-2] = 0$.
+  </pl-hint>
+  <pl-hint hint-name="Signs and FIR/IIR" show-after-submission="1">
+    A term $a_k\,y[n-k]$ on the <em>left</em> becomes $-a_k\,h[n-k]$ when you solve for $h[n]$.
+    FIR means $h[n]$ is zero after finitely many samples. A feedback term alone does not decide it:
+    write $H(z)$ and check whether every pole away from $z = 0$ is cancelled by a zero (Lecture 9), or keep
+    running the recursion until the input terms are over and see whether $h[n]$ dies out exactly.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    {{#params.has_feedback}}In the Lecture 9 form the equation reads $ {{params.std_tex}} $; solved for the newest output it is the recursion
+    $$ {{params.rec_tex}} . $${{/params.has_feedback}}
+    With $x[n] = \delta[n]$ the output is $h[n]$, and initial rest gives $h[n] = 0$ for $n \lt 0$:
+    $$ {{params.hrec_tex}} .$$
+    Since $\delta[n-k]$ is $1$ only at $n = k$, at time $n$ the input terms contribute just the coefficient of
+    $x[n-k]$ with $k = n$ (and nothing once $n$ is past the last input term):
+    $$ {{params.steps_tex}} $$
+    so $h[n] = {{params.h_seq_tex}}$.
+  </p>
+  {{#params.fir_plain}}
+  <p>
+    <b>FIR:</b> there are no feedback terms, so $h[n]$ is the list of input coefficients and is zero for
+    $n \gt {{params.nb_last}}$ (Lecture 5 §1.1). Equivalently $H(z) = {{params.H_tex}}$ has no poles away from $z = 0$.
+  </p>
+  {{/params.fir_plain}}
+  {{#params.fir_rec}}
+  <p>
+    <b>FIR, despite the feedback term.</b> At $n = {{params.nz}}$ the last input term exactly cancels the fed-back
+    value, $ {{params.hL_tex}} $, and from then on there is no input and $h[n] = {{params.pole_tex}}\,h[n-1] = 0$:
+    the impulse response is finite. In the $z$-domain
+    $$ H(z) = {{params.H_tex}} = {{params.Hnumfact_tex}}, $$
+    and since ${{params.factor_tex}}$, the pole at $z = {{params.pole_tex}}$ is cancelled by a zero:
+    $$ H(z) = {{params.Hpoly_tex}} , $$
+    which has no poles away from $z = 0$. A system is IIR only if it keeps a finite pole that no zero cancels
+    (Lecture 9 §1.2, Figure 1). This is the trick of Lecture 5 Eq. (4), the moving average computed recursively,
+    $y[n] = y[n-1] + \tfrac{1}{L}\big(x[n] - x[n-L]\big)$, whose impulse response is finite although the equation has a
+    feedback term.
+  </p>
+  {{/params.fir_rec}}
+  {{#params.iir}}
+  <p>
+    <b>IIR:</b> the feedback terms keep the response going after the input has ended (Lecture 5 §1.2).
+    In Lecture 9 terms, $H(z) = {{params.H_tex}}$ has poles away from $z = 0$, and the numerator and denominator
+    share no factor, so no pole is cancelled and $h[n]$ is infinitely long (Lecture 9 §1.2, Figure 1).
+  </p>
+  {{/params.iir}}
+  <p class="small text-muted">
+    Modelled on Lecture 5 (recursive computation from initial rest, FIR vs IIR, the recursive moving average Eq. (4),
+    Exercise 1), Lecture 9 §1.2 (FIR/IIR from the poles that survive cancellation), past exam SP2021 #6 ($h[0..4]$ of a
+    recursion) and HW4 #6(b) (impulse response of an LCCDE at zero initial conditions).
+  </p>
+</pl-answer-panel>

@@ -1,0 +1,81 @@
+{{#params.to_H}}
+<pl-question-panel>
+  <p>
+    A causal LTI system is described by the difference equation
+    $$ {{params.eq_tex}} $$
+    with zero initial conditions. Find its transfer function $H(z) = Y(z)/X(z)$.
+  </p>
+</pl-question-panel>
+
+<p>Enter $H(z)$ as an expression in <code>z</code>, e.g. <code>(1 + 2*z^(-1))/(1 - (1/3)*z^(-1))</code>
+  (use fractions, not decimals; any equivalent form is accepted).</p>
+<pl-symbolic-input answers-name="H" variables="z" label="$H(z) =$" size="45"></pl-symbolic-input>
+{{/params.to_H}}
+
+{{#params.to_ba}}
+<pl-question-panel>
+  <p>
+    A causal LTI system has transfer function
+    $$ H(z) = {{params.Hgiven_tex}} . $$
+    Write its difference equation in the Lecture 9 form
+    $$ y[n] + \sum_{k=1}^{N} a_k\, y[n-k] = \sum_{k=0}^{M} b_k\, x[n-k], $$
+    <b>normalised so that the coefficient of $y[n]$ is $1$</b> (the convention of
+    <code>scipy.signal.lfilter(b, a, x)</code>).
+  </p>
+</pl-question-panel>
+
+<p>
+  Enter the coefficient vectors as row vectors of <b>decimals</b> with at least 4 significant digits (fractions are
+  not accepted in these boxes), for example <code>[1, -0.75, 0.125]</code>. The vector $b$ starts with $b_0$, the coefficient of $x[n]$,
+  <em>even if it is zero</em>; $a$ starts with $a_0 = 1$. Each vector ends with its last nonzero coefficient.
+</p>
+<p><pl-matrix-input answers-name="bvec" label="$b = [b_0, b_1, \dots] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-matrix-input></p>
+<p><pl-matrix-input answers-name="avec" label="$a = [1, a_1, \dots] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-matrix-input></p>
+{{/params.to_ba}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="The Lecture 9 recipe">
+    Put every $y$ term on the left and every $x$ term on the right, transform term by term
+    ($y[n-k] \to z^{-k}Y(z)$, $x[n-k] \to z^{-k}X(z)$) and divide:
+    $H(z) = \dfrac{\sum_k b_k z^{-k}}{1 + \sum_k a_k z^{-k}}$. Going the other way, cross-multiply
+    $Y(z)\,(1 + \sum_k a_k z^{-k}) = X(z) \sum_k b_k z^{-k}$ and read off the delays.
+  </pl-hint>
+  <pl-hint hint-name="Where the points go" show-after-submission="1">
+    A term $+c\,y[n-1]$ on the <em>right</em> of a recursion becomes $a_1 = -c$. Before reading off coefficients,
+    write $H$ in powers of $z^{-1}$ (divide numerator and denominator by the highest power of $z$) and divide
+    everything by the constant term of the denominator so that it is $1$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.to_H}}
+  <p>
+    {{#params.rec}}Move every output term to the left (the sign of each feedback coefficient flips):{{/params.rec}}
+    {{#params.scaled}}Divide the equation by ${{params.scale}}$ so that the coefficient of $y[n]$ is $1$:{{/params.scaled}}
+    {{^params.rec}}{{^params.scaled}}The equation is already in the Lecture 9 form:{{/params.scaled}}{{/params.rec}}
+    $$ {{params.std_tex}} . $$
+    Transform term by term with zero initial conditions ($y[n-k] \to z^{-k}Y(z)$, $x[n-k] \to z^{-k}X(z)$):
+    $$ Y(z)\left({{params.Y_tex}}\right) = X(z)\left({{params.X_tex}}\right), $$
+    $$ H(z) = \frac{Y(z)}{X(z)} = {{params.H_tex}} = {{params.Hpos_tex}} . $$
+    (Both forms are the same function; the second is multiplied through by the highest power of $z$.)
+  </p>
+  {{/params.to_H}}
+  {{#params.to_ba}}
+  <p>
+    {{#params.form_zpos}}Divide numerator and denominator by the highest power of $z$ in the denominator to get
+    powers of $z^{-1}${{#params.has_lead_zeros}} — the numerator has lower degree, so it starts with ${{params.zlead_tex}}$
+    and $b_0 = 0${{/params.has_lead_zeros}}:{{/params.form_zpos}}
+    {{#params.form_factored}}Multiply out the factors:{{/params.form_factored}}
+    {{#params.form_zinv}}{{#params.c_ne_1}}Divide numerator and denominator by ${{params.c}}$ so that the constant term of the
+    denominator is $1$:{{/params.c_ne_1}}{{^params.c_ne_1}}$H(z)$ is already in powers of $z^{-1}$ with denominator constant term $1$:{{/params.c_ne_1}}{{/params.form_zinv}}
+    $$ H(z) = {{params.H_tex}} . $$
+    Cross-multiplying $Y(z)\,A(z) = X(z)\,B(z)$ and replacing $z^{-k}Y(z) \to y[n-k]$, $z^{-k}X(z) \to x[n-k]$:
+    $$ {{params.std_tex}}, $$
+    so $b = {{params.b_tex}}$ and $a = {{params.a_tex}}$, i.e. <code>b = {{params.b_plain}}</code>, <code>a = {{params.a_plain}}</code>.
+  </p>
+  {{/params.to_ba}}
+  <p class="small text-muted">
+    Modelled on Lecture 9 §1.1 (LCCDE $\leftrightarrow$ transfer function), HW4 #6(a), and the past-exam parts
+    FA2025 #6(a), SP2025 #8(a), FA2023 #6(b) and FA2019 #10 ($H(z) \to$ LCCDE).
+  </p>
+</pl-answer-panel>

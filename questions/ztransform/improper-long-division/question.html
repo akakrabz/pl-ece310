@@ -1,0 +1,68 @@
+<pl-question-panel>
+  <p>
+    A <b>causal</b> LTI system has the transfer function
+    $$H(z) = {{params.H_tex}},\qquad {{params.roc_tex}}.$$
+    The numerator has degree ${{params.deg_num}}$ in $z^{-1}$ and the denominator degree ${{params.deg_den}}$, so $H(z)$
+    is improper. Write it as
+    $$H(z) = {{params.form_tex}},\qquad {{params.poles_named_tex}}.$$
+  </p>
+</pl-question-panel>
+
+<p class="small text-muted">Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</p>
+<p><b>(a)</b> The polynomial (direct) part, from long division in powers of $z^{-1}$:</p>
+<pl-number-input answers-name="C0" label="$C_0 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{#params.has_C1}}
+<pl-number-input answers-name="C1" label="$C_1 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.has_C1}}
+
+<p class="mt-3"><b>(b)</b> The partial-fraction coefficients:</p>
+<pl-number-input answers-name="A1" label="$A_1\;(\text{pole } p_1 = {{params.p1_tex}}):$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{#params.two_poles}}
+<pl-number-input answers-name="A2" label="$A_2\;(\text{pole } p_2 = {{params.p2_tex}}):$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.two_poles}}
+
+<p class="mt-3"><b>(c)</b> The first samples of the impulse response:</p>
+<div class="mb-1"><pl-number-input answers-name="h0" label="$h[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h1" label="$h[1] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h2" label="$h[2] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h3" label="$h[3] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Long division first">
+    Multiply out the denominator and divide as polynomials in $w = z^{-1}$, starting from the <b>highest</b> powers
+    (Lecture 10): numerator $=$ (quotient)$\times$(denominator) $+$ remainder, with the remainder of lower degree than
+    the denominator. The quotient gives the $C_k$; the remainder over the denominator is proper and gets the
+    partial fractions.
+  </pl-hint>
+  <pl-hint hint-name="From H(z) to h[n]" show-after-submission="1">
+    $C_k z^{-k} \leftrightarrow C_k\,\delta[n-k]$ and, since the system is causal,
+    $\dfrac{A_k}{1 - p_k z^{-1}} \leftrightarrow A_k\,p_k^n\,u[n]$. Check: $h[0]$ is the constant term of the numerator
+    (the denominator starts with $1$).
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a) Long division</b> by $D(z^{-1}) = {{params.D_line_tex}}$, in powers of $z^{-1}$, highest first:</p>
+  <ul>
+    {{#params.div_steps}}<li>${{tex}}$</li>{{/params.div_steps}}
+  </ul>
+  <p>Quotient ${{params.Q_tex}}$, remainder ${{params.R_tex}}$:
+    $$H(z) = {{params.split_tex}}.$$</p>
+  {{#params.two_poles}}
+  <p><b>(b) Cover-up</b> on the proper part (it gives the same $A_k$ on the original fraction, because the
+    polynomial part times $1 - p_k z^{-1}$ vanishes at $z = p_k$; what the division adds are the $\delta$ terms):
+    $$\begin{aligned} {{params.cover_tex}} \end{aligned}$$</p>
+  {{/params.two_poles}}
+  {{#params.one_pole}}
+  <p><b>(b)</b> With a single pole the remainder is the constant ${{params.R0_tex}}$, so the proper part
+    ${{params.R0_frac_tex}}$ is already a partial fraction: $A_1 = {{params.R0_tex}}$.</p>
+  {{/params.one_pole}}
+  <p>$$H(z) = {{params.full_tex}}.$$</p>
+  <p><b>(c)</b> Causal, so every fraction is right-sided:
+    $$h[n] = {{params.h_tex}}.$$</p>
+  {{{params.table_html}}}
+  <p>Check: ${{params.h0_check_tex}}$ (constant term of the numerator), and $h[n]$ satisfies the recursion read off
+    from $H(z)$.</p>
+  <p class="text-muted small">Modelled on Lecture 10, Exercise 1 (improper $H(z)$: long division in $z^{-1}$, then
+    partial fractions of the remainder), HW4 #1(b) (an improper transform), and Lecture 8 (cover-up rule).</p>
+</pl-answer-panel>

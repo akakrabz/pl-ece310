@@ -1,0 +1,8 @@
+{
+  "uuid": "6c6f9ebe-3e2f-487c-b820-057fe6b0fbca",
+  "title": "System properties: linear, time-invariant, causal, BIBO stable",
+  "topic": "System properties",
+  "tags": ["L3", "L4", "hw1", "hw2", "midterm1", "fam-properties", "MC", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

@@ -1,0 +1,102 @@
+{
+  "uuid": "267b88a1-fbc1-41c0-b60b-300a651d96db",
+  "type": "Homework",
+  "title": "Signals, systems and convolution (L1–L5)",
+  "set": "Practice",
+  "number": "1",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 1–5, Homework 1–2.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Signals",
+      "questions": [
+        {
+          "id": "signals/index-transformations",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "signals/complex-numbers",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "System properties",
+      "questions": [
+        {
+          "id": "systems/system-properties",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "systems/true-false",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Convolution",
+      "questions": [
+        {
+          "id": "convolution/finite-convolution",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "convolution/infinite-convolution",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "convolution/find-h-deconvolution",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "convolution/step-response",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "convolution/lti-superposition",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Difference equations",
+      "questions": [
+        {
+          "id": "lccde/recursion",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}
