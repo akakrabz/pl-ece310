@@ -1,0 +1,40 @@
+<pl-question-panel>
+  <p>
+    We are given the z-transform pair
+    $$x[n] \;\overset{\mathcal{Z}}{\longleftrightarrow}\; X(z) = {{params.X_tex}}, \qquad \text{ROC: } {{params.rocx_tex}}.$$
+    Using properties of the z-transform, find the z-transform $Y(z)$ and the ROC of
+    $$y[n] = {{params.y_tex}}.$$
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> $Y(z)$ as an expression in $z$ (for example <code>(1+2*z^(-1))/(1-(1/4)*z^(-2))</code>;
+  use fractions, not decimals):</p>
+<pl-symbolic-input answers-name="Y" variables="z" label="$Y(z) =$" size="50"></pl-symbolic-input>
+
+<p class="mt-3"><b>(b)</b> The ROC of $Y(z)$:</p>
+<pl-multiple-choice answers-name="roc" hide-letter-keys="true">
+  {{#params.roc_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.roc_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Which property?">
+    Lecture 7 table: $x[n-k] \leftrightarrow z^{-k}X(z)$; $\;n\,x[n] \leftrightarrow -z\,\frac{dX(z)}{dz}$;
+    $\;c^{n}x[n] \leftrightarrow X(z/c)$; $\;x[-n] \leftrightarrow X(z^{-1})$; $\;x_1[n]*x_2[n] \leftrightarrow X_1(z)X_2(z)$.
+  </pl-hint>
+  <pl-hint hint-name="Track the ROC" show-after-submission="1">
+    Shifts keep $R_x$ except possibly $z = 0$ or $z = \infty$ (where does the new signal start or end?);
+    scaling by $c^{n}$ multiplies the radius by $\lvert c\rvert$; reversal inverts the ROC ($\lvert z\rvert \gt r$ becomes
+    $\lvert z\rvert \lt 1/r$); $n\,x[n]$, convolution with itself and first differences keep $R_x$ here.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>{{params.prop}}</p>
+  <p>$$ {{params.steps_tex}} $$</p>
+  <p>ROC: {{params.note}}</p>
+  <p>$$Y(z) = {{params.Y_tex}}, \qquad \text{ROC: } {{params.roc_tex}}.$$</p>
+  <p>For reference, in the time domain: the given pair is $x[n] = {{params.x_tex}}$, so
+    $y[n] = {{params.y_time_tex}}$.</p>
+  <p class="text-muted small">Properties table of Lecture 7; modelled on HW3 #2 (properties applied to
+    $\frac{1}{1-\frac13 z^{-1}}$) and SP2021 #4 ($(n+1)x[n]$).</p>
+</pl-answer-panel>

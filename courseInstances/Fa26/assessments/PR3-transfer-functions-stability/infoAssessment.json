@@ -1,0 +1,80 @@
+{
+  "uuid": "c49aa73a-f108-4279-a4c3-c5840e2f11ef",
+  "type": "Homework",
+  "title": "Transfer functions, stability and causality (L9–L11)",
+  "set": "Practice",
+  "number": "3",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 9–11, Homework 4.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Transfer functions",
+      "questions": [
+        {
+          "id": "lccde/lccde-to-transfer-function",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "lccde/system-response",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "stability/series-parallel",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "BIBO stability and causality",
+      "questions": [
+        {
+          "id": "stability/stability-from-roc",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "stability/bibo-from-impulse-response",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "stability/unbounded-outputs",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "stability/parameters-for-stability",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "lccde/two-sided-recursion",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

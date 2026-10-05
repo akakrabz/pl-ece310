@@ -1,0 +1,15 @@
+{
+  "uuid": "6c005d7d-55df-4d9f-b418-c6f10d92e924",
+  "title": "Causality and BIBO stability from H(z) and its ROC",
+  "topic": "Stability and causality",
+  "tags": [
+    "L11",
+    "hw4",
+    "midterm1",
+    "fam-rocs",
+    "MC",
+    "easy"
+  ],
+  "type": "v3",
+  "singleVariant": false
+}

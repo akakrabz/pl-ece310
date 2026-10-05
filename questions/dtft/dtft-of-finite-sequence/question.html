@@ -1,0 +1,61 @@
+<pl-question-panel>
+  <p>
+    Consider the finite-length sequence
+    $$x[n] = {{params.x_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero).
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Compute the DTFT $X_d(\omega)$ from its definition. Type <code>w</code> for $\omega$ and
+  <code>j</code> for the imaginary unit; <code>exp(...)</code>, <code>e^(...)</code>, <code>cos</code> and <code>sin</code>
+  are all accepted, e.g. <code>1 + 2*exp(-j*w)</code> or <code>e^(-j*w)*(1 + 2*cos(w))</code>.</p>
+<pl-symbolic-input answers-name="X" variables="w" allow-complex="true" imaginary-unit-for-display="j"
+  label="$X_d(\omega) =$" size="50" display="block"></pl-symbolic-input>
+
+<p class="mt-3"><b>(b)</b> Evaluate the magnitude of the DTFT at $\omega = {{params.w0_tex}}$.
+  Enter exact values: fractions such as <code>12/7</code> are accepted; decimals need 4 significant digits.</p>
+<pl-number-input answers-name="mag" label="$\left|X_d\!\left({{params.w0_tex}}\right)\right| =$"
+  comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One term per sample">
+    $X_d(\omega) = \sum_n x[n]\,e^{-j\omega n}$: each nonzero sample $x[n]$ contributes $x[n]\,e^{-j\omega n}$,
+    with $n$ the true index (where the arrow is), not the position in the list. Mind the minus sign in the exponent.
+  </pl-hint>
+  <pl-hint hint-name="Symmetry and the magnitude" show-after-submission="1">
+    If the samples are symmetric (or antisymmetric) about some $n_c$, factor out $e^{-j\omega n_c}$ and pair the terms
+    with $e^{jk\omega} + e^{-jk\omega} = 2\cos k\omega$ (or $e^{jk\omega} - e^{-jk\omega} = 2j\sin k\omega$).
+    For the magnitude use $|e^{-j\theta}| = 1$, $e^{-j\pi n} = (-1)^n$ and $e^{-j\pi n/2} = (-j)^n$; a magnitude is never negative.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    Modelled on HW5 Problem 1(a) (Fall 2026) and the Lecture 14 examples $\{\underset{\uparrow}{1},\ 0,\ 0,\ -1\}$ and
+    $\{1,\ \underset{\uparrow}{2},\ 3\}$; DTFT definition from Lecture 13.
+  </p>
+  <p>
+    (a) One term per nonzero sample:
+    $$\begin{aligned} X_d(\omega) &amp;= \sum_n x[n]\,e^{-j\omega n} \\ &amp;= {{params.def_tex}} \\ &amp;= {{params.exp_tex}}. \end{aligned}$$
+  </p>
+  {{#params.closed}}
+  <p>
+    The samples are {{params.symmetry_word}} about $n_c = {{params.center_tex}}$: factor out $e^{-j\omega n_c}$ and pair
+    the terms around the centre using ${{params.euler_tex}}$:
+    $$\begin{aligned} X_d(\omega) &amp;= {{params.phase_nc_tex}}\left[{{params.group_tex}}\right] \\ &amp;= {{params.closed_tex}}. \end{aligned}$$
+    Both forms are accepted.
+  </p>
+  <p>
+    (b) Since $\left|e^{-j\omega n_c}\right| = 1$, only the bracket matters:
+    at $\omega = {{params.w0_tex}}$ it equals ${{params.amp_val_tex}}$, so
+    $\left|X_d\!\left({{params.w0_tex}}\right)\right| = \left|{{params.amp_val_tex}}\right| = {{params.mag_tex}}$.
+  </p>
+  {{/params.closed}}
+  {{^params.closed}}
+  <p>
+    (b) At $\omega = {{params.w0_tex}}$ each exponential is $e^{-j\omega n} = {{params.unit_tex}}$, so
+    $$X_d\!\left({{params.w0_tex}}\right) = {{params.terms_w0_tex}} = {{params.Xw0_tex}},$$
+    and $\left|X_d\!\left({{params.w0_tex}}\right)\right| = {{params.mag_work_tex}}$.
+  </p>
+  {{/params.closed}}
+</pl-answer-panel>

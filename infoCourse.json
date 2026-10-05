@@ -1,6 +1,6 @@
 {
-  "name": "ECE 329",
-  "title": "Fields and Waves I",
+  "name": "ECE 310",
+  "title": "Digital Signal Processing",
   "timezone": "America/Chicago",
   "assessmentSets": [
     {
@@ -8,95 +8,226 @@
       "name": "Practice",
       "heading": "Practice sets",
       "color": "green2"
+    },
+    {
+      "abbreviation": "ME",
+      "name": "Mock exam",
+      "heading": "Mock exams",
+      "color": "red2"
     }
   ],
   "topics": [
     {
-      "name": "Electrostatics",
-      "color": "blue3",
-      "description": "Coulomb, Gauss, potential, dielectrics, capacitance (Lectures 1-11)"
+      "name": "Signals",
+      "color": "blue1",
+      "description": "Discrete-time signals, index transformations, complex numbers, elementary signals (Lectures 1-2, HW1)"
     },
     {
-      "name": "Magnetostatics",
-      "color": "green3",
-      "description": "Biot-Savart, Ampere, Faraday, inductance (Lectures 12-15)"
-    },
-    {
-      "name": "Waves",
+      "name": "System properties",
       "color": "purple2",
-      "description": "Maxwell's equations, plane waves, reflection (Lectures 16-26)"
+      "description": "Linearity, time-invariance, causality, BIBO stability (Lecture 3, HW1-HW2)"
     },
     {
-      "name": "Transmission lines",
+      "name": "Convolution",
+      "color": "blue3",
+      "description": "Impulse response, convolution, LTI input-output relations (Lecture 4, HW2)"
+    },
+    {
+      "name": "Difference equations",
+      "color": "turquoise2",
+      "description": "LCCDEs, recursion, FIR/IIR, block diagrams (Lecture 5)"
+    },
+    {
+      "name": "z-transform",
+      "color": "green2",
+      "description": "z-transform, ROC, properties, inverse z-transform by partial fractions (Lectures 6-8, HW3-HW4)"
+    },
+    {
+      "name": "Transfer functions",
+      "color": "yellow2",
+      "description": "Transfer functions, LCCDE <-> H(z), system response, improper H, system algebra (Lectures 9-10, HW4)"
+    },
+    {
+      "name": "Stability and causality",
       "color": "orange2",
-      "description": "Bounce diagrams, input impedance, Smith chart (Lectures 27-38)"
+      "description": "BIBO stability and causality in the z-domain, unbounded outputs (Lecture 11, HW4)"
+    },
+    {
+      "name": "DTFT",
+      "color": "pink2",
+      "description": "Discrete-time Fourier transform and its properties (Lectures 13-14, HW5)"
     }
   ],
   "tags": [
     {
-      "name": "exam1",
-      "color": "red2",
-      "description": "In scope for Exam 1 (Lectures 1-10)"
+      "name": "L1",
+      "color": "gray1",
+      "description": "Lecture 1"
     },
     {
-      "name": "gauss",
-      "color": "blue1",
-      "description": "Uses Gauss's law"
+      "name": "L2",
+      "color": "gray1",
+      "description": "Lecture 2"
     },
     {
-      "name": "potential",
-      "color": "blue2",
-      "description": "Electrostatic potential"
+      "name": "L3",
+      "color": "gray1",
+      "description": "Lecture 3"
     },
     {
-      "name": "boundary-conditions",
-      "color": "turquoise2",
-      "description": "Interface conditions on E and D"
+      "name": "L4",
+      "color": "gray1",
+      "description": "Lecture 4"
     },
     {
-      "name": "capacitance",
-      "color": "yellow2",
-      "description": "Capacitance calculations"
+      "name": "L5",
+      "color": "gray1",
+      "description": "Lecture 5"
     },
     {
-      "name": "flux",
-      "color": "pink2",
-      "description": "Electric flux through surfaces"
+      "name": "L6",
+      "color": "gray1",
+      "description": "Lecture 6"
+    },
+    {
+      "name": "L7",
+      "color": "gray1",
+      "description": "Lecture 7"
+    },
+    {
+      "name": "L8",
+      "color": "gray1",
+      "description": "Lecture 8"
+    },
+    {
+      "name": "L9",
+      "color": "gray1",
+      "description": "Lecture 9"
+    },
+    {
+      "name": "L10",
+      "color": "gray1",
+      "description": "Lecture 10"
+    },
+    {
+      "name": "L11",
+      "color": "gray1",
+      "description": "Lecture 11"
+    },
+    {
+      "name": "L12",
+      "color": "gray1",
+      "description": "Lecture 12"
+    },
+    {
+      "name": "L13",
+      "color": "gray1",
+      "description": "Lecture 13"
+    },
+    {
+      "name": "L14",
+      "color": "gray1",
+      "description": "Lecture 14"
+    },
+    {
+      "name": "hw1",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 1"
+    },
+    {
+      "name": "hw2",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 2"
+    },
+    {
+      "name": "hw3",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 3"
     },
     {
       "name": "hw4",
-      "color": "red3",
-      "description": "Modelled on Fall 2026 Homework 4 (Lectures 8-10)"
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 4"
     },
     {
-      "name": "conductance",
-      "color": "yellow3",
-      "description": "Conductance, leakage current and RC relaxation"
+      "name": "hw5",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 5"
     },
     {
-      "name": "ampere",
-      "color": "green1",
-      "description": "Uses Ampere's law"
+      "name": "midterm1",
+      "color": "red2",
+      "description": "In scope for Midterm 1 (Lectures 1-11, HW1-HW4)"
     },
     {
-      "name": "faraday",
-      "color": "green2",
-      "description": "Faraday's law and Lenz's rule"
+      "name": "fam-tf",
+      "color": "brown1",
+      "description": "Exam problem family: True/False statements (7 of 7 past Midterm 1 exams)"
     },
     {
-      "name": "inductance",
-      "color": "green3",
-      "description": "Flux linkage, inductance, magnetic energy"
+      "name": "fam-properties",
+      "color": "brown1",
+      "description": "Exam problem family: Linear / time-invariant / causal / stable table (7 of 7)"
+    },
+    {
+      "name": "fam-conv-finite",
+      "color": "brown1",
+      "description": "Exam problem family: Finite-length convolution (7 of 7)"
+    },
+    {
+      "name": "fam-conv-infinite",
+      "color": "brown1",
+      "description": "Exam problem family: Infinite-length or mixed convolution (5 of 7)"
+    },
+    {
+      "name": "fam-find-h",
+      "color": "brown1",
+      "description": "Exam problem family: Finding h or H from input-output data (7 of 7)"
+    },
+    {
+      "name": "fam-ztransform",
+      "color": "brown1",
+      "description": "Exam problem family: z-transform with ROC (6 of 7)"
+    },
+    {
+      "name": "fam-rocs",
+      "color": "brown1",
+      "description": "Exam problem family: Inverse z-transform, partial fractions, all possible ROCs (7 of 7)"
+    },
+    {
+      "name": "fam-lccde",
+      "color": "brown1",
+      "description": "Exam problem family: LCCDE <-> H(z) <-> response (7 of 7)"
+    },
+    {
+      "name": "fam-unbounded",
+      "color": "brown1",
+      "description": "Exam problem family: Unbounded outputs, pole matching, cancellation (7 of 7)"
+    },
+    {
+      "name": "fam-stability-params",
+      "color": "brown1",
+      "description": "Exam problem family: Parameters for stability (3 of 7)"
+    },
+    {
+      "name": "fam-two-sided",
+      "color": "brown1",
+      "description": "Exam problem family: Two-sided systems as recursions (2 of 7)"
     },
     {
       "name": "numeric",
-      "color": "gray1",
-      "description": "Has numeric-input parts"
+      "color": "gray3",
+      "description": "Has pl-number-input parts"
+    },
+    {
+      "name": "integer",
+      "color": "gray3",
+      "description": "Has pl-integer-input parts"
     },
     {
       "name": "symbolic",
-      "color": "gray2",
-      "description": "Has symbolic-input parts"
+      "color": "gray3",
+      "description": "Has pl-symbolic-input parts"
     },
     {
       "name": "MC",
@@ -104,14 +235,29 @@
       "description": "Has multiple-choice parts"
     },
     {
-      "name": "calculate",
-      "color": "brown1",
-      "description": "Computation-focused"
+      "name": "checkbox",
+      "color": "gray3",
+      "description": "Has checkbox parts"
     },
     {
-      "name": "concept",
-      "color": "brown2",
-      "description": "Concept check"
+      "name": "matrix",
+      "color": "gray3",
+      "description": "Has pl-matrix-input parts"
+    },
+    {
+      "name": "easy",
+      "color": "green1",
+      "description": "Warm-up"
+    },
+    {
+      "name": "medium",
+      "color": "yellow1",
+      "description": "Exam level"
+    },
+    {
+      "name": "hard",
+      "color": "red1",
+      "description": "Harder than a typical exam part"
     }
   ]
 }

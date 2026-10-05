@@ -1,0 +1,8 @@
+{
+  "uuid": "7d9e104f-a51d-4e17-b6e8-dc36b7380c9b",
+  "title": "Find h[n] from one input-output pair (deconvolution)",
+  "topic": "Convolution",
+  "tags": ["L4", "hw2", "midterm1", "fam-find-h", "integer", "matrix", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

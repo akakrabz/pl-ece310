@@ -1,0 +1,8 @@
+{
+  "uuid": "14cbebbd-616a-4c7c-ac13-61ddaf1f72ed",
+  "title": "Step response and impulse response: running sum and first difference",
+  "topic": "Convolution",
+  "tags": ["L4", "hw2", "midterm1", "numeric", "symbolic", "matrix", "easy"],
+  "type": "v3",
+  "singleVariant": false
+}

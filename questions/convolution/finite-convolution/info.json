@@ -1,0 +1,8 @@
+{
+  "uuid": "b7c8c80e-4f11-4ac6-a167-e37c5fd09f9d",
+  "title": "Finite-length convolution with start indices",
+  "topic": "Convolution",
+  "tags": ["L4", "hw2", "midterm1", "fam-conv-finite", "matrix", "numeric", "easy"],
+  "type": "v3",
+  "singleVariant": false
+}

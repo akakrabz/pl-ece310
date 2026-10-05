@@ -1,0 +1,16 @@
+{
+  "uuid": "a3743e68-57cc-4d2e-9a60-9814103b4f54",
+  "title": "Inverse z-transform with complex-conjugate poles: damped sinusoid",
+  "topic": "z-transform",
+  "tags": [
+    "L8",
+    "hw3",
+    "midterm1",
+    "fam-rocs",
+    "numeric",
+    "symbolic",
+    "hard"
+  ],
+  "type": "v3",
+  "singleVariant": false
+}

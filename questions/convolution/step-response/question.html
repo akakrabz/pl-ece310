@@ -1,0 +1,92 @@
+<pl-question-panel>
+  {{#params.is_fir}}
+  <p>
+    An LTI system has the finite impulse response
+    $$h[n] = {{params.h_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero). Find its step response
+    $s[n] = h[n] * u[n]$, the output for the input $x[n] = u[n]$.
+  </p>
+  {{/params.is_fir}}
+  {{#params.is_exp}}
+  <p>
+    The step response of an LTI system (its output for the input $x[n] = u[n]$) is
+    $$s[n] = {{params.s_tex}}.$$
+    Find the impulse response $h[n]$.
+  </p>
+  {{/params.is_exp}}
+</pl-question-panel>
+
+{{#params.is_fir}}
+<p><b>(a)</b> The values $s[n]$ for $n = {{params.w_tex}}$, as a row vector
+  $\big[\,s[{{params.w0}}], \dots, s[{{params.w_last}}]\,\big]$ (for example <code>[0, 2, -1]</code>):</p>
+<pl-matrix-input answers-name="win" label="$s =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input>
+
+<p class="mt-3"><b>(b)</b> The steady-state value: $s[n]$ for every $n \ge {{params.n_last}}$:</p>
+<pl-number-input answers-name="steady" label="$s[n] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.is_fir}}
+
+{{#params.is_exp}}
+<p><b>(a)</b> The sample $h[0]$. Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need
+  4 significant digits.</p>
+<pl-number-input answers-name="h0" label="$h[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> A closed form of $h[n]$ valid for all $n \ge 1$, as a function of <code>n</code> without step
+  factors; use fractions, not decimals (syntax example: <code>(3/2)*(1/4)^n</code>):</p>
+<pl-symbolic-input answers-name="hn" variables="n" label="$h[n] =$" size="30"></pl-symbolic-input>
+{{/params.is_exp}}
+
+<pl-hidden-hints>
+  {{#params.is_fir}}
+  <pl-hint hint-name="Running sum">
+    $s[n] = \sum_k h[k]\,u[n-k] = \sum_{k \le n} h[k]$: the running sum of $h$. It is $0$ before the first sample of $h$.
+  </pl-hint>
+  <pl-hint hint-name="Steady state" show-after-submission="1">
+    After the last nonzero sample of $h$ nothing more is added, so $s[n]$ stays at $\sum_n h[n]$ (the DC gain $H(1)$).
+  </pl-hint>
+  {{/params.is_fir}}
+  {{#params.is_exp}}
+  <pl-hint hint-name="Difference the step response">
+    $\delta[n] = u[n] - u[n-1]$, so by linearity and time invariance $h[n] = s[n] - s[n-1]$.
+  </pl-hint>
+  <pl-hint hint-name="Treat n = 0 separately" show-after-submission="1">
+    At $n = 0$ the delayed term is $s[-1] = 0$ (because of the $u[n]$), so $h[0] = s[0]$. For $n \ge 1$ both terms use the
+    formula; the constant cancels and $a^n - a^{n-1} = a^{n-1}(a-1)$.
+  </pl-hint>
+  {{/params.is_exp}}
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.is_fir}}
+  <p>
+    $s[n] = h[n] * u[n] = \sum_k h[k]\,u[n-k]$: one shifted step per sample of $h$,
+    $$s[n] = {{params.steps_tex}},$$
+    i.e. the running sum $s[n] = \sum_{k \le n} h[k]$:
+  </p>
+  {{{params.table_html}}}
+  <p>
+    (a) $\big[\,s[{{params.w0}}], \dots, s[{{params.w_last}}]\,\big]$ is read off the table ($s = 0$ before $h$ starts).
+    (b) From $n = {{params.n_last}}$ on, nothing more is added: $s[n] = \sum_n h[n] = {{params.sum_tex}}$.
+  </p>
+  <p class="text-muted"><small>Modelled on FA2019 #3(b) (step response of a finite $h$ as a sum of shifted steps),
+    HW2 #3 and Lecture 4 (convolution with $u[n]$ is a running sum).</small></p>
+  {{/params.is_fir}}
+  {{#params.is_exp}}
+  <p>
+    Since $\delta[n] = u[n] - u[n-1]$, linearity and time invariance give $h[n] = s[n] - s[n-1]$.
+  </p>
+  <p>
+    <b>$n = 0$:</b> $s[-1] = 0$, so $h[0] = s[0] = {{params.s0_tex}} = {{params.h0_tex}}$.
+  </p>
+  <p>
+    <b>$n \ge 1$:</b> both $s[n]$ and $s[n-1]$ use the formula $s[n] = {{params.s_inner_tex}}$, and the constant cancels:
+    $$h[n] = {{params.diff_tex}} = {{params.fact_tex}} = {{params.hn_tex}},\qquad n \ge 1.$$
+  </p>
+  <p>
+    Altogether
+    $$h[n] = {{params.h_full_tex}}.$$
+    {{#params.has_delta}}(The formula for $n \ge 1$ does not hold at $n = 0$; the difference is the $\delta[n]$ term.){{/params.has_delta}}
+  </p>
+  <p class="text-muted"><small>Modelled on FA2023 #4 ($h[n] = s[n] - s[n-1]$ from a given step response) and HW2 #3
+    ($\delta[n] = u[n] - u[n-1]$); see also Lecture 4 &sect;2.2.3, where $u[n] * \left(-\tfrac34\right)^n u[n]$ is a step response.</small></p>
+  {{/params.is_exp}}
+</pl-answer-panel>

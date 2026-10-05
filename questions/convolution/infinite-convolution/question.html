@@ -1,0 +1,107 @@
+<pl-question-panel>
+  <p>
+    Compute the convolution $y[n] = x[n] * h[n]$ of
+    $$x[n] = {{params.x_tex}}, \qquad h[n] = {{params.h_tex}}.$$
+    {{#params.is_finite}}(In $x[n]$ the arrow marks the sample at $n = 0$; all samples not shown are zero.){{/params.is_finite}}
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The first index $n_0$ at which $y[n]$ is nonzero (so $y[n] = 0$ for every $n \lt n_0$):</p>
+<pl-integer-input answers-name="n0" label="$n_0 =$"></pl-integer-input>
+
+{{#params.is_exp}}
+<p class="mt-3"><b>(b)</b> A closed form of $y[n]$ that is valid for all $n \ge n_0$. Type it as a function of
+  <code>n</code> <i>without</i> the step factor $u[n - n_0]$, and use fractions, not decimals
+  (syntax example: <code>5*(1/4)^n - (3/2)*(-3)^(n-1)</code>).</p>
+{{/params.is_exp}}
+{{#params.is_finite}}
+<p class="mt-3"><b>(b)</b> From $n = n_0 + {{params.n_full_off}}$ on, every shifted copy of $h$ is present and $y[n]$ is a
+  single closed form. Enter that closed form, valid for all $n \ge n_0 + {{params.n_full_off}}$, as a function of
+  <code>n</code> without step factors, and use fractions, not decimals (syntax example: <code>(5/2)*(1/4)^n</code>).</p>
+{{/params.is_finite}}
+<pl-symbolic-input answers-name="yform" variables="n" label="$y[n] =$" size="40"></pl-symbolic-input>
+
+<p class="mt-3"><b>(c)</b> The value $y[n_0 + {{params.c_off}}]$. Enter exact values: fractions such as
+  <code>-7/3</code> are accepted; decimals need 4 significant digits.</p>
+<pl-number-input answers-name="yc" label="$y[n_0 + {{params.c_off}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  {{#params.is_exp}}
+  <pl-hint hint-name="Keep the steps in the sum">
+    Write $y[n] = \sum_k x[k]\,h[n-k]$ with both unit steps kept. A factor $u[k - a]$ means $k \ge a$, a factor
+    $u[n - k - b]$ means $k \le n - b$. The sum is empty (so $y[n] = 0$) unless the lower limit is at most the upper limit.
+  </pl-hint>
+  <pl-hint hint-name="Geometric sum" show-after-submission="1">
+    Pull every factor that depends only on $n$ out of the sum. Then
+    $\sum_{k=K_1}^{K_2} r^k = \dfrac{r^{K_1} - r^{K_2+1}}{1-r}$ for $r \ne 1$, and $\sum_{k=K_1}^{K_2} 1 = K_2 - K_1 + 1$.
+    Check your formula at $n = n_0$: it must give $y[n_0] = x[\text{first}]\,h[\text{first}]$.
+  </pl-hint>
+  {{/params.is_exp}}
+  {{#params.is_finite}}
+  <pl-hint hint-name="Write x as deltas">
+    $x[n] = \sum_m c_m\,\delta[n - m]$, so $y[n] = \sum_m c_m\,h[n - m]$: a sum of scaled, shifted copies of $h$.
+    Shift each copy <i>everywhere</i>, step included.
+  </pl-hint>
+  <pl-hint hint-name="Where each copy starts" show-after-submission="1">
+    The copy $c_m\,h[n-m]$ starts where its step switches on. Once $n$ is past the start of the last copy, all steps
+    equal 1 and the copies combine into one multiple of the same exponential.
+  </pl-hint>
+  {{/params.is_finite}}
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.is_ab}}
+  <p>
+    Convolution sum with the steps kept:
+    $$y[n] = {{params.sum_tex}}.$$
+    The steps restrict the sum to ${{params.range_tex}}$, which is non-empty only for $n \ge {{params.k1}} + ({{params.k2}})$.
+    Hence $y[n] = 0$ for $n \lt n_0$ and $\boxed{n_0 = {{params.n_first}}}$, with $y[n_0] = {{params.y0_tex}}$.
+  </p>
+  <p>
+    For $n \ge n_0$, pull out the factors that depend only on $n$ and sum the geometric series whose ratio is
+    (base of $x$)/(base of $h$) $= r = {{params.r_tex}}$:
+    $$y[n] = {{params.geo_tex}},$$
+    which simplifies to
+    $$\boxed{\,y[n] = {{params.y_tex}}\,}\qquad (n \ge {{params.n_first}}),$$
+    i.e. $y[n] = \big({{params.y_tex}}\big)\,u[n-n_0]$. Check at $n = n_0$: the formula gives the value $x[\text{first}]\,h[\text{first}]$ found above.
+  </p>
+  <p>(c) $y[n_0 + 2] = y[{{params.n_first}} + 2] = {{params.yc_tex}}$.</p>
+  <p class="text-muted"><small>Modelled on SP2025 #4(b) and SP2023 #3(b) (exponential times exponential with a shifted step),
+    HW2 #5(d) and Lecture 4 &sect;2.2.3 (convolution sum and geometric series).</small></p>
+  {{/params.is_ab}}
+
+  {{#params.is_aa}}
+  <p>
+    Both sequences use the same base, so the ratio inside the sum is $1$:
+    $$y[n] = {{params.sum_tex}}.$$
+    The steps restrict the sum to ${{params.range_tex}}$, non-empty only for $n \ge {{params.k1}} + ({{params.k2}})$, so
+    $\boxed{n_0 = {{params.n_first}}}$ and $y[n_0] = {{params.y0_tex}}$.
+  </p>
+  <p>
+    For $n \ge n_0$ every term of the sum is the same, $a^k a^{n-k} = a^n$, and we only count the terms:
+    $$y[n] = {{params.geo_tex}},$$
+    $$\boxed{\,y[n] = {{params.y_tex}}\,}\qquad (n \ge {{params.n_first}}).$$
+    (The formula $\frac{a^{n+1} - b^{n+1}}{a - b}$ cannot be used: its denominator is zero for $a = b$.)
+  </p>
+  <p>(c) $y[n_0 + 2]$ has $3$ terms: $y[{{params.n_first}} + 2] = {{params.yc_tex}}$.</p>
+  <p class="text-muted"><small>Modelled on the $a = b$ case of the infinite-length convolution family
+    ($a^n u[n] * a^n u[n] = (n+1)a^n u[n]$), with shifted steps as in SP2025 #4(b); method of HW2 #5(d) and Lecture 4 &sect;2.2.3.</small></p>
+  {{/params.is_aa}}
+
+  {{#params.is_finite}}
+  <p>
+    Write the finite sequence as deltas, $x[n] = {{params.xdelta_tex}}$. By linearity and time invariance
+    $$y[n] = {{params.hcopies_tex}} = {{params.copies_tex}}.$$
+    The first copy switches on at $n = {{params.nx}} + ({{params.k}})$, so $\boxed{n_0 = {{params.n_first}}}$ with
+    $y[n_0] = {{params.y0_tex}}$.
+  </p>
+  <p>
+    For ${{params.full_tex}}$ all steps equal $1$:
+    $$y[n] = {{params.factor_tex}} = {{params.y_tex}},$$
+    $$\boxed{\,y[n] = {{params.y_tex}}\,}\qquad ({{params.full_tex}}).$$
+  </p>
+  <p>(c) {{#params.n1_lt_full}}At $n = n_0 + 1$ the last copy has not started yet: {{/params.n1_lt_full}}$y[{{params.n_first}} + 1] = {{params.yc_tex}}$.</p>
+  <p class="text-muted"><small>Modelled on HW2 #5(b), FA2023 #3(b) and FA2024 #4(b) (finite sequence times exponential:
+    a sum of shifted copies) and Lecture 4 &sect;2.3.</small></p>
+  {{/params.is_finite}}
+</pl-answer-panel>

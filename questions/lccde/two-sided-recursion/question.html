@@ -1,0 +1,83 @@
+<pl-question-panel>
+  <p>
+    {{#params.given_H}}The transfer function of a <b>BIBO-stable</b> LTI system is
+    $$ H(z) = {{params.Hgiven_tex}} . $${{/params.given_H}}
+    {{#params.given_lccde}}A <b>BIBO-stable</b> LTI system (necessarily non-causal and two-sided) is described by the
+    difference equation
+    $$ {{params.eq_tex}} . $${{/params.given_lccde}}
+    It is implemented as $H(z) = H_1(z) + H_2(z)$, one first-order term per pole, so that
+    $Y(z) = H_1(z)X(z) + H_2(z)X(z)$: each term is computed by its own stable recursion and the two outputs are added.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> In which direction must each term be computed?</p>
+<pl-multiple-choice answers-name="dir" hide-letter-keys="true">
+  {{#params.dir_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.dir_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(b)</b> The output $y_a[n]$ of the anti-causal term is computed backward in time, starting from
+  rest after the input has ended, with a recursion of the form
+  $$ y_a[n-1] = \alpha\, y_a[n] + \beta\, x[n] . $$
+  Find $\alpha$ and $\beta$. Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need
+  4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="alpha" label="$\alpha =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="beta" label="$\beta =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> The input $x[n] = {{params.x_tex}}$ is applied to the stable system. Find these output samples
+  (exact values, as in (b)):</p>
+<div class="mb-1"><pl-number-input answers-name="ym1" label="$y[-1] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="y0" label="$y[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="y1" label="$y[1] =$" comparison="relabs" rtol="1e-3" atol="1e-6" size="10"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Split by pole">
+    Partial fractions give $H(z) = \dfrac{A_1}{1-p_1z^{-1}} + \dfrac{A_2}{1-p_2z^{-1}}$. A stable system has the ROC that
+    contains the unit circle; the pole inside it gives a right-sided (causal) term, the pole outside a left-sided
+    (anti-causal) term. Each term satisfies $y_k[n] - p_k\,y_k[n-1] = A_k\,x[n]$.
+  </pl-hint>
+  <pl-hint hint-name="Which way to solve" show-after-submission="1">
+    The causal term is solved for the newest sample and run forward from rest before the input starts. The
+    anti-causal term is solved for the <em>oldest</em> sample, $y_a[n-1]$, and run backward from rest after the input
+    has ended; divide the <em>whole</em> equation by $-p$. Then add the two outputs sample by sample.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    {{#params.given_lccde}}Transforming the difference equation gives $H(z) = {{params.H_tex}}$, with poles at
+    $z = {{params.pole1_tex}}$ and $z = {{params.pole2_tex}}$.{{/params.given_lccde}}
+    {{#params.given_H}}The poles are $z = {{params.pole1_tex}}$ and $z = {{params.pole2_tex}}$.{{/params.given_H}}
+    Cover-up:
+    $$ {{params.cover_tex}} $$
+    $$ H(z) = {{params.pfe_tex}} . $$
+    <b>(a)</b> BIBO stable means the ROC contains the unit circle, so ROC $= {{params.roc_tex}}$ (Lecture 11). The pole
+    $z = {{params.pin_tex}}$ lies inside the ROC's inner edge: its term is right-sided, i.e. causal, computed
+    <b>forward</b> in time. The pole $z = {{params.pout_tex}}$ lies outside the outer edge: its term is left-sided, i.e.
+    anti-causal, computed <b>backward</b> in time:
+    $$ h[n] = {{params.h_tex}} . $$
+    Running both terms forward would give the causal, unstable system (ROC outside both poles); the stable
+    system needs one recursion in each direction, and the outputs add because the two terms are in parallel (Lecture 10).
+  </p>
+  <p>
+    <b>(b)</b> The anti-causal term satisfies $ {{params.aout_eq_tex}} $. Solving for the oldest sample (divide the whole
+    equation by $-p_{\text{out}} = {{params.mpout_tex}}$):
+    $$ {{params.bwd_eq_tex}}, \qquad \alpha = \frac{1}{p_{\text{out}}} = {{params.alpha_tex}},\quad
+       \beta = {{params.beta_expr_tex}} = {{params.beta_tex}} . $$
+    Its feedback gain $\lvert\alpha\rvert \lt 1$ in the direction it runs, so it is stable. The causal term runs forward:
+    $ {{params.fwd_eq_tex}} $.
+  </p>
+  <p>
+    <b>(c)</b> Forward from rest ($y_c[n] = 0$ for $n \lt 0$) and backward from rest ($y_a[n] = 0$ for $n \ge 1$, since
+    $x[n] = 0$ for $n \ge 2$):
+    $$ {{params.run_tex}} $$
+    Adding the two outputs:
+    $$ {{params.sum_tex}} $$
+    Check by convolution: ${{params.check_tex}}$.
+  </p>
+  <p class="small text-muted">
+    Modelled on past exam FA2025 #7(b) (stable difference equations for $H_1$ and $H_2$ with their directions of recursive
+    computation; the key's backward recursion has exactly this form), FA2024 #8(a) and FA2023 #8(b) (non-causal and
+    two-sided difference equations), Lecture 11 ($h = h_l + h_r$), Lecture 10 (parallel connection) and Lecture 8
+    (inverse $z$-transform for an annulus ROC).
+  </p>
+</pl-answer-panel>

@@ -1,0 +1,107 @@
+<pl-question-panel>
+  {{#params.is_polar}}
+  <p>
+    Let
+    $$w = {{params.w_tex}}.$$
+    Find the magnitude $|w|$ and the <b>principal</b> angle $\angle w \in (-\pi, \pi]$.
+  </p>
+  {{/params.is_polar}}
+  {{#params.is_roots}}
+  <p>
+    Consider the ${{params.N}}$ solutions of
+    $$z^{ {{params.N}} } = {{params.c_tex}}.$$
+    They all have the same magnitude. Find that common magnitude, and the <b>principal</b> angle
+    (in $(-\pi, \pi]$) of {{{params.sel_html}}}.
+  </p>
+  {{/params.is_roots}}
+  {{#params.is_sum}}
+  <p>
+    Let
+    $$w = {{params.w_tex}}.$$
+    Find the real and imaginary parts of $w$.
+  </p>
+  {{/params.is_sum}}
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits
+    (for example <code>1.414</code> for $\sqrt{2}$).
+    {{^params.is_sum}}Enter angles as a multiple of $\pi$: for $\angle = \tfrac{3\pi}{4}$ type <code>3/4</code>.{{/params.is_sum}}</small></p>
+</pl-question-panel>
+
+{{#params.is_polar}}
+<pl-number-input answers-name="mag" label="$|w| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+<p class="mt-3">Principal angle of $w$, as a multiple of $\pi$:</p>
+<pl-number-input answers-name="ang" label="$\angle w =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.is_polar}}
+{{#params.is_roots}}
+<pl-number-input answers-name="mag" label="$|z| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+<p class="mt-3">Principal angle of the requested root, as a multiple of $\pi$:</p>
+<pl-number-input answers-name="ang" label="$\angle z =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.is_roots}}
+{{#params.is_sum}}
+<div class="mb-1"><pl-number-input answers-name="re" label="$\mathrm{Re}\{w\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="im" label="$\mathrm{Im}\{w\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+{{/params.is_sum}}
+
+<pl-hidden-hints>
+  {{#params.is_polar}}
+  <pl-hint hint-name="Go polar">
+    Write every factor as $R\,e^{j\theta}$. Magnitudes multiply (divide), angles add (subtract); a power
+    $k$ multiplies the angle by $k$.
+  </pl-hint>
+  <pl-hint hint-name="Principal value" show-after-submission="1">
+    Add or subtract $2\pi$ until the angle lies in $(-\pi, \pi]$, then divide by $\pi$.
+  </pl-hint>
+  {{/params.is_polar}}
+  {{#params.is_roots}}
+  <pl-hint hint-name="Write the right side with all its angles">
+    $c = R\,e^{j(\theta + 2\pi k)}$ for every integer $k$ (HW1 #4 hint). Take the ${{params.N}}$-th root of
+    the magnitude and divide the angle by ${{params.N}}$.
+  </pl-hint>
+  <pl-hint hint-name="List them" show-after-submission="1">
+    $k = 0, 1, \dots, {{params.N}} - 1$ give the distinct roots, spaced $2\pi/{{params.N}}$ apart. Reduce each angle
+    to $(-\pi, \pi]$ before picking the requested one.
+  </pl-hint>
+  {{/params.is_roots}}
+  {{#params.is_sum}}
+  <pl-hint hint-name="Euler's formula">
+    $A e^{j\theta} = A\cos\theta + jA\sin\theta$. Convert each term, then add real parts and imaginary parts separately.
+  </pl-hint>
+  <pl-hint hint-name="Watch the signs" show-after-submission="1">
+    $e^{-j\theta} = \cos\theta - j\sin\theta$: a negative angle flips the sign of the imaginary part only.
+  </pl-hint>
+  {{/params.is_sum}}
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.is_polar}}
+  <p>Polar form of each factor: $${{params.factors_tex}}.$$</p>
+  <p>Magnitude: $|w| = {{params.mag_steps_tex}} = {{params.mag_tex}}{{#params.mag_irr}} \approx {{params.mag_dec}}{{/params.mag_irr}}$.</p>
+  <p>
+    Angle: ${{params.ang_steps_tex}} = {{params.raw_ang_tex}}$.
+    {{#params.needs_reduction}}This is outside $(-\pi, \pi]$; adding a multiple of $2\pi$ gives the principal value{{/params.needs_reduction}}
+    {{^params.needs_reduction}}This already lies in $(-\pi, \pi]$, so{{/params.needs_reduction}}
+    $\angle w = {{params.ang_tex}}$, i.e. ${{params.ang_frac}}\cdot\pi$.
+  </p>
+  <p>$$w = {{params.mag_tex}}\;e^{j\left({{params.ang_tex}}\right)}.$$</p>
+  {{/params.is_polar}}
+  {{#params.is_roots}}
+  <p>
+    Write the right side with all its angles: ${{params.c_chain_tex}} = {{params.R_pre}}e^{j\left({{params.th_tex}} + 2\pi k\right)}$, $k \in \mathbb{Z}$.
+    Then
+    $$z = {{params.rho_pre}}e^{\,j{{params.gen_angle_tex}}},\qquad k = {{params.k_list_tex}},$$
+    so every root has magnitude ${{params.rho_tex}}{{#params.rho_irr}} \approx {{params.mag_dec}}{{/params.rho_irr}}$.
+  </p>
+  <p>
+    Reduced to $(-\pi, \pi]$, the ${{params.N}}$ angles are $${{params.roots_tex}}.$$
+    The requested one ({{{params.sel_html}}}) is ${{params.ang_tex}}$, i.e. ${{params.ang_frac}}\cdot\pi$.
+  </p>
+  {{/params.is_roots}}
+  {{#params.is_sum}}
+  <p>Euler's formula on each term:</p>
+  <p>$${{params.euler1_tex}},$$ $${{params.euler2_tex}}.$$</p>
+  <p>
+    Adding: $\mathrm{Re}\{w\} = {{params.re_tex}}{{#params.re_irr}} \approx {{params.re_dec}}{{/params.re_irr}}$ and
+    $\mathrm{Im}\{w\} = {{params.im_tex}}{{#params.im_irr}} \approx {{params.im_dec}}{{/params.im_irr}}$.
+  </p>
+  {{/params.is_sum}}
+  <p class="text-muted"><small>Modelled on Lecture 2 (polar form, principal angle) and HW1 #4 (the roots of $z^4 - 1 = 0$ and $z^4 + 1 = 0$).</small></p>
+</pl-answer-panel>

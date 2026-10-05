@@ -1,0 +1,57 @@
+<pl-question-panel>
+  <p>
+    An LTI system has the transfer function
+    $$H(z) = {{params.H_tex}}, \qquad \text{ROC: } {{params.roc_tex}}.$$
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Is this system causal?</p>
+<pl-multiple-choice answers-name="causal" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.causal_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.causal_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(b)</b> Is this system BIBO stable?</p>
+<pl-multiple-choice answers-name="stable" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.stable_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.stable_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(c)</b> Keep the same $H(z)$ but choose the ROC. Which ROC gives a BIBO stable system?</p>
+<pl-multiple-choice answers-name="roc" order="fixed" hide-letter-keys="true">
+  {{#params.roc_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.roc_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Read the ROC shape">
+    Causal (for $H(z)$ written in powers of $z^{-1}$, numerator degree no larger than the denominator's)
+    $\iff$ the ROC is the outside of the outermost pole circle, $\lvert z\rvert \gt \lvert p_{\max}\rvert$.
+    BIBO stable $\iff$ the ROC contains the unit circle $\lvert z\rvert = 1$. Zeros play no role in either.
+  </pl-hint>
+  <pl-hint hint-name="Draw the pole circles" show-after-submission="1">
+    Factor the denominator and list the distinct pole magnitudes. Every possible ROC is a disc, an annulus or an
+    exterior bounded by consecutive pole circles; see which of these rings the radius $1$ falls into.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    {{#params.pair}}The quadratic factor splits as ${{params.pair_tex}}$. {{/params.pair}}
+    The poles are $z = {{params.pole_list_tex}}$, so the distinct pole magnitudes are ${{params.mags_tex}}$ and
+    there are ${{params.nrocs}}$ possible ROCs.{{#params.has_zero}} The zero at $z = {{params.zero_tex}}$ does not
+    bound any ROC and does not affect stability.{{/params.has_zero}}
+  </p>
+  {{{params.table_html}}}
+  <p>
+    <b>(a)</b> The given ROC ${{params.roc_tex}}$ makes $h[n]$ {{params.given_kind}}: the system {{params.causal_word}}
+    causal (causal $\iff$ ROC $= \lvert z\rvert \gt \lvert p_{\max}\rvert$, including $z = \infty$).
+  </p>
+  <p>
+    <b>(b)</b> The given ROC {{params.stable_word}} the unit circle, so the system is
+    {{params.stable_not}}BIBO stable.
+  </p>
+  <p>
+    <b>(c)</b> The only ROC that contains $\lvert z\rvert = 1$ is ${{params.stable_roc_tex}}$. With that ROC
+    $\sum_n \lvert h[n]\rvert \lt \infty$ (Lecture 11: BIBO stable $\iff$ the ROC contains the unit circle).
+  </p>
+  <p class="text-muted small">Modelled on Lecture 11 (Table 1, slide 10), HW4 #3 and the stability
+    True/False statements FA2023 #1(f), FA2024 #1(f), SP2025 #1(e), FA2025 #1(c).</p>
+</pl-answer-panel>

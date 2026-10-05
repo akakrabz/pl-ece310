@@ -1,0 +1,172 @@
+{
+  "uuid": "9402c929-2a26-4206-a27f-f39d8ceacba8",
+  "type": "Exam",
+  "title": "Mock Midterm 1",
+  "set": "Mock exam",
+  "number": "1",
+  "multipleInstance": true,
+  "text": "<p>Ten problems in the shape of a past ECE 310 Midterm 1 (Lectures 1–11, Homework 1–4), with fresh random numbers every time you start a new instance. 2 hours. Each problem has three attempts worth 10, 7 and 4 points. Work on paper first, as on the real exam; the worked solutions are visible once you finish.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        },
+        "durationMinutes": 120
+      },
+      "afterComplete": {
+        "questions": {
+          "hidden": false
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Concepts",
+      "questions": [
+        {
+          "id": "systems/true-false",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "systems/system-properties",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Convolution",
+      "questions": [
+        {
+          "id": "convolution/finite-convolution",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "convolution/infinite-convolution"
+            },
+            {
+              "id": "convolution/lti-superposition"
+            }
+          ]
+        },
+        {
+          "id": "convolution/find-h-deconvolution",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "z-transform",
+      "questions": [
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "ztransform/z-transform-pair"
+            },
+            {
+              "id": "ztransform/roc-of-signal"
+            }
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "ztransform/inverse-pfe"
+            },
+            {
+              "id": "ztransform/all-possible-rocs"
+            },
+            {
+              "id": "lccde/two-sided-recursion"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Transfer functions and stability",
+      "questions": [
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "lccde/lccde-to-transfer-function"
+            },
+            {
+              "id": "lccde/system-response"
+            }
+          ]
+        },
+        {
+          "id": "stability/unbounded-outputs",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "stability/parameters-for-stability"
+            },
+            {
+              "id": "stability/stability-from-roc"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

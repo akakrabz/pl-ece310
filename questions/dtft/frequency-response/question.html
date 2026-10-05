@@ -1,0 +1,62 @@
+<pl-question-panel>
+  <p>
+    A causal LTI system is described by the difference equation
+    $$ {{params.lccde_tex}}. $$
+    The system is BIBO stable, so its frequency response $H_d(\omega)$ exists.
+  </p>
+</pl-question-panel>
+
+<p class="text-muted small">Enter exact values: fractions such as <code>12/7</code> are accepted; decimals need 4 significant digits.</p>
+
+<p><b>(a)</b> The gain at $\omega = 0$:</p>
+<pl-number-input answers-name="H0" label="$\left|H_d(0)\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> The gain at $\omega = \pi$:</p>
+<pl-number-input answers-name="Hpi" label="$\left|H_d(\pi)\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> The input $x[n] = {{params.x_tex}}$ is applied for all $n$ ($-\infty \lt n \lt \infty$).
+  The output has the form $y[n] = B\cos\!\left(\tfrac{\pi}{2}n + \phi\right)$ with $B \ge 0$. Find $B$:</p>
+<pl-number-input answers-name="B" label="$B =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(d)</b> Over $0 \le \omega \le \pi$, this system is best described as a filter of type:</p>
+<pl-multiple-choice answers-name="type" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.type_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.type_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Evaluate on the unit circle">
+    $H_d(\omega) = H(z)\big|_{z = e^{j\omega}}$. The points $\omega = 0,\ \tfrac{\pi}{2},\ \pi$ are $z = 1,\ j,\ -1$,
+    where $e^{-jk\omega}$ equals $1$, $(-j)^k$ and $(-1)^k$. For a ratio, $|N/D| = |N|/|D|$.
+  </pl-hint>
+  <pl-hint hint-name="Sinusoids in, sinusoids out" show-after-submission="1">
+    For a real impulse response, $\cos(\omega_0 n + \theta) \mapsto |H_d(\omega_0)|\cos\big(\omega_0 n + \theta + \angle H_d(\omega_0)\big)$:
+    the amplitude is scaled by the gain at $\omega_0$. The three gains at $0$, $\tfrac{\pi}{2}$, $\pi$ also tell you
+    where the filter passes and where it attenuates.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    Modelled on Lecture 14 ($H_d(\omega) = H(z)$ on the unit circle, which exists because the system is stable) and the
+    sinusoidal response of an LTI system (course summary; eigenfunctions, Lecture 6); evaluating a transform on the unit
+    circle is the method of HW5 Problem 1(d).
+  </p>
+  <p>
+    From the difference equation, $H(z) = {{params.Hz_tex}}$, so
+    $$H_d(\omega) = {{params.H_tex}}.$$
+  </p>
+  <ul>
+    <li>(a) $\omega = 0$: ${{params.at0_tex}}$, so $|H_d(0)| = {{params.m0_tex}}$.</li>
+    <li>(b) $\omega = \pi$: ${{params.atpi_tex}}$, so $|H_d(\pi)| = {{params.mpi_tex}}$.</li>
+    <li>$\omega = \tfrac{\pi}{2}$: ${{params.at2_tex}}$, so $|H_d(\tfrac{\pi}{2})| = {{params.m2_tex}}$.</li>
+  </ul>
+  <p>
+    (c) $\cos(\tfrac{\pi}{2}n + \theta)$ is an eigenfunction pair at $\pm\tfrac{\pi}{2}$, so the amplitude is multiplied by the gain there:
+    $B = {{params.A}}\cdot\left|H_d(\tfrac{\pi}{2})\right| = {{params.A}}\cdot {{params.m2_tex}} = {{params.B_tex}}$
+    (the phase $\theta$ does not matter).
+  </p>
+  <p>
+    (d) The gains at $\omega = 0,\ \tfrac{\pi}{2},\ \pi$ are ${{params.m0_tex}},\ {{params.m2_tex}},\ {{params.mpi_tex}}$, and
+    {{{params.why_html}}}. Hence the filter is <b>{{params.kind}}</b>.
+  </p>
+</pl-answer-panel>

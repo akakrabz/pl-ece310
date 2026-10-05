@@ -1,0 +1,57 @@
+<pl-question-panel>
+  <p>
+    Let $x[n]$ be the finite-length sequence
+    $$x[n] = {{params.x_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero). Consider
+    $$y[n] = x[{{params.arg_tex}}].$$
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The index of the first nonzero sample of $y[n]$:</p>
+<pl-integer-input answers-name="ny" label="$n_{\text{first}} =$"></pl-integer-input>
+
+<p class="mt-3"><b>(b)</b> The samples of $y[n]$ from its first to its last nonzero sample, as a row vector
+  (for example <code>[1, -2, 0, 5]</code>):</p>
+<pl-matrix-input answers-name="y" label="$y =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Substitute, don't guess">
+    Make a table: for each $n$ compute the argument $m = {{params.arg_tex}}$ and read $y[n] = x[m]$ from the
+    list ($0$ outside it). $y[n]$ can only be nonzero where ${{params.nx}} \le m \le {{params.nx_last}}$.
+  </pl-hint>
+  <pl-hint hint-name="Order of operations" show-after-submission="1">
+    Shift first, then act on the <em>current</em> $n$: with $w[n] = {{params.w_tex}}$ you get
+    $y[n] = {{params.scale_tex}}$. Doing it the other way round gives a different sequence.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    Substitute, don't guess. $x$ is nonzero only for ${{params.nx}} \le m \le {{params.nx_last}}$, so with
+    $m = {{params.arg_tex}}$:
+    $${{params.support_tex}}.$$
+    Table of $m$ and $y[n] = x[m]$ over that range:
+  </p>
+  {{{params.table_html}}}
+  {{#params.decimate}}
+  <p>
+    Because the argument jumps by $2$, only the samples of $x$ with {{params.parity}} index are used; the nonzero
+    samples ${{params.dropped_tex}}$ are dropped for good.
+  </p>
+  {{/params.decimate}}
+  {{#params.trimmed}}
+  <p>Dropping the zero samples at the ends of this range:</p>
+  {{/params.trimmed}}
+  <p>
+    $$y[n] = {{params.y_tex}},$$
+    so the first nonzero sample is at $n = {{correct_answers.ny}}$ and the last at $n = {{params.ny_last}}$.
+  </p>
+  <p>
+    Two-step check: first {{params.shift_words}}, $w[n] = {{params.w_tex}}$; then {{params.scale_words}}:
+    $y[n] = {{params.scale_tex}} = x[{{params.arg_tex}}]$.
+    {{#params.show_wrong_order}}
+    (Reversing or decimating first and only then shifting would give ${{params.wrong_order_tex}}$, a different signal.)
+    {{/params.show_wrong_order}}
+  </p>
+  <p class="text-muted"><small>Modelled on HW1 #2 ($x[-n+3]$ and $x[2n+1]$ of an 8-sample sequence), Lecture 1.</small></p>
+</pl-answer-panel>

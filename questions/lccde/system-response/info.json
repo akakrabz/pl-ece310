@@ -1,0 +1,8 @@
+{
+  "uuid": "4c3f6ef7-f838-4681-aff7-a3fd5049d73d",
+  "title": "Response of a causal LTI system to an exponential input",
+  "topic": "Transfer functions",
+  "tags": ["L9", "L10", "hw4", "midterm1", "fam-lccde", "symbolic", "numeric", "hard"],
+  "type": "v3",
+  "singleVariant": false
+}

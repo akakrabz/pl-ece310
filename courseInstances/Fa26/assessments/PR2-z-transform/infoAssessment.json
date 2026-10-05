@@ -1,0 +1,74 @@
+{
+  "uuid": "8a76cc50-eecf-4d19-b73f-5bf6831e5e1c",
+  "type": "Homework",
+  "title": "z-transform and inverse z-transform (L6–L8)",
+  "set": "Practice",
+  "number": "2",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 6–8, Homework 3 (and the inverse-transform parts of Homework 4).</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "z-transform and ROC",
+      "questions": [
+        {
+          "id": "ztransform/z-transform-pair",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "ztransform/roc-of-signal",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "ztransform/z-transform-properties",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Inverse z-transform",
+      "questions": [
+        {
+          "id": "ztransform/inverse-pfe",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "ztransform/all-possible-rocs",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "ztransform/improper-long-division",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "ztransform/complex-poles",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+<pl-question-panel>
+  <p>
+    An LTI system has the transfer function
+    $$H(z) = {{params.H_tex}},$$
+    but its region of convergence is not given.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> How many different ROCs are possible for this $H(z)$, i.e. how many different impulse responses
+  $h[n]$ does this formula describe?</p>
+<pl-integer-input answers-name="nroc" label="$\text{number of ROCs} =$"></pl-integer-input>
+
+<p class="mt-3"><b>(b)</b> Which ROC makes the system BIBO stable?</p>
+<pl-multiple-choice answers-name="stab" order="fixed" hide-letter-keys="true">
+  {{#params.stab_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.stab_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(c)</b> Now take the ROC $\,{{params.spec_tex}}$. Find these samples of the corresponding impulse
+  response. Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="hm2" label="$h[-2] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h0" label="$h[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="h2" label="$h[2] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Clean up first">
+    A factor that appears in both numerator and denominator cancels, and a cancelled pole does not bound an ROC.
+    Test each denominator factor $1 - p z^{-1}$: does the numerator vanish at $z^{-1} = 1/p$? Then the ROCs are the
+    regions between consecutive distinct pole magnitudes: $k$ magnitudes give $k + 1$ ROCs.
+  </pl-hint>
+  <pl-hint hint-name="Partial fractions and sides" show-after-submission="1">
+    Cover-up: $A_k = \big[(1 - p_k z^{-1})H(z)\big]_{z = p_k}$. In a given ROC, a pole inside the inner circle gives
+    $A_k\,p_k^n u[n]$ (only $n \ge 0$) and a pole outside the outer circle gives $-A_k\,p_k^n u[-n-1]$ (only $n \le -1$).
+    BIBO stable $\Leftrightarrow$ the ROC contains $\lvert z\rvert = 1$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.cancel}}
+  <p><b>Cancellation.</b> The numerator vanishes at $z^{-1} = {{params.cinv_tex}}$, i.e. it contains the factor
+    ${{params.cfac_tex}}$: ${{params.shown_tex}} = {{params.cfac_tex}}\left({{params.red_num_tex}}\right)$. That factor
+    cancels, so $z = {{params.c_tex}}$ is <b>not</b> a pole. A ring bounded by $\lvert z\rvert = {{params.cmag_tex}}$
+    is therefore never an ROC, even one that contains $\lvert z\rvert = 1$: after the cancellation $H(z)$ converges
+    right across that circle, and an ROC is always the <i>whole</i> region of convergence (bounded by true poles
+    only), not a piece of it:</p>
+  {{/params.cancel}}
+  {{#params.nocancel}}
+  <p><b>Cancellation?</b> The numerator does not vanish at $z^{-1} = 1/p$ for any of the poles, so nothing cancels:</p>
+  {{/params.nocancel}}
+  <p>$$H(z) = {{params.Hred_tex}}.$$</p>
+  <p><b>(a)</b> Poles ${{params.poles_list_tex}}$ with distinct magnitudes ${{params.mags_tex}}$: ${{params.m}}$ circles split the
+    plane into <b>${{params.nroc}}$ possible ROCs</b> (not ${{params.two_m_tex}}$: a left-sided term needs $\lvert z\rvert \lt \lvert p\rvert$ and a right-sided
+    term needs $\lvert z\rvert \gt \lvert p\rvert$, so every right-sided pole must be smaller in magnitude than every
+    left-sided one: only ${{params.nroc}}$ choices):</p>
+  <ul>
+    {{#params.rocs_tex}}<li>${{tex}}${{#stable}} &larr; contains $\lvert z\rvert = 1${{/stable}}</li>{{/params.rocs_tex}}
+  </ul>
+  <p><b>(b)</b> BIBO stable $\Leftrightarrow$ the ROC contains the unit circle: ${{params.stable_tex}}$.</p>
+  <p><b>(c)</b> Partial fractions by cover-up, with ${{params.poles_named_tex}}$:
+    $$\begin{aligned} {{params.cover_tex}} \end{aligned}$$
+    so $H(z) = {{params.pfe_tex}}$. For the ROC ${{params.spec_tex}}$:</p>
+  <ul>
+    {{#params.side_lines}}<li>{{{line_html}}}</li>{{/params.side_lines}}
+  </ul>
+  <p>$$h[n] = {{params.h_tex}}.$$
+    Only the right-sided terms contribute for $n \ge 0$ and only the left-sided ones for $n \le -1$:
+    $$\begin{aligned} &{{params.hm2_tex}}\\ &{{params.h0_tex}}\\ &{{params.h2_tex}} \end{aligned}$$</p>
+  <p class="text-muted small">Modelled on the "all possible ROCs" exam family (FA2023 Midterm 1 #6(a), FA2019 #7,
+    SP2025 #8(b)&ndash;(c)), HW4 #1 (all possible ROCs; #1(b) has a cancelled pole), HW3 #3(c) (two-sided $h$ for a
+    given ring), Lecture 8 (partial fractions) and Lecture 11 (ROC and stability).</p>
+</pl-answer-panel>

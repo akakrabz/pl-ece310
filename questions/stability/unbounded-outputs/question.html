@@ -1,0 +1,36 @@
+<pl-question-panel>
+  <p>
+    A <b>causal</b> LTI system has the transfer function
+    $$H(z) = {{params.H_tex}}.$$
+    Each signal below is a bounded input. Select <b>every</b> input for which the output $y[n]$ is
+    <b>unbounded</b>.
+  </p>
+</pl-question-panel>
+
+<pl-checkbox answers-name="unb" partial-credit="net-correct">
+  {{#params.x_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.x_choices}}
+</pl-checkbox>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Pole bookkeeping">
+    $Y(z) = H(z)X(z)$. Cancel common factors first. Then $y[n]$ is unbounded exactly when $Y(z)$ has a pole outside the
+    unit circle or a <i>repeated</i> pole on it. A simple pole on $\lvert z\rvert = 1$ only gives a bounded oscillation.
+  </pl-hint>
+  <pl-hint hint-name="Poles of the inputs" show-after-submission="1">
+    $e^{j\omega_0 n}u[n]$ has one pole, at $e^{j\omega_0}$; $\cos(\omega_0 n)u[n]$ and $\sin(\omega_0 n)u[n]$ have two,
+    at $e^{\pm j\omega_0}$; $a^n u[n]$ has a pole at $a$; $\delta[n-k]$ has none. Compare angles exactly: $\tfrac{2}{3}$ rad is not
+    $\tfrac{2\pi}{3}$, and a conjugate $e^{-j\omega_0}$ is a different point from $e^{j\omega_0}$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    The poles of $H$ are {{{params.pole_desc_html}}}.{{{params.cancel_html}}} The system is causal, so its ROC is
+    $\lvert z\rvert \gt 1$: it does not contain the unit circle, the system is <b>marginally stable</b> (not BIBO stable),
+    and $h[n]$ is bounded but not absolutely summable. An input gives an unbounded output only if it <b>resonates</b>: one of
+    its poles lands exactly on a surviving pole of $H$ on the unit circle, creating a double pole there.
+  </p>
+  {{{params.table_html}}}
+  <p class="text-muted small">Modelled on Lecture 11 (marginal stability, slide 18), HW4 #3(c),(d), SP2025 #6,
+    FA2025 #8(b) (the $e^{j2/3}$ trap) and SP2021 #5(b).</p>
+</pl-answer-panel>
