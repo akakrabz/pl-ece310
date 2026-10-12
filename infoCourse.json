@@ -55,7 +55,22 @@
     {
       "name": "DTFT",
       "color": "pink2",
-      "description": "Discrete-time Fourier transform and its properties (Lectures 13-14, HW5)"
+      "description": "Periodicity, the discrete-time Fourier transform and its properties, inverse DTFTs of ideal spectra (Lectures 13-14, HW5-HW6)"
+    },
+    {
+      "name": "Frequency response",
+      "color": "purple3",
+      "description": "Frequency response, response to sinusoids, magnitude and phase, group delay (Lectures 15-16, HW6)"
+    },
+    {
+      "name": "Sampling and reconstruction",
+      "color": "turquoise3",
+      "description": "Ideal A/D conversion, Nyquist rate, aliasing (Lecture 17); ideal D/A reconstruction and A/D -> H_d -> D/A systems (later lectures)"
+    },
+    {
+      "name": "DFT",
+      "color": "brown2",
+      "description": "The discrete Fourier transform, its properties, zero padding, spectral analysis, circular convolution (lectures after 17)"
     }
   ],
   "tags": [
@@ -130,6 +145,26 @@
       "description": "Lecture 14"
     },
     {
+      "name": "L15",
+      "color": "gray1",
+      "description": "Lecture 15"
+    },
+    {
+      "name": "L16",
+      "color": "gray1",
+      "description": "Lecture 16"
+    },
+    {
+      "name": "L17",
+      "color": "gray1",
+      "description": "Lecture 17"
+    },
+    {
+      "name": "ahead",
+      "color": "orange1",
+      "description": "Ahead of the lectures (as of Oct 12, 2026): Midterm 2 material taught after Lecture 17, learned from past Midterm 2 exams and the 2019 course notes"
+    },
+    {
       "name": "hw1",
       "color": "gray2",
       "description": "Modelled on Fall 2026 Homework 1"
@@ -153,6 +188,11 @@
       "name": "hw5",
       "color": "gray2",
       "description": "Modelled on Fall 2026 Homework 5"
+    },
+    {
+      "name": "hw6",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 6"
     },
     {
       "name": "midterm1",
@@ -215,6 +255,56 @@
       "description": "Exam problem family: Two-sided systems as recursions (2 of 7)"
     },
     {
+      "name": "midterm2",
+      "color": "red3",
+      "description": "In the scope of Midterm 2 as set on the seven past exams (Lectures 13 on: DTFT, frequency response, sampling, the DFT)"
+    },
+    {
+      "name": "fam2-tf",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: True/False statements (7 of 7 past Midterm 2 exams)"
+    },
+    {
+      "name": "fam2-dtft",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: Computing DTFTs and inverse DTFTs (7 of 7)"
+    },
+    {
+      "name": "fam2-sinusoids",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: LTI response to sinusoids (5 of 7)"
+    },
+    {
+      "name": "fam2-magphase",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: Magnitude, phase and group delay (5 of 7)"
+    },
+    {
+      "name": "fam2-sampling",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: Sampling: Nyquist rate, sketch of X_d, aliasing, reconstruction (6 of 7)"
+    },
+    {
+      "name": "fam2-ad-da",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: Digital filtering of analog signals: A/D -> H_d -> D/A with an ideal filter (6 of 7)"
+    },
+    {
+      "name": "fam2-dft",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: DFT computation and properties (7 of 7)"
+    },
+    {
+      "name": "fam2-spectral",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: DFT spectral analysis and resolution (6 of 7)"
+    },
+    {
+      "name": "fam2-circconv",
+      "color": "brown2",
+      "description": "Midterm 2 problem family: Linear vs circular convolution, the FFT (2 of 7)"
+    },
+    {
       "name": "numeric",
       "color": "gray3",
       "description": "Has pl-number-input parts"
@@ -243,6 +333,16 @@
       "name": "matrix",
       "color": "gray3",
       "description": "Has pl-matrix-input parts"
+    },
+    {
+      "name": "matching",
+      "color": "gray3",
+      "description": "Has pl-matching parts"
+    },
+    {
+      "name": "sketch",
+      "color": "gray3",
+      "description": "Has pl-sketch parts (draw a graph)"
     },
     {
       "name": "easy",

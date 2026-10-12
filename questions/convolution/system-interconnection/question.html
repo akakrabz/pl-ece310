@@ -1,0 +1,62 @@
+<pl-question-panel>
+  <p>
+    The LTI system below is built from three FIR blocks with impulse responses
+    $$ {{params.blocks_tex}} $$
+    (the arrows mark $n = 0$; all samples not shown are zero) and a delay block. A block labelled $z^{-k}$ delays its input by
+    $k$ samples; a circle adds its inputs with the signs written next to them.
+  </p>
+  {{{params.fig_html}}}
+</pl-question-panel>
+
+<p><b>(a)</b> Find the overall impulse response $h[n]$ from $x[n]$ to $y[n]$: the index of its first nonzero sample, and its
+  samples from the first to the last nonzero one as a row vector (for example <code>[20, 0, -30, 40]</code>).</p>
+<div class="mb-1"><pl-integer-input answers-name="nh" label="$n_{\text{first}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-matrix-input answers-name="h" label="$h =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input></div>
+
+<p class="mt-3"><b>(b)</b> Find the overall transfer function $H(z)$. Type <code>z^(-2)</code> for $z^{-2}$; products of
+  polynomials are fine, e.g. <code>(5 - z^(-1))*(4 + 7*z^(-3))</code>.</p>
+<pl-symbolic-input answers-name="H" variables="z" label="$H(z) =$" size="45"></pl-symbolic-input>
+
+<p class="mt-3"><b>(c)</b>
+  {{#params.is_delta}}The input is $x[n] = \delta[{{params.m_tex}}]$. Find the output sample $y[{{params.n0}}]$.{{/params.is_delta}}
+  {{#params.is_const}}The input is the constant $x[n] = {{params.c_tex}}$ for all $n$. The output is constant too; find its value.{{/params.is_const}}
+</p>
+<pl-integer-input answers-name="y0" label="{{params.y_label}}"></pl-integer-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Collapse the diagram">
+    Blocks in series multiply: $H_1(z)H_2(z) \leftrightarrow h_1[n] * h_2[n]$. Branches that meet at an adder add (with their
+    signs): $H_1(z) \pm H_2(z) \leftrightarrow h_1[n] \pm h_2[n]$. A delay block is $z^{-k} \leftrightarrow \delta[n-k]$. Work
+    from the innermost connection outwards (Lecture 10, Table 1).
+  </pl-hint>
+  <pl-hint hint-name="Polynomials do the bookkeeping" show-after-submission="1">
+    Write each block as a polynomial in $z^{-1}$, e.g. $\{\underset{\uparrow}{1}, -2\} \to 1 - 2z^{-1}$. Multiplying the
+    polynomials is the convolution, adding them adds the impulse responses, and the coefficient of $z^{-n}$ in the result
+    is $h[n]$. An input $\delta[n - m]$ gives $y[n] = h[n - m]$; a constant input $c$ gives the constant $c\,H(1)$, with
+    $H(1) = \sum_n h[n]$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>Collapse the diagram.</b> Series connections multiply transfer functions and parallel connections add them, so
+    $$H(z) = {{params.net_tex}},$$
+    with each block written as a sum of powers of $z$ (the sample $h_i[n]$ contributes $h_i[n]\,z^{-n}$):</p>
+  <ul>{{#params.Hi_list}}<li>${{tex}}$</li>{{/params.Hi_list}}</ul>
+  <p>Evaluating from the inside out:</p>
+  <ul>{{#params.steps}}<li>${{what}} = {{fac}} = {{res}}$</li>{{/params.steps}}</ul>
+  <p><b>(a)</b> The coefficient of $z^{-n}$ in the result is $h[n]$:
+    $$h[n] = {{params.h_tex}},$$
+    first nonzero sample at $n = {{correct_answers.nh}}$, last at $n = {{params.h_last}}$; the row vector has
+    ${{params.h_len}}$ entries, <code>{{params.h_plain}}</code>. (In the time domain: series blocks convolve, parallel branches add,
+    and $z^{-k}$ shifts by $k$ samples.)</p>
+  <p><b>(b)</b> $$H(z) = {{params.H_tex}}.$$ Any equivalent form (for example the product form above) is accepted.</p>
+  <p><b>(c)</b>
+    {{#params.is_delta}}An LTI system maps $\delta[n - m]$ to $h[n - m]$, so ${{params.shift_tex}}$ and
+    $${{params.y_work_tex}}.$${{/params.is_delta}}
+    {{#params.is_const}}A constant $c = c\cdot 1^n$ is an eigenfunction: the output is $c\,H(1)$ for every $n$ (Lecture 6), and
+    $H(1) = \sum_n h[n] = {{params.H1_tex}}$. So $${{params.y_work_tex}}.$${{/params.is_const}}
+  </p>
+  <p class="text-muted small">Modelled on Lecture 10 &sect;2 (system algebra: series = product, parallel = sum, Table 1 and the
+    five-block example of slide 11), Lecture 4 (convolution is commutative, associative and distributive), and
+    FA2024 Midterm 1 #3(b) and SP2025 Midterm 1 #3(b) (overall $h[n]$ of a series and of a parallel connection).</p>
+</pl-answer-panel>

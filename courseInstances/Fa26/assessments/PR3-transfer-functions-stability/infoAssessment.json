@@ -38,12 +38,24 @@
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3
+        },
+        {
+          "id": "convolution/system-interconnection",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
         }
       ]
     },
     {
       "title": "BIBO stability and causality",
       "questions": [
+        {
+          "id": "stability/pole-zero-plot",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
         {
           "id": "stability/stability-from-roc",
           "autoPoints": 2,

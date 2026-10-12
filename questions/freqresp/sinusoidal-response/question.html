@@ -1,0 +1,90 @@
+<pl-question-panel>
+  {{#params.closed}}
+  <p>The frequency response of an LTI system is
+    $$H_d(\omega) = {{params.H_tex}}{{params.domain_tex}}.$$</p>
+  {{/params.closed}}
+  {{#params.fir_h}}
+  <p>An LTI system has the impulse response
+    $${{params.sys_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero).</p>
+  {{/params.fir_h}}
+  {{#params.fir_Hz}}
+  <p>An LTI system has the transfer function
+    $${{params.sys_tex}},\qquad \lvert z\rvert \gt 0.$$</p>
+  {{/params.fir_Hz}}
+  {{#params.is_lccde}}
+  <p>A causal LTI system is described by the difference equation
+    $${{params.sys_tex}}.$$</p>
+  {{/params.is_lccde}}
+  <p>The input
+    $$x[n] = {{params.x_tex}}$$
+    is applied for all $n$ ($-\infty \lt n \lt \infty$). The output can be written as
+    $$y[n] = {{params.y_form_tex}}$$
+    with complex constants $D$, $B$, $C_{+}$, $C_{-}$ (one term per frequency).</p>
+</pl-question-panel>
+
+<p class="small text-muted">Magnitudes: exact values or decimals with 4 significant digits (for example <code>1.047</code> for
+  $\tfrac{\pi}{3}$; <code>pi</code> cannot be typed). Angles: as multiples of $\pi$ (for $-\tfrac{5\pi}{6}$ type <code>-5/6</code>),
+  as the <b>principal value</b> in $(-\pi, \pi]$; an angle off by a multiple of $2\pi$ is marked wrong (for an angle of
+  exactly $\pi$, both <code>1</code> and <code>-1</code> are accepted).</p>
+
+<p><b>(a)</b> Is the impulse response $h[n]$ of this system real-valued?</p>
+<pl-multiple-choice answers-name="real" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.real_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.real_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(b)</b> The constant (DC) term of the output; here it is a real number:</p>
+<pl-number-input answers-name="D" label="$D =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> The coefficient $B$ of ${{params.E_tex}}$:</p>
+<div class="mb-1"><pl-number-input answers-name="B_mag" label="$|B| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="B_ang" label="$\angle B =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(d)</b> The coefficients of the two complex exponentials at $\pm{{params.w2_tex}}$:</p>
+<div class="mb-1"><pl-number-input answers-name="Cp_mag" label="$|C_{+}| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Cp_ang" label="$\angle C_{+} =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Cm_mag" label="$|C_{-}| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Cm_ang" label="$\angle C_{-} =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One frequency at a time">
+    $e^{j\omega_0 n} \mapsto H_d(\omega_0)\,e^{j\omega_0 n}$, and the coefficient in front stays. A constant is frequency $0$;
+    $(-1)^n = e^{j\pi n}$, $j^n = e^{j\frac{\pi}{2}n}$; a cosine or sine is <b>two</b> exponentials, at $+\omega_0$ and $-\omega_0$.
+    Bring every frequency into $[-\pi, \pi]$ first ($e^{j2\pi n} = 1$).
+  </pl-hint>
+  <pl-hint hint-name="Real or not" show-after-submission="1">
+    $h[n]$ is real exactly when $H_d(-\omega) = H_d^*(\omega)$ (even magnitude, odd phase). Only then does the half at
+    $-\omega_0$ get the conjugate gain. In every case $C_{-}$ uses $H_d(-\omega_0)$, evaluated with $-\omega_0$ plugged in.
+    For the angles: multiply magnitudes, add angles, then reduce to $(-\pi, \pi]$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Modelled on SP2025 Midterm 2 #4, FA2024 #4, SP2023 #6, FA2023 #4(b) and FA2019 #7 (Lecture 15: complex exponentials are
+    eigenfunctions; the cosine shortcut needs a real $h$; HW6 #6&ndash;#7).</p>
+  {{^params.closed}}
+  <p><b>Frequency response.</b>
+    {{#params.is_lccde}}The system is causal with its pole at $z = {{params.pole_tex}}$, inside the unit circle, so the ROC
+    contains the unit circle and $H_d(\omega) = H(e^{j\omega})${{/params.is_lccde}}{{#params.is_fir}}An FIR system is stable, so
+    $H_d(\omega) = \sum_n h[n]e^{-j\omega n}$; pulling out the centre of the taps{{/params.is_fir}}:
+    $$H_d(\omega) = {{params.H_tex}}.$$</p>
+  {{/params.closed}}
+  <p><b>(a)</b> {{{params.real_html}}} Answer: <b>{{#params.is_real}}Yes{{/params.is_real}}{{^params.is_real}}No{{/params.is_real}}</b>.</p>
+  <p><b>Frequencies in the input.</b> The constant is frequency $0$. {{{params.E_note_html}}} The sinusoid splits into two exponentials,
+    $${{params.split_tex}},\qquad \theta = {{params.theta_tex}}.$$</p>
+  <p><b>The frequency response at those frequencies:</b></p>
+  {{#params.ev_rows}}$${{line}}$${{/params.ev_rows}}
+  <p><b>(b)</b> $D = {{params.c0}}\cdot H_d(0) = {{params.c0}}\cdot {{params.H0_tex}} = {{params.D_tex}}$.</p>
+  <p><b>(c)</b> $B = \left({{params.a1_polar_tex}}\right)\cdot H_d\!\left({{params.f1_tex}}\right) = {{params.B_tex}}$, so
+    $|B| = {{params.B_mag_tex}}${{#params.B_irr}} $\approx {{params.B_mag_dec}}${{/params.B_irr}} and
+    $\angle B = {{params.B_ang_plain}}\cdot\pi$.</p>
+  <p><b>(d)</b> The half at $+{{params.w2_tex}}$ has the input coefficient ${{params.Cp_in_tex}}$, the half at $-{{params.w2_tex}}$
+    has ${{params.Cm_in_tex}}$; each is multiplied by $H_d$ at <b>its own</b> frequency:
+    $$C_{+} = \left({{params.Cp_in_tex}}\right)\left({{params.Hp_tex}}\right) = {{params.Cp_tex}},$$
+    $$C_{-} = \left({{params.Cm_in_tex}}\right)\left({{params.Hm_tex}}\right) = {{params.Cm_tex}}.$$
+    So $|C_{+}| = {{params.Cp_mag_tex}}$, $\angle C_{+} = {{params.Cp_ang_plain}}\cdot\pi$, $|C_{-}| = {{params.Cm_mag_tex}}$,
+    $\angle C_{-} = {{params.Cm_ang_plain}}\cdot\pi${{#params.is_real}} (conjugates of each other, as they must be for a real
+    $h$ and a real sinusoid){{/params.is_real}}.</p>
+  <p>Altogether
+    $$\begin{aligned} y[n] &amp;= {{params.y1_tex}} \\ &amp;\quad {{params.y2_tex}} \\ &amp;\quad {{params.y3_tex}}. \end{aligned}$$</p>
+</pl-answer-panel>

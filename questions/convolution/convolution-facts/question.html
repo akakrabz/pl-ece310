@@ -1,0 +1,62 @@
+<pl-question-panel>
+  <p>
+    Let $y[n] = x[n] * h[n]$ for the finite-length sequences
+    $$x[n] = {{params.x_tex}}, \qquad h[n] = {{params.h_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero).
+    Answer the questions below <b>without</b> computing the whole convolution.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Where does $y[n]$ live? Give the index of its first and of its last nonzero sample, and its length
+  (the number of samples from the first to the last nonzero one).</p>
+<div class="mb-1"><pl-integer-input answers-name="nfirst" label="$n_{\text{first}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="nlast" label="$n_{\text{last}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="leny" label="$\text{length of } y =$"></pl-integer-input></div>
+
+<p class="mt-3"><b>(b)</b> The sum of all samples of the output:</p>
+<pl-integer-input answers-name="sumy" label="$\displaystyle\sum_{n} y[n] =$"></pl-integer-input>
+
+<p class="mt-3"><b>(c)</b> The first and the last nonzero sample of $y[n]$ (at the indices of part (a)):</p>
+<div class="mb-1"><pl-integer-input answers-name="yfirst" label="$y[n_{\text{first}}] =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="ylast" label="$y[n_{\text{last}}] =$"></pl-integer-input></div>
+
+<p class="mt-3"><b>(d)</b> One sample in the middle:</p>
+<pl-integer-input answers-name="yn0" label="$y[{{params.n0}}] =$"></pl-integer-input>
+
+<p class="mt-3"><b>(e)</b> A property question for an arbitrary signal $x[n]$ (not only the one above). {{{params.mc_stem_html}}}</p>
+<pl-multiple-choice answers-name="prop" hide-letter-keys="true">
+  {{#params.prop_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.prop_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Bookkeeping">
+    If $x$ occupies $n_s \le n \le n_e$ (length $N$) and $h$ occupies $m_s \le n \le m_e$ (length $M$), then
+    $y = x * h$ starts at $n_s + m_s$, ends at $n_e + m_e$ and has length $N + M - 1$ (Lecture 4, eqs. 15&ndash;17).
+  </pl-hint>
+  <pl-hint hint-name="Sums, ends and one sample" show-after-submission="1">
+    $\sum_n y[n] = \sum_n\sum_k x[k]\,h[n-k] = \big(\sum_k x[k]\big)\big(\sum_m h[m]\big)$. At the first index only the
+    first samples of $x$ and $h$ overlap (one product), likewise at the last index. In general
+    $y[n_0] = \sum_k x[k]\,h[n_0 - k]$: keep only the $k$ for which both factors lie inside their supports.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> $x$ occupies ${{params.a1}} \le n \le {{params.b1}}$ (length ${{params.lx}}$) and $h$ occupies
+    ${{params.a2}} \le n \le {{params.b2}}$ (length ${{params.lh}}$), so
+    $n_{\text{first}} = {{params.first_tex}} = {{correct_answers.nfirst}}$,
+    $n_{\text{last}} = {{params.last_tex}} = {{correct_answers.nlast}}$ and the length is
+    ${{params.len_tex}} = {{correct_answers.leny}}$ (check: ${{correct_answers.nlast}} - ({{correct_answers.nfirst}}) + 1 = {{correct_answers.leny}}$).</p>
+  <p><b>(b)</b> Every product $x[k]\,h[m]$ lands in exactly one output sample, so the output sum is the product of the sums:
+    $\sum_n x[n] = {{params.sx_tex}}$, $\sum_n h[n] = {{params.sh_tex}}$, and
+    $\sum_n y[n] = {{params.sy_tex}}$.</p>
+  <p><b>(c)</b> At the ends only one pair of samples overlaps:
+    $y[{{correct_answers.nfirst}}] = {{params.yfirst_tex}}$ and $y[{{correct_answers.nlast}}] = {{params.ylast_tex}}$.</p>
+  <p><b>(d)</b> $y[{{params.n0}}] = \sum_k x[k]\,h[{{params.n0}} - k]$, where both factors lie inside their supports only for
+    ${{params.kmin}} \le k \le {{params.kmax}}$:
+    $$y[{{params.n0}}] = {{params.terms_tex}} = {{params.vals_tex}} = {{params.yn0_val}}.$$
+    For reference, the whole output is $y[n] = {{params.y_tex}}$.</p>
+  <p><b>(e)</b> {{{params.mc_stem_html}}} Answer: {{{params.mc_correct_html}}}. {{{params.mc_why_html}}}</p>
+  <p class="text-muted"><small>Modelled on Lecture 4 &sect;2.1 (start point, end point and length, eqs. 15&ndash;17;
+    identity $x * \delta = x$, commutativity, associativity, distributivity) and the &sect;2.2 shift-and-overlap example,
+    with the sum check used in HW2 #5.</small></p>
+</pl-answer-panel>

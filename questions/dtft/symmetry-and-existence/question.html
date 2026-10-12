@@ -1,0 +1,52 @@
+<pl-question-panel>
+  <p>Four short DTFT questions: symmetry, periodicity and existence.</p>
+</pl-question-panel>
+
+<p><b>(a)</b> {{#params.is_real}}$x[n]$ is a <b>real-valued</b> sequence{{/params.is_real}}{{^params.is_real}}$x[n]$ is an
+  <b>arbitrary</b> (possibly complex-valued) sequence{{/params.is_real}} whose DTFT satisfies
+  $$X_d(\omega) = {{params.F_tex}}\qquad\text{for } {{params.range_tex}}.$$
+  Find $X_d(\omega)$ at $\omega = {{params.w0_tex}}$. Enter the real and imaginary parts; decimals with 4 significant digits are
+  fine (exact multiples of $\pi$ may be entered as decimals, e.g. <code>2.244</code> for $5\pi/7$).</p>
+<div class="mb-1"><pl-number-input answers-name="re" label="$\mathrm{Re}\{X_d({{params.w0_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-4"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="im" label="$\mathrm{Im}\{X_d({{params.w0_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-4"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> The frequency response of an LTI system is $H_d(\omega) = {{params.H_tex}}$ for $|\omega| \le \pi$.
+  Is its impulse response $h[n]$ real-valued?</p>
+<pl-multiple-choice answers-name="hreal" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.h_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.h_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(c)</b> Which statement is true for $x_1[n] = {{params.s1.tex}}$?</p>
+<pl-multiple-choice answers-name="ex1" order="fixed" hide-letter-keys="true">
+  {{#params.s1_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.s1_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(d)</b> Which statement is true for $x_2[n] = {{params.s2.tex}}$?</p>
+<pl-multiple-choice answers-name="ex2" order="fixed" hide-letter-keys="true">
+  {{#params.s2_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.s2_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Two different facts">
+    Every DTFT is $2\pi$-periodic: $X_d(\omega + 2\pi) = X_d(\omega)$. Only a <b>real</b> $x[n]$ adds Hermitian symmetry,
+    $X_d(-\omega) = X_d^*(\omega)$ (and conversely: Hermitian $X_d$ means real $x$). Symmetry flips the sign of $\omega$ <i>and</i>
+    conjugates; periodicity only shifts the argument.
+  </pl-hint>
+  <pl-hint hint-name="Does the DTFT exist?" show-after-submission="1">
+    $\sum_n|x[n]| \lt \infty$ $\iff$ the ROC contains $|z| = 1$; then substitute $z = e^{j\omega}$. Bounded sequences that do
+    not decay ($u[n]$, $\cos\omega_0 n$, $e^{j\omega_0 n}$) need Dirac impulses. $\frac{\sin(\omega_c n)}{\pi n}$ decays like $1/n$:
+    not absolutely summable, yet its DTFT is a rectangle. Growing sequences have no DTFT.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> {{{params.why_html}}}
+    $${{params.steps_tex}} \approx {{params.val_tex}}.$$</p>
+  <p><b>(b)</b> {{{params.h_why_html}}} (Test: compute $H_d(-\omega)$ and $H_d^*(\omega)$; conjugation flips every $j$, $\omega$ stays.)</p>
+  <p><b>(c)</b> {{params.s1.verdict}}. {{{params.s1.why_html}}}</p>
+  <p><b>(d)</b> {{params.s2.verdict}}. {{{params.s2.why_html}}}</p>
+  <p class="text-muted"><small>Modelled on SP2023 MT2 #2&ndash;#3 (symmetry vs periodicity of $X_d = j\omega$), Lecture 14 slide 13
+    (both properties at once), FA2024 MT2 #4(a) and SP2023 MT2 #6 (is $h[n]$ real for $H_d = |\omega|e^{-j\pi\sin\omega}$,
+    $\omega e^{j\pi\cos\omega}$?), Lecture 14 slide 12, the Lecture 13 notes §4 (existence, eq. 43; study-site Lecture 13 page §6.2) and Lecture 14 §1 (the table
+    "ROC contains / touches / misses the unit circle") and the Midterm 2 T/F bank Q1&ndash;Q2; HW6 #4.</small></p>
+</pl-answer-panel>

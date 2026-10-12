@@ -1,0 +1,67 @@
+<pl-question-panel>
+  <p>Sinusoids and complex exponential sequences. Answer all three parts.</p>
+  <p class="small text-muted">Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant
+    digits (for example <code>1.414</code> for $\sqrt{2}$). Enter angles as a multiple of $\pi$, principal value in
+    $(-\pi, \pi]$: for $\tfrac{3\pi}{4}$ type <code>3/4</code>.</p>
+</pl-question-panel>
+
+<p><b>(a)</b> By Euler's identities the real sinusoid
+  $$x_1[n] = {{params.xa_tex}}$$
+  can be written as $x_1[n] = c\,e^{j\omega_0 n} + c^*e^{-j\omega_0 n}$ with $\omega_0 = {{params.w0_tex}}$ and a complex
+  constant $c$. Find the magnitude and the principal angle of $c$.</p>
+<div class="mb-1"><pl-number-input answers-name="cmag" label="$\lvert c\rvert =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="cang" label="$\angle c =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-4"><b>(b)</b> Write
+  $$x_2[n] = {{params.xb_tex}}$$
+  as a single sinusoid $x_2[n] = A\cos(\omega n + \theta)$ with amplitude $A \ge 0$ and principal phase $\theta$.</p>
+<div class="mb-1"><pl-number-input answers-name="amp" label="$A =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="phase" label="$\theta =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-4"><b>(c)</b> Consider the complex exponential sequence
+  $$x_3[n] = {{params.xc_tex}},\qquad -\infty \lt n \lt \infty.$$
+  Give $\lvert x_3[n]\rvert$ for every integer $n$ as an expression in $n$ (powers with <code>^</code>, square roots as
+  <code>sqrt(...)</code>, fractions rather than decimals; e.g. <code>sqrt(7)*n^2</code> is valid syntax), and the real and
+  imaginary parts of the sample $x_3[{{params.c_k}}]$.</p>
+<div class="mb-1"><pl-symbolic-input answers-name="xmag" variables="n" label="$\lvert x_3[n]\rvert =$" size="30"></pl-symbolic-input></div>
+<div class="mb-1"><pl-number-input answers-name="xre" label="$\mathrm{Re}\{x_3[{{params.c_k}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="xim" label="$\mathrm{Im}\{x_3[{{params.c_k}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Euler, phasors, polar form">
+    $\cos\phi = \dfrac{e^{j\phi} + e^{-j\phi}}{2}$ and $\sin\phi = \dfrac{e^{j\phi} - e^{-j\phi}}{2j}$. Sinusoids of the same
+    frequency add like their phasors: $A_1\cos(\omega n + \theta_1) + A_2\cos(\omega n + \theta_2) = \mathrm{Re}\{(A_1e^{j\theta_1} + A_2e^{j\theta_2})\,e^{j\omega n}\}$.
+    For $x_3$ write the base in polar form $r\,e^{j\phi}$: then $(r\,e^{j\phi})^n = r^n e^{j\phi n}$.
+  </pl-hint>
+  <pl-hint hint-name="Sign traps" show-after-submission="1">
+    $\tfrac{1}{j} = -j = e^{-j\pi/2}$, a negative amplitude is a phase shift of $\pi$ ($-1 = e^{j\pi}$), and
+    $\sin\phi = \cos(\phi - \tfrac{\pi}{2})$. $c$ multiplies $e^{+j\omega_0 n}$ (its conjugate goes with $e^{-j\omega_0 n}$).
+    Amplitudes only add when the phases agree. $\lvert e^{j\phi n}\rvert = 1$, so only $\lvert B\rvert$ and $r^n$ set the size.
+    Reduce every angle to $(-\pi, \pi]$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Euler's identity term by term:
+    $$x_1[n] = {{params.a_split_tex}},$$
+    so ${{params.a_c_tex}}$.
+    {{#params.a_neg}}The amplitude is negative: $-1 = e^{j\pi}$ adds $\pi$ to the angle.{{/params.a_neg}}
+    The magnitude is $\lvert c\rvert = {{params.a_mag_tex}}$ (half of $\lvert A\rvert = {{params.a_absA}}$) and the angle is ${{params.a_raw_tex}}${{#params.a_reduced}},
+    which reduces to ${{params.a_ang_tex}}$ in $(-\pi, \pi]${{/params.a_reduced}}: $\angle c = {{params.a_ang_frac}}\cdot\pi$.</p>
+  <p><b>(b)</b> {{{params.b_conv_html}}}Add the phasors $A_ie^{j\theta_i}$ of the two cosines:
+    $${{params.b_phasors_tex}}.$$
+    Here {{{params.b_why_html}}}. So $A = {{params.b_A_tex}}{{#params.b_A_irr}} \approx {{params.b_A_dec}}{{/params.b_A_irr}}$ and
+    $\theta = {{params.b_raw_tex}}${{#params.b_reduced}}, which reduces to ${{params.b_th_tex}}$ in $(-\pi, \pi]${{/params.b_reduced}},
+    i.e. $\theta = {{params.b_th_frac}}\cdot\pi$. (Adding the amplitudes, $A_1 + A_2 = {{params.b_sum_amp_tex}}$,
+    is right only when the phases agree.)</p>
+  <p><b>(c)</b> {{#params.c_rect}}Polar form of the base: ${{params.c_rect_steps_tex}}$. {{/params.c_rect}}With
+    $a = r\,e^{j\phi}$, $r = {{params.c_r_tex}}$, $\phi = {{params.c_phi_tex}}$:
+    $$x_3[n] = B\,r^n e^{j\phi n},\qquad \lvert x_3[n]\rvert = \lvert B\rvert\,r^n = {{params.c_mag_tex}}$$
+    for every integer $n$ (the factor $e^{j\phi n}$ has magnitude $1$). For $n = {{params.c_k}}$:
+    $$x_3[{{params.c_k}}] = {{params.c_xk_polar_tex}},$$
+    so $\mathrm{Re}\{x_3[{{params.c_k}}]\} = {{params.c_re_tex}}$ and $\mathrm{Im}\{x_3[{{params.c_k}}]\} = {{params.c_im_tex}}$.</p>
+  <p class="text-muted"><small>Modelled on Lecture 2 (Euler's identities, Eqs. 17 and 20; sinusoids $A\sin(\omega_0 n + \theta)$ and
+    exponentials $B a^n$ with complex $a$), the conversions of FA2025 Midterm 1 #5(a) and #5(c) ($e^{-j4\pi/3} = e^{j2\pi/3}$,
+    $\cos^2(\tfrac{\pi}{4}n) = \tfrac12 + \tfrac14 e^{j\pi n/2} + \tfrac14 e^{-j\pi n/2}$), SP2021 Midterm 1 #3 ($\lvert(0.8 + 0.8j)^n\rvert$ grows)
+    and SP2021 #5 (conjugate terms combining into $3\sin(\tfrac{\pi}{2}n)$).</small></p>
+</pl-answer-panel>

@@ -1,0 +1,50 @@
+<pl-question-panel>
+  <p>Geometric sums are the algebra behind every z-transform. Answer all three parts.</p>
+</pl-question-panel>
+
+<p><b>(a)</b> Evaluate
+  $$S = {{params.sumA_tex}}.$$
+  Enter the exact value: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="S" label="$S =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-4"><b>(b)</b> Find a closed form (no $\sum$, no "$\dots$") of
+  $$s[n] = {{params.sumB_tex}},\qquad {{params.sumB_valid_tex}}.$$
+  Enter an expression in $n$, for example <code>(2/3)*n^2 + 5^(n-1)</code> (powers with <code>^</code>; use fractions, not decimals).</p>
+<div class="mb-1"><pl-symbolic-input answers-name="closed" variables="n" label="$s[n] =$" size="40"></pl-symbolic-input></div>
+
+<p class="mt-4"><b>(c)</b> For which real or complex $a$ does the series
+  $${{params.conv_tex}}$$
+  converge?</p>
+<pl-multiple-choice answers-name="conv" order="fixed" hide-letter-keys="true">
+  {{#params.conv_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.conv_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Two formulas cover everything">
+    $\sum_{k=0}^{N-1} a^k = \dfrac{1 - a^N}{1 - a}$ for $a \ne 1$ (it is $N$ when $a = 1$), and
+    $\sum_{k=0}^{\infty} a^k = \dfrac{1}{1 - a}$ exactly when $\lvert a\rvert \lt 1$. Any other sum: pull out its first term
+    so that the remaining sum starts at $0$, or substitute $m = -n$ when it runs to $-\infty$.
+  </pl-hint>
+  <pl-hint hint-name="Common slips" show-after-submission="1">
+    "First term minus first omitted term, over one minus the ratio": $\sum_{k=k_1}^{k_2} a^k = \dfrac{a^{k_1} - a^{k_2+1}}{1 - a}$.
+    A two-sided sum splits at $n = 0$: count the $n = 0$ term exactly as often as the signal does. A sum of roots of unity
+    $\sum_{n=0}^{N-1} w^n$ with $w^N = 1$ is $0$ unless $w = 1$. A series that runs to $\pm\infty$ in both directions needs
+    $\lvert\text{ratio}\rvert \lt 1$ on one side and $\gt 1$ on the other.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> {{{params.sumA_words_html}}}
+    $${{params.sumA_steps_tex}}.$$</p>
+  <p><b>(b)</b> For ${{params.sumB_valid_tex}}$,
+    $$s[n] = {{params.sumB_tex}} = {{params.sumB_form_tex}} = {{params.sumB_closed_tex}}.$$
+    Any equivalent expression is accepted, for instance with numerator and denominator both multiplied by $-1$, or with
+    $\left(\tfrac{p}{q}\right)^n$ written as $p^n/q^n$.</p>
+  <p><b>(c)</b> {{{params.conv_why_html}}}</p>
+  <p class="text-muted"><small>Modelled on section 4 "Two tools the z-transform will need" of the study site's Lecture 2
+    page (geometric sums and roots of unity are not in the Lecture 2 notes or slides themselves; the z-transform of Lecture 6
+    is exactly such a series, and its ROC is where the series converges), HW1 #4 (roots of $z^4 = \pm 1$),
+    HW3 #1 (z-transforms of $(\tfrac34)^{n+3}u[n-2]$, $3^n u[-n] + 2^{-n}u[n]$, $(\tfrac14)^{\lvert n\rvert}$ as geometric series),
+    the convolution $a^n u[n] * b^n u[n] = \sum_{k=0}^{n} a^k b^{n-k}$ (Lecture 4), and FA2025 Midterm 1 #5(b)
+    ($u[n] - u[n-8]$: a finite sum of eight terms).</small></p>
+</pl-answer-panel>

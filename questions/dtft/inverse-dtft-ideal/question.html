@@ -1,0 +1,64 @@
+<pl-question-panel>
+  <p>
+    {{#params.has_delay}}The DTFT of a sequence $x[n]$ is $X_d(\omega) = G(\omega)\,{{params.phase_tex}}$ for $-\pi \le \omega \le \pi$
+    (and repeats every $2\pi$), where the real function $G(\omega)$ is shown below.{{/params.has_delay}}
+    {{^params.has_delay}}The DTFT $X_d(\omega) = G(\omega)$ of a sequence $x[n]$ is shown below for $-\pi \le \omega \le \pi$
+    (it repeats every $2\pi$).{{/params.has_delay}}
+  </p>
+  {{{params.fig_html}}}
+</pl-question-panel>
+
+<p><b>(a)</b> Find a <b>real-valued</b> closed form for $x[n]$, valid for every $n \ne {{params.n0}}$. Use <code>sin</code>,
+  <code>cos</code> and <code>pi</code>, e.g. <code>(-1)^n*cos(pi*n/5)/(n^2+1)</code> (syntax only); <code>sinc(t)</code> is also accepted and
+  means $\sin(t)/t$ (the course's sinc, not NumPy's).</p>
+<pl-symbolic-input answers-name="x" variables="n" custom-functions="sinc" label="$x[n] =$"
+  suffix="$\text{for } n \ne {{params.n0}}$" size="50" display="block"></pl-symbolic-input>
+
+<p class="mt-3"><b>(b)</b> Find the sample $x[{{params.n0}}]$. Enter an exact value: fractions such as <code>13/7</code> are accepted;
+  decimals need 4 significant digits.</p>
+<pl-number-input answers-name="x0" label="$x[{{params.n0}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> Find the sample $x[{{params.n1}}]$, as a decimal with 4 significant digits (for example
+  <code>1.414</code> for $\sqrt{2}$).</p>
+<pl-number-input answers-name="xm" label="$x[{{params.n1}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One rectangle">
+    $\dfrac{1}{2\pi}\displaystyle\int_{-W}^{W} e^{j\omega n}\,d\omega = \dfrac{\sin(Wn)}{\pi n}$: a rectangle of height $1$ and
+    half-width $W$ is the sequence $\dfrac{\sin(Wn)}{\pi n}$, whose value at $n = 0$ is $\dfrac{W}{\pi}$. The full band
+    ($W = \pi$) gives $\delta[n]$.
+  </pl-hint>
+  <pl-hint hint-name="Build the sketch from rectangles" show-after-submission="1">
+    Write $G(\omega)$ as a sum of centred rectangles (heights add; a band is a big rectangle minus a small one, a high-pass is
+    the full band minus a low-pass). Then $e^{-j\omega n_0}$ is a delay by $n_0$: replace $n$ by $n - n_0$. At $n = n_0$ the
+    value is the average height of $G$ over one period, $\frac{1}{2\pi}\int_{-\pi}^{\pi} G(\omega)\,d\omega$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>Rectangles</b> (Lecture 14, Table 1; study-site Lecture 13 page, §8): $\dfrac{1}{2\pi}\displaystyle\int_{-W}^{W}e^{j\omega n}d\omega = \dfrac{\sin(Wn)}{\pi n}$, so a
+    centred rectangle of height $h$ and half-width $W$ is $h\,\dfrac{\sin(Wn)}{\pi n}$ ($= h\,\tfrac{W}{\pi}\,\mathrm{sinc}(Wn)$ with
+    $\mathrm{sinc}\,\theta = \tfrac{\sin\theta}{\theta}$). The sketched $G(\omega)$ is the sum of</p>
+  <ul>{{#params.dec_lines}}<li>{{{line_html}}}</li>{{/params.dec_lines}}</ul>
+  {{#params.has_delay}}<p>The factor ${{params.phase_tex}}$ is a time shift (Lecture 14): $x[n] = g[{{params.gshift_tex}}]$, where $g$ is the
+    inverse DTFT of $G$ alone. {{/params.has_delay}}
+  {{#params.is_hp}}<p>
+    $$x[n] = {{params.x_full_tex}},$$
+    so for $n \ne {{params.n0}}$, where the $\delta$ term vanishes,
+    $$x[n] = {{params.x_tex}}.$$
+  </p>{{/params.is_hp}}
+  {{^params.is_hp}}<p>$$x[n] = {{params.x_tex}}.$$</p>{{/params.is_hp}}
+  {{#params.is_hp}}<p>Equivalently, the band is centred at $\pi$: modulation by $(-1)^n = e^{j\pi n}$ moves a low-pass there,
+    $x[n] = {{params.alt_tex}}$ (FA2024 MT2 #2 accepts all these forms).</p>{{/params.is_hp}}
+  {{#params.is_bp}}<p>Equivalently, the two bands are a low-pass of half-width ${{params.dw_tex}}$ shifted to $\pm{{params.wm_tex}}$
+    (modulation by $2\cos$): $x[n] = {{params.mod_tex}}$.</p>{{/params.is_bp}}
+  {{#params.is_stair}}<p>The two rectangles <b>stack</b>: the inner height is the sum of both heights (the SP2021 MT2 #7 trap).</p>{{/params.is_stair}}
+  <p><b>(b)</b> {{#params.is_hp}}At $n = {{params.n0}}$ the sinc term is $\tfrac{0}{0}$ (and the $\delta$ term equals its height);
+    simplest is the average height of $G$ over one period:{{/params.is_hp}}{{^params.is_hp}}At $n = {{params.n0}}$ every term is
+    $\tfrac{0}{0}$; use the average height of $G$ over one period:{{/params.is_hp}}
+    $$x[{{params.n0}}] = \frac{1}{2\pi}\int_{-\pi}^{\pi} G(\omega)\,d\omega = \frac{1}{2\pi}\left({{params.area_tex}}\right) = {{params.x0_tex}}.$$</p>
+  <p><b>(c)</b> $$x[{{params.n1}}] = \frac{ {{params.xm_terms_tex}} }{ {{params.xm_den_tex}} } \approx {{params.xm_dec}}.$$</p>
+  <p class="text-muted"><small>Modelled on Lecture 14 Table 1 (rectangle $\leftrightarrow$ sinc; the study-site Lecture 13 page §8 has the inverse-DTFT recipe for sketches),
+    Lecture 14 (time shift), FA2024 MT2 #2 (real-valued $x[n]$ from an ideal high-pass), SP2021 MT2 #7 (two stacked rectangles)
+    and FA2019 MT2 #5 (a phase factor in the inverse DTFT); site family "computing DTFTs and inverse DTFTs".</small></p>
+</pl-answer-panel>

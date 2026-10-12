@@ -1,0 +1,57 @@
+<pl-question-panel>
+  <p>Three short Lecture 1 questions. $\delta[n]$ is the Kronecker delta and $u[n]$ the unit step.</p>
+</pl-question-panel>
+
+<p><b>(a)</b> Consider the sequence
+  $$x[n] = {{params.seq_tex}}.$$
+  Give the index of its first nonzero sample and its samples from the first to the last <b>nonzero</b> sample.</p>
+<div class="mb-1"><pl-integer-input answers-name="nfirst" label="$n_{\text{first}} =$"></pl-integer-input></div>
+<p class="mb-1">Samples as a row vector (for example <code>[1, -2, 0, 5]</code>):</p>
+<div class="mb-1"><pl-matrix-input answers-name="xs" label="$x =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input></div>
+
+<p class="mt-4"><b>(b)</b> The analog signal
+  $$x_a(t) = {{params.xa_tex}},\qquad t \text{ in seconds},$$
+  is sampled {{#params.mode_T}}with sampling period ${{params.rate_tex}}${{/params.mode_T}}{{^params.mode_T}}at the rate ${{params.rate_tex}}$ (${{params.fs_words}}$ samples per second){{/params.mode_T}},
+  giving $x[n] = x_a(nT)$. The result is a discrete-time sinusoid $x[n] = {{params.A}}\cos(\omega_0 n + \theta)$ with the same
+  amplitude and phase as $x_a$.</p>
+<p class="small text-muted">Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.
+  Enter $\omega_0$ as a multiple of $\pi$: for $\omega_0 = \tfrac{3\pi}{4}$ type <code>3/4</code>.</p>
+<p class="mb-1">The digital frequency $\omega_0$ in radians per sample, $0 \lt \omega_0 \lt \pi$:</p>
+<div class="mb-1"><pl-number-input answers-name="w0" label="$\omega_0 =$" suffix="$\cdot\,\pi\ \text{rad/sample}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<p class="mb-1">The sample at $n = {{params.k}}$:</p>
+<div class="mb-1"><pl-number-input answers-name="xk" label="$x[{{params.k}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-4"><b>(c)</b> {{{params.sig_desc_html}}} Using the definitions of Lecture 1, this signal is</p>
+<pl-multiple-choice answers-name="sig" order="fixed" hide-letter-keys="true">
+  {{#params.sig_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.sig_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Where do steps and impulses sit?">
+    $\delta[n-k]$ is one sample at $n = k$ and $u[n-k]$ switches on at $n = k$: each sits where its argument is zero.
+    $u[n-a] - u[n-b]$ is on for $a \le n \le b - 1$ ($b - a$ samples), and a product of steps is on only where both are on.
+    For (b), sampling replaces $t$ by $nT = n/f_s$.
+  </pl-hint>
+  <pl-hint hint-name="Checks" show-after-submission="1">
+    (a) Write $x[n]$ in a table for every $n$ near the edges; a sample that comes out $0$ at an end is not part of the
+    nonzero range. (b) $\omega_0 = \Omega_0 T = 2\pi f_0 / f_s$ in radians per sample, with $\Omega_0 = 2\pi f_0$ in rad/s:
+    divide by the sampling <em>rate</em>, multiply by the sampling <em>period</em>. Then $x[k] = A\cos(\omega_0 k + \theta)$.
+    (c) Ask two separate questions: is time continuous or an integer index, and can the value be any real number or only one of a set of levels?
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> {{{params.seq_expl_html}}} Sample by sample:</p>
+  {{{params.seq_table_html}}}
+  <p>So the first nonzero sample is at $n = {{correct_answers.nfirst}}$ and the last at $n = {{params.seq_last}}$:
+    $$x[n] = {{params.seq_samples_tex}}.$$</p>
+  <p><b>(b)</b> Substituting $t = nT$:
+    $$x[n] = x_a(nT),\qquad {{params.w0_steps_tex}}\ \text{rad/sample},$$
+    so $\omega_0 = {{params.w0_frac}}\cdot\pi$ and $x[n] = {{params.xn_tex}}$. Since ${{params.nyq_tex}}$,
+    $\omega_0$ already lies in $(0, \pi)$ (no aliasing). The requested sample:
+    $${{params.xk_steps_tex}}.$$</p>
+  <p><b>(c)</b> {{{params.sig_why_html}}}</p>
+  <p class="text-muted"><small>Modelled on Lecture 1 (continuous- vs discrete-time, analog vs digital, sampling
+    $x[n] = x(nT)$ at $44.1$ kHz) and HW1 #1 and #3 (signals written with $\delta[n]$ and $u[n]$, e.g.
+    $2u[n+3] - 3u[n-1] + u[n-5]$ and $n\,u[n]\,u[n-4]$); the product of steps $n\,u[n+1]\,u[-n+1]$ is FA2025 Midterm 1 #3(b).</small></p>
+</pl-answer-panel>

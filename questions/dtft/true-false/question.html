@@ -1,0 +1,38 @@
+<pl-question-panel>
+  <p>Decide whether each statement is <b>True</b> or <b>False</b>. On past Midterm 2 exams this is problem 1;
+    some terms penalised wrong answers (+2/&minus;1/0) and FA2024 asked for a one-sentence reason &mdash; say your
+    reason to yourself before checking.</p>
+</pl-question-panel>
+
+{{#params.statements}}
+<p class="mt-3"><b>({{label}})</b> {{{stmt_html}}}</p>
+<pl-multiple-choice answers-name="{{name}}" order="fixed" display="inline" hide-letter-keys="true">
+  {{#choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/choices}}
+</pl-multiple-choice>
+{{/params.statements}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Six facts that decide most statements">
+    Every DTFT is $2\pi$-periodic, finite signal or not. $X_d(\omega) = X(z)\big|_{z=e^{j\omega}}$ only when the ROC contains
+    $\lvert z\rvert = 1$. A real $x[n]$ $\iff$ a Hermitian DTFT, $X_d(-\omega) = X_d^*(\omega)$. Only $e^{j\omega_0 n}$ is an
+    eigenfunction of every LTI system; a cosine is two of them. Appending zeros never changes the DTFT. A magnitude is never
+    negative and a phase response is a principal angle.
+  </pl-hint>
+  <pl-hint hint-name="Test a claim on a tiny example" show-after-submission="1">
+    Try the statement on $x[n] = \delta[n-1]$ ($X_d = e^{-j\omega}$), on $2^n u[n]$ (no DTFT), on the delay
+    $y[n] = x[n-1]$ (it shifts a cosine), or on $h = \delta[n] + \delta[n-2]$ ($H_d = 2e^{-j\omega}\cos\omega$, which changes
+    sign). For a formula $H_d(\omega)$ or $X_d(\omega)$, compare $X_d(-\omega)$ with $X_d^*(\omega)$ before using any shortcut
+    for real signals.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <ul>
+    {{#params.statements}}
+    <li class="mb-2"><b>({{label}}) {{ans}}.</b> {{why}} <span class="text-muted"><small>(Modelled on {{src}}.)</small></span></li>
+    {{/params.statements}}
+  </ul>
+  <p class="text-muted"><small>Statements from the past Midterm 2 True/False problems (problem 1 on every exam, FA2019&ndash;SP2025),
+    some with randomized parameters, and new ones in the same spirit from Lectures 13&ndash;16 (DTFT, DTFT properties,
+    frequency response, magnitude and phase response).</small></p>
+</pl-answer-panel>

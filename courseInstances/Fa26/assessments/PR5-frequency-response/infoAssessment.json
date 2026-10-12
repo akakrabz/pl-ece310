@@ -1,0 +1,73 @@
+{
+  "uuid": "0d020168-a681-4b57-be07-4ee5a7a09fa2",
+  "type": "Homework",
+  "title": "Frequency response, magnitude and phase (L15–L16)",
+  "set": "Practice",
+  "number": "5",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 15–16, Homework 6: the response of an LTI system to sinusoids, magnitude and phase responses with their π jumps, group delay, and Midterm 2 true/false statements on Lectures 13–16. The pole–zero matching question is enrichment (the distance rule is not in the lecture notes).</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Frequency response",
+      "questions": [
+        {
+          "id": "dtft/frequency-response",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/sinusoidal-response",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Magnitude and phase",
+      "questions": [
+        {
+          "id": "freqresp/magnitude-phase-fir",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/phase-and-group-delay",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/pole-zero-and-magnitude",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "True/False",
+      "questions": [
+        {
+          "id": "dtft/true-false",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

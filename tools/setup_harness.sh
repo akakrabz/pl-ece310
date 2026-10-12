@@ -8,7 +8,8 @@
 # Needs git and python3 (3.12+; PrairieLearn itself runs 3.13). Downloads only from GitHub:
 #   - PrairieLearn (sparse): apps/prairielearn/{elements,python,src/schemas} + docs/{elements,question,assessment}
 #   - pure-Python packages, only if `import` fails: sympy 1.14.0, mpmath 1.3.0, chevron,
-#     text-unidecode, coloraide 8.12.1; plus a tiny stand-in for pint (units are not used)
+#     text-unidecode, coloraide 8.12.1, sketchresponse 0.1.5 (pl-sketch); plus a tiny stand-in
+#     for pint (units are not used)
 #   - Bootstrap 5.3.8 CSS (for tools/preview.py)
 # numpy, lxml, pandas, networkx and jsonschema must already be importable (pip install them if not;
 # scipy is needed by the answer checkers).
@@ -53,6 +54,7 @@ clone_pkg https://github.com/sympy/sympy.git sympy-1.14.0 sympy sympy
 clone_pkg https://github.com/noahmorrison/chevron.git "" chevron chevron
 clone_pkg https://github.com/kmike/text-unidecode.git "" src/text_unidecode text_unidecode
 clone_pkg https://github.com/facelessuser/coloraide.git 8.12.1 coloraide coloraide
+clone_pkg https://github.com/PrairieLearn/sketchresponse.git v0.1.5 sketchresponse sketchresponse   # pl-sketch grading (PrairieLearn pins 0.1.5)
 if need pint; then
   mkdir -p pylib/pint
   cat > pylib/pint/__init__.py <<'EOF'

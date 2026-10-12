@@ -1,0 +1,107 @@
+<pl-question-panel>
+  <p>
+    The plot shows <b>all</b> finite poles ($\times$) and zeros ($\circ$) of the transfer function $H(z)$ of an LTI
+    system, including any at $z = 0$; a small number next to a marker is its multiplicity ("2" for a double pole or zero),
+    and the dashed circle is $\lvert z\rvert = 1$.
+  </p>
+  {{{params.fig_html}}}
+  <p>
+    {{#params.is_b0}}The gain is fixed as follows: written as a ratio of polynomials in $z^{-1}$ whose denominator has constant
+    term $1$, the numerator of $H(z)$ has constant term $b_0 = {{params.K_tex}}$.{{/params.is_b0}}
+    {{#params.is_dc}}The gain is fixed by $H(1) = {{params.c_tex}}$.{{/params.is_dc}}
+    {{#params.is_ny}}The gain is fixed by $H(-1) = {{params.c_tex}}$.{{/params.is_ny}}
+    The ROC is not given.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Find $H(z)$. Type <code>z</code>, and use fractions, not decimals. Factored or multiplied-out forms, in powers of
+  $z$ or of $z^{-1}$, are all accepted; complex factors may use <code>j</code>. Example of the syntax:
+  <code>5*(z+4)/((z-1/3)*(z^2+9))</code>.</p>
+<pl-symbolic-input answers-name="H" variables="z" allow-complex="true" imaginary-unit-for-display="j"
+  label="$H(z) =$" size="50" display="block"></pl-symbolic-input>
+
+<p class="mt-3"><b>(b)</b> Suppose the system is causal. What is the ROC of $H(z)$?</p>
+<pl-multiple-choice answers-name="roc_c" order="fixed" hide-letter-keys="true">
+  {{#params.roc_c_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.roc_c_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(c)</b> Is that causal system BIBO stable?</p>
+<pl-multiple-choice answers-name="stab_c" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.stab_c_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.stab_c_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(d)</b> Now suppose instead that the system is BIBO stable. What is the ROC of $H(z)$?</p>
+<pl-multiple-choice answers-name="roc_s" order="fixed" hide-letter-keys="true">
+  {{#params.roc_s_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.roc_s_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(e)</b> What can you say about the causality of that BIBO stable system?</p>
+<pl-multiple-choice answers-name="kind_s" order="fixed" hide-letter-keys="true">
+  {{#params.kind_s_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.kind_s_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="From the plot to H(z)">
+    Each zero $z_k$ gives a factor $(z - z_k)$ in the numerator and each pole $p_k$ a factor $(z - p_k)$ in the
+    denominator; a zero at the origin is a factor $z$. The plot fixes $H(z)$ only up to a constant $K$:
+    $H(z) = K\,\prod_k (z - z_k)\big/\prod_k (z - p_k)$. Use the given condition to find $K$. A conjugate pair
+    $a \pm jb$ multiplies out to $z^2 - 2az + a^2 + b^2$.
+  </pl-hint>
+  <pl-hint hint-name="ROC, causality, stability" show-after-submission="1">
+    The possible ROCs are bounded by the circles through the poles (zeros play no role). Causal: outside the outermost pole.
+    BIBO stable: the ROC contains the unit circle $\lvert z\rvert = 1$; an ROC that only touches it (a pole on the circle)
+    does not count. Outside a circle = right-sided, inside = left-sided, a ring = two-sided (Lecture 11, Table 1).
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Poles: $z = {{params.poles_list_tex}}$. Zeros: $z = {{params.zeros_list_tex}}$
+    ({{params.count_text}}). Up to a constant,
+    $$H(z) = {{params.Hz_K_tex}}.$$</p>
+  {{#params.has_pairs}}
+  <p>Each conjugate pair multiplies out to a real quadratic:</p>
+  <ul>{{#params.pair_lines}}<li>${{line}}$</li>{{/params.pair_lines}}</ul>
+  {{/params.has_pairs}}
+  <p>Dividing the numerator and the denominator by $z^{ {{params.P}} }$ puts $H(z)$ in powers of $z^{-1}$:
+    $$H(z) = {{params.Hzi_K_tex}}.$$
+    {{#params.has_delay}}There are fewer finite zeros than poles, so a factor ${{params.d_tex}}$ is left over (a zero at
+    $z = \infty$): leaving it out is the classic slip.{{/params.has_delay}}
+    {{#params.is_b0}}In this form the numerator's constant term is $K$ itself, so ${{params.gain_tex}}$.{{/params.is_b0}}
+    {{#params.is_dc}}Substitute $z = 1$: ${{params.gain_tex}}$.{{/params.is_dc}}
+    {{#params.is_ny}}Substitute $z = -1$: ${{params.gain_tex}}$.{{/params.is_ny}}
+    Therefore
+    $$\begin{aligned} H(z) &amp;= {{params.H_fact_tex}} \\ &amp;= {{params.H_exp_tex}} \\ &amp;= {{params.H_pos_tex}}. \end{aligned}$$
+  </p>
+  <p><b>ROCs.</b> The distinct pole magnitudes are ${{params.mags_tex}}$, so there are ${{params.nrocs}}$ possible ROCs:</p>
+  <ul>{{#params.roc_list}}<li>${{tex}}$: {{note}} the unit circle</li>{{/params.roc_list}}</ul>
+  <p><b>(b)</b> $H(z)$ has no more finite zeros than poles, so it is finite at $z = \infty$, and a causal system has the ROC
+    outside its outermost pole, including $z = \infty$: ${{params.causal_roc_tex}}$.</p>
+  <p><b>(c)</b>
+    {{#params.causal_stable}}Every pole is inside the unit circle ($\lvert p\rvert_{\max} = {{params.rmax_tex}} \lt 1$), so the
+    causal ROC ${{params.causal_roc_tex}}$ contains $\lvert z\rvert = 1$: <b>yes</b>, the causal system is BIBO stable.{{/params.causal_stable}}
+    {{#params.causal_unstable}}{{#params.rmax_on}}The outermost pole lies <b>on</b> the unit circle, so the causal ROC
+    ${{params.causal_roc_tex}}$ only touches $\lvert z\rvert = 1$ without containing it: <b>no</b>, the causal system is not BIBO
+    stable.{{#params.marginal}} (It is marginally stable: its poles on the unit circle are simple, so $h[n]$ stays bounded,
+    but a bounded input with a pole at the same place gives an unbounded output.){{/params.marginal}}{{#params.on_repeated}}
+    The pole on the unit circle is repeated, so $h[n]$ itself grows like $n$ (e.g. $n\,a^n u[n]$ with $\lvert a\rvert = 1$):
+    already $x[n] = \delta[n]$ gives an unbounded output. This is not marginal stability, which needs simple poles on
+    the circle.{{/params.on_repeated}}{{/params.rmax_on}}{{^params.rmax_on}}The outermost pole has magnitude
+    ${{params.rmax_tex}} \gt 1$, so the causal ROC ${{params.causal_roc_tex}}$ misses the unit circle: <b>no</b>, the causal
+    system is not BIBO stable.{{/params.rmax_on}}{{/params.causal_unstable}}
+  </p>
+  <p><b>(d)</b>
+    {{#params.stable_exists}}BIBO stable $\iff$ the ROC contains $\lvert z\rvert = 1$. Exactly one of the ROCs above does:
+    ${{params.stable_roc_tex}}$.{{/params.stable_exists}}
+    {{#params.stable_none}}{{params.on_words}} $z = {{params.on_tex}}$ {{params.on_verb}} on the unit circle. An ROC never contains a pole, so no ROC
+    contains $\lvert z\rvert = 1$ (the ones bounded by that circle only touch it): <b>no</b> choice of ROC makes this system
+    BIBO stable.{{/params.stable_none}}
+  </p>
+  <p><b>(e)</b>
+    {{#params.stable_exists}}The stable ROC ${{params.stable_roc_tex}}$ is {{params.skind_text}}. (Causal and stable at once
+    $\iff$ every pole is inside the unit circle.){{/params.stable_exists}}
+    {{#params.stable_none}}There is no BIBO stable system with this $H(z)$, see (d).{{/params.stable_none}}
+  </p>
+  <p class="text-muted small">Modelled on Lecture 6 (pole-zero plots), Lecture 9 &sect;1.2 (poles, zeros and the gain of $H(z)$),
+    Lecture 11 (Table 1 and slide 10: the stable $h[n]$ and its causality), HW3 #4 run backwards (pole-zero plot and causal ROC),
+    FA2019 Midterm 1 #10 and the True/False items FA2023 #1(f), SP2025 #1(e), FA2025 #1(c).</p>
+</pl-answer-panel>

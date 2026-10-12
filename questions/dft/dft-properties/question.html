@@ -1,0 +1,79 @@
+<pl-question-panel>
+  <p><small><em>Ahead of the lectures: this topic is taught after Lecture 17 and appears on past Midterm 2 exams; notation follows those exams.</em></small></p>
+  <p>
+    The $N$-point DFT of a length-$N$ signal $\{x[n]\}_{n=0}^{N-1}$ is
+    $X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn}$, $k = 0, 1, \dots, N-1$; $\langle n\rangle_N$ denotes $n$ modulo $N$
+    (a number in $\{0, 1, \dots, N-1\}$).
+  </p>
+  <p>
+    Let $\{x[n]\}_{n=0}^{ {{params.Nm1}} } = {{params.x_tex}}$ be a length-${{params.N}}$ signal with ${{params.N}}$-point DFT
+    $\{X[k]\}_{k=0}^{ {{params.Nm1}} } = {{params.X_names_tex}}$.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The ${{params.N}}$-point DFT of another length-${{params.N}}$ signal $\{y[n]\}_{n=0}^{ {{params.Nm1}} }$ is
+  $${{params.Y_def_tex}}.$$
+{{#params.ask_vec}}
+  Determine $y[n]$ for $n = 0, 1, \dots, {{params.Nm1}}$, as a row vector (entries separated by commas inside brackets;
+  complex entries are typed like <code>2+3j</code> or <code>-j</code>, with no spaces or <code>*</code> inside an entry: type
+  <code>-3j</code>, not <code>-3 j</code> or <code>j3</code>; e.g. <code>[1, -2+3j, 0]</code>).</p>
+<pl-matrix-input answers-name="y" label="$y =$" allow-complex="true" comparison="relabs" rtol="1e-6" atol="1e-6"></pl-matrix-input>
+{{/params.ask_vec}}
+{{#params.ask_formula}}
+  Then $y[n]$ can be written as
+  $$y[n] = c\,e^{j\frac{2\pi}{ {{params.N}} }\ell n}\,x[\langle n - n_0\rangle_{ {{params.N}} }],\qquad n = 0, 1, \dots, {{params.Nm1}},$$
+  with $c \in \{1, -1\}$ and integers $0 \le \ell \le {{params.Nm1}}$, $0 \le n_0 \le {{params.Nm1}}$. Find $c$, $\ell$ and $n_0$.</p>
+<div class="mb-1"><pl-integer-input answers-name="coef" label="$c =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="ell" label="$\ell =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="n0" label="$n_0 =$"></pl-integer-input></div>
+{{/params.ask_formula}}
+
+<p class="mt-3"><b>(b)</b> Exactly one of the following lists is the ${{params.M}}$-point DFT $\{Z[k]\}_{k=0}^{ {{params.Mm1}} }$ of a
+  <b>real-valued</b> signal $\{z[n]\}_{n=0}^{ {{params.Mm1}} }$. Which one?</p>
+<pl-multiple-choice answers-name="real_list" hide-letter-keys="true">
+  {{#params.real_list_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.real_list_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="The property table">
+    $x[\langle n - m\rangle_N] \leftrightarrow e^{-j\frac{2\pi}{N}km}X[k]$ (circular delay by $m$; a plus sign in the exponent is an advance),
+    $e^{j\frac{2\pi}{N}\ell n}x[n] \leftrightarrow X[\langle k - \ell\rangle_N]$, $x[\langle -n\rangle_N] \leftrightarrow X[\langle -k\rangle_N]$,
+    $x^*[\langle -n\rangle_N] \leftrightarrow X^*[k]$, and $\sum_{m} x[m]\,h[\langle n - m\rangle_N] \leftrightarrow X[k]H[k]$.
+    Every index lives on a circle of $N$ points.
+  </pl-hint>
+  <pl-hint hint-name="Check the bookkeeping" show-after-submission="1">
+    Test your answer on one sample: $y[0]$ must come out right. $(-1)^k = e^{-j\frac{2\pi}{N}k\frac{N}{2}}$ is a circular shift by $\frac N2$,
+    while $(-1)^n$ multiplying $x[n]$ shifts the DFT by $\frac N2$ bins. A real signal has a Hermitian DFT: $X[0]$ (and $X[N/2]$ for even $N$)
+    real, and $X[k] = X^*[\langle -k\rangle_N] = X^*[N - k]$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b></p>
+  <ul>
+    {{#params.steps}}<li>{{{step_html}}}</li>{{/params.steps}}
+  </ul>
+  {{#params.is_square}}
+  <p>Linear convolution: $c = x * x = {{params.lin_tex}}$ (sum check: $\sum c = (\sum x)^2$).</p>
+  {{/params.is_square}}
+  {{#params.ask_vec}}
+  <p>
+    $${{params.y_formula_tex}},$$
+    $$\begin{aligned}\{y[n]\}_{n=0}^{ {{params.Nm1}} } &amp;= {{params.y_index_tex}} \\ &amp;= {{params.y_tex}}.\end{aligned}$$
+  </p>
+  {{/params.ask_vec}}
+  {{#params.ask_formula}}
+  <p>
+    $${{params.y_formula_tex}},$$
+    so $c = {{params.formula.c}}$, $\ell = {{params.formula.l}}$ and $n_0 = {{params.formula.n0}}$.
+  </p>
+  {{/params.ask_formula}}
+  <p><b>(b)</b> A real $z[n]$ has a Hermitian DFT, $Z[k] = Z^*[\langle -k\rangle_{ {{params.M}} }]$: $Z[0]$ is real{{^params.M_odd}} (and so is $Z[{{params.Mh}}]$, which pairs with itself){{/params.M_odd}},
+    and $Z[k]$, $Z[{{params.M}} - k]$ are conjugates.</p>
+  <ul>
+    {{#params.real_reasons}}<li>{{{list_html}}}: <b>{{verdict}}</b>. {{{why_html}}}</li>{{/params.real_reasons}}
+  </ul>
+  <p class="text-muted"><small>Modelled on FA2019 Midterm 2 #4 and SP2021 #4 (a linear phase on the DFT), SP2025 #8 (an advance),
+    FA2024 #8 (circular reversal and shift), FA2021 #3(b), SP2025 #7(b) and SP2023 #9(b) (a permuted, sign-alternated DFT), FA2021 #6(b)
+    (a product of DFTs is a circular convolution) and SP2021 #5 (is $x$ real?). Properties: 2019 course notes, Section 2.5.1 (Table 2.5).</small></p>
+</pl-answer-panel>

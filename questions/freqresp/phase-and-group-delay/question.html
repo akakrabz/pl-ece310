@@ -1,0 +1,89 @@
+<pl-question-panel>
+  <p>
+    An LTI system has the frequency response
+    $$H_d(\omega) = {{params.H_tex}}{{params.domain_tex}}.$$
+  </p>
+  {{#params.is_iir}}
+  <p>For a first-order system $\dfrac{g}{1 - a e^{-j\omega}}$ the group delay is
+    $$\tau(\omega) = \frac{a\cos\omega - a^2}{1 - 2a\cos\omega + a^2}\qquad(\text{here } a = {{params.a_tex}}).$$</p>
+  {{/params.is_iir}}
+</pl-question-panel>
+
+<p class="small text-muted">Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant
+  digits (for example <code>1.155</code> for $\tfrac{2}{\sqrt{3}}$). Enter angles as multiples of $\pi$ (for
+  $\tfrac{3\pi}{4}$ type <code>3/4</code>), as the <b>principal value</b> in $(-\pi, \pi]$: an angle off by a multiple of
+  $2\pi$ is marked wrong.</p>
+
+<p><b>(a)</b> Magnitude and phase at $\omega = {{params.fa_tex}}$:</p>
+<div class="mb-1"><pl-number-input answers-name="mag_a" label="$\left|H_d\!\left({{params.fa_tex}}\right)\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="ph_a" label="$\angle H_d\!\left({{params.fa_tex}}\right) =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> Magnitude and phase at $\omega = {{params.fb_tex}}$:</p>
+<div class="mb-1"><pl-number-input answers-name="mag_b" label="$\left|H_d\!\left({{params.fb_tex}}\right)\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="ph_b" label="$\angle H_d\!\left({{params.fb_tex}}\right) =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> The group delay $\tau(\omega) = -\dfrac{d\angle H_d(\omega)}{d\omega}$, in samples, at $\omega = {{params.fc_tex}}$:</p>
+<pl-number-input answers-name="tau" label="$\tau\!\left({{params.fc_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(d)</b> At which of these frequencies does the phase response $\angle H_d(\omega)$ have a jump of $\pm\pi$?
+  Select all that apply. (A $2\pi$ wrap that only keeps the principal value inside $(-\pi, \pi]$ is not a jump of $\pm\pi$.)</p>
+<pl-checkbox answers-name="jumps" order="fixed" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.jump_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.jump_choices}}
+</pl-checkbox>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Split off a real factor">
+    Write $H_d(\omega)$ as a factor of modulus one times a <b>real</b> function $R(\omega)$. Then $|H_d| = |R|$, and the phase is
+    the angle of the unit-modulus factor, plus $\pm\pi$ where $R(\omega) \lt 0$ (because $-1 = e^{\pm j\pi}$). A ratio such as
+    $\dfrac{1}{1 - a e^{-j\omega}}$ has no such factor: compute magnitude and angle of the denominator and invert.
+  </pl-hint>
+  <pl-hint hint-name="Jumps, wraps and the slope" show-after-submission="1">
+    A $\pm\pi$ jump happens only where the real factor changes sign (a zero of $|H_d|$). A $2\pi$ wrap happens where the phase
+    reaches $\pm\pi$; it changes nothing. The group delay is minus the slope of the phase between jumps and wraps; for
+    $\dfrac{1}{1 - a e^{-j\omega}}$ it is $\tau(\omega) = \dfrac{a\cos\omega - a^2}{1 - 2a\cos\omega + a^2}$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Modelled on Lecture 16, &sect;2&ndash;4 (principal angle, the $\pm\pi$ jumps of a real factor that changes sign) and &sect;7
+    (group delay); SP2021 Midterm 2 #2 ($e^{-j4\omega}\sin 2\omega$) and FA2023 Midterm 2 #4(a) ($(\tfrac12 + \cos\omega)e^{j|\omega|}$).</p>
+  {{^params.is_iir}}
+  <p>Here $H_d(\omega)$ is a unit-modulus factor times the real factor $R(\omega) = {{params.R_tex}}$, so
+    $|H_d(\omega)| = |R(\omega)|$ and the phase is
+    {{#params.is_lin}}$-{{params.M}}\omega${{/params.is_lin}}{{#params.is_even}}${{params.phase_lin_tex}}${{/params.is_even}}
+    where $R \gt 0$, and that plus $\pm\pi$ where $R \lt 0$, reduced to $(-\pi, \pi]$.</p>
+  <ul>
+    {{#params.rows}}
+    <li>$\omega = {{w_tex}}$: $R = {{R_val}}{{#neg}} \lt 0{{/neg}}{{^neg}} \gt 0{{/neg}}$, so $|H_d| = {{mag_tex}}{{#irr}} \approx {{mag_dec}}{{/irr}}$ and the angle is
+      ${{angle_work}}$.</li>
+    {{/params.rows}}
+  </ul>
+  <p>So (a) $\left|H_d\!\left({{params.fa_tex}}\right)\right| = {{params.mag_a_tex}}$ and $\angle H_d\!\left({{params.fa_tex}}\right) = {{params.ph_a_plain}}\cdot\pi$;
+    (b) $\left|H_d\!\left({{params.fb_tex}}\right)\right| = {{params.mag_b_tex}}$ and $\angle H_d\!\left({{params.fb_tex}}\right) = {{params.ph_b_plain}}\cdot\pi$.
+    Forgetting the $\pm\pi$ of the negative real factor in ({{params.neg_letter}}) gives ${{params.nojump_neg}}\cdot\pi$, which is wrong.</p>
+  {{#params.is_lin}}
+  <p>(c) Between its breaks the phase is a line of slope $-{{params.M}}$, so $\tau(\omega) = {{params.M}}$ samples at every
+    $\omega$ where $H_d(\omega) \ne 0$, in particular at $\omega = {{params.fc_tex}}$.</p>
+  {{/params.is_lin}}
+  {{#params.is_even}}
+  <p>(c) For $\omega \gt 0$ the phase is ${{params.phase_lin_tex}}$ (plus a constant $\pm\pi$ on the intervals where $R \lt 0$),
+    whose slope is ${{params.s_word}}1$. So $\tau\!\left({{params.fc_tex}}\right) = {{params.tau_tex}}${{#params.tau_neg}}: a group delay can be negative{{/params.tau_neg}}.
+    The phase is even, not odd, so $h[n]$ is not real.</p>
+  {{/params.is_even}}
+  {{/params.is_iir}}
+  {{#params.is_iir}}
+  <p>There is no real factor to split off. Evaluate the denominator at each frequency, then invert (magnitudes divide, angles
+    change sign):</p>
+  {{#params.rows}}$${{line}}{{#irr}}\approx {{mag_dec}}\,{{ph_e_tex}}{{/irr}}.$${{/params.rows}}
+  <p>So $\angle H_d\!\left({{params.fa_tex}}\right) = {{params.ph_a_plain}}\cdot\pi$ and
+    $\angle H_d\!\left({{params.fb_tex}}\right) = {{params.ph_b_plain}}\cdot\pi$ (for a real $h[n]$ the phase is odd).</p>
+  <p>(c) Differentiating $\angle H_d(\omega) = -\tan^{-1}\dfrac{a\sin\omega}{1 - a\cos\omega}$ gives the formula stated
+    with the question (Lecture 16, &sect;7: the phase is not linear, so the group delay is not uniform). With $a = {{params.a_tex}}$:
+    $${{params.tau_work_tex}}.$$</p>
+  {{/params.is_iir}}
+  <p>(d) {{#params.has_jumps}}The real factor changes sign at $\omega = {{params.jumps_tex}}$ in $(0, \pi)$: the phase jumps by
+    $\pm\pi$ there.{{/params.has_jumps}}{{^params.has_jumps}}No real factor changes sign in $(0, \pi)$ ($H_d$ has no zero
+    there), so the phase has no $\pm\pi$ jump: the answer is "{{params.none_text}}".{{/params.has_jumps}}
+    {{#params.has_wraps}}The breaks at $\omega = {{params.wraps_tex}}$ are $2\pi$ wraps of the principal value (the phase line reaches
+    $\pm\pi$), not jumps.{{/params.has_wraps}}</p>
+</pl-answer-panel>

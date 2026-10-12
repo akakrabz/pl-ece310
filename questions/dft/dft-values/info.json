@@ -1,0 +1,8 @@
+{
+  "uuid": "d13af1e3-24ff-438e-b099-77e49199c7d4",
+  "title": "DFT values: X[0], X[N/2], one bin, Parseval and the inverse DFT",
+  "topic": "DFT",
+  "tags": ["ahead", "midterm2", "fam2-dft", "numeric", "matrix", "easy"],
+  "type": "v3",
+  "singleVariant": false
+}

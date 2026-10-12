@@ -1,0 +1,8 @@
+{
+  "uuid": "ec7590b5-9200-4dc7-879b-31692fad7a70",
+  "title": "Ideal D/A reconstruction: sinc interpolation, zero-order hold, aliased inputs",
+  "topic": "Sampling and reconstruction",
+  "tags": ["ahead", "midterm2", "fam2-sampling", "numeric", "checkbox", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

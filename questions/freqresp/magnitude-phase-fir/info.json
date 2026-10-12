@@ -1,0 +1,8 @@
+{
+  "uuid": "70d0693a-83fb-42da-b9bf-94b3c7db709c",
+  "title": "Linear-phase FIR: pull out the delay, magnitude, phase jumps, group delay",
+  "topic": "Frequency response",
+  "tags": ["L16", "hw6", "midterm2", "fam2-magphase", "numeric", "symbolic", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

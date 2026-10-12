@@ -1,0 +1,72 @@
+<pl-question-panel>
+  <p>
+    The analog signal $x_a(t)$ has the real, even CTFT $X_a(\Omega)$ sketched below ($\Omega$ in rad/s):
+    {{{params.words_html}}},
+    $$X_a(\Omega) = {{params.xa_tex}}$$
+  </p>
+  {{{params.fig_html}}}
+  <p>
+    It is sampled ideally with sampling period $T = {{params.T_tex}}$ s, $x[n] = x_a(nT)$. Let $X_d(\omega)$ be the
+    DTFT of $x[n]$.
+  </p>
+  {{#params.jumpy}}<p>This spectrum jumps at its band edges. At a frequency where jumps of two copies meet, $X_d$ means the
+    common value of its one-sided limits.</p>{{/params.jumpy}}
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.
+    Enter digital frequencies as multiples of $\pi$: for $\tfrac{3\pi}{4}$ type <code>3/4</code>.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> The band edge $\omega_B$ of the spectral copy centred at $\omega = 0$ (the digital frequency of the
+  analog band edge; that copy is zero for $\lvert\omega\rvert \gt \omega_B$), as a multiple of $\pi$:</p>
+<pl-number-input answers-name="wB" label="$\omega_B =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> Values of the DTFT of the samples:</p>
+<div class="mb-1"><pl-number-input answers-name="X0" label="$X_d(0) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Xpi" label="$X_d(\pi) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="X1" label="$X_d\!\left({{params.u1_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> Which statement describes the spectral copies in $X_d(\omega)$?</p>
+<pl-multiple-choice answers-name="regime" order="fixed" hide-letter-keys="true">
+  {{#params.regime_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.regime_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="The recipe">
+    $X_d(\omega) = \dfrac{1}{T}\sum_{k} X_a\!\left(\dfrac{\omega - 2\pi k}{T}\right)$: rescale the axis by $\omega = \Omega T$
+    (so the band edge $\Omega_B$ moves to $\Omega_B T$), multiply every height by $\tfrac{1}{T}$, put a copy at every multiple
+    of $2\pi$, and <b>add</b> the copies wherever they overlap.
+  </pl-hint>
+  <pl-hint hint-name="Which copies reach a frequency?" show-after-submission="1">
+    The copy centred at $2\pi k$ is nonzero only for $\lvert\omega - 2\pi k\rvert \lt \omega_B$. At $\omega = \pi$ the copies
+    at $0$ and $2\pi$ are equally far away, so either both or neither contribute. The copies are apart, touch, or overlap
+    according to $\omega_B \lt \pi$, $\omega_B = \pi$ or $\omega_B \gt \pi$, i.e. $f_s \gt 2B$, $f_s = 2B$ or $f_s \lt 2B$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    {{#params.named}}These are the numbers of {{{params.source_html}}}. {{/params.named}}The band edge is
+    $\Omega_B = {{params.WB_tex}}$ rad/s, i.e. $B = {{params.B_tex}}$ Hz, so the Nyquist rate is $2B = {{params.twoB_tex}}$ Hz.
+    Here $f_s = \tfrac{1}{T} = {{params.fs_tex}}$ Hz, so $f_s {{params.cmp_tex}} 2B$: we sample
+    {{{params.regime_html}}}.
+  </p>
+  <p>
+    <b>(a)</b> $\omega = \Omega T$ moves the band edge to $\omega_B = \Omega_B T = {{params.b_work_tex}}$
+    {{#params.trap_note}}(and the corner of the flat top to ${{params.c_work_tex}}$){{/params.trap_note}}: enter
+    <code>{{params.b_plain}}</code>.
+  </p>
+  <p>
+    <b>(b)</b> Every copy is scaled by $\tfrac{1}{T}$: its height is ${{params.H_work_tex}}$. The copy centred at $0$ is
+    $$\frac{1}{T}X_a\!\left(\frac{\omega}{T}\right) = {{params.central_tex}},$$
+    and the copy centred at $2\pi k$ is the same shape shifted by $2\pi k$. Adding the copies that reach each frequency:
+    $${{params.X0_line}}$$ {{{params.X0_note_html}}}
+    $${{params.Xpi_line}}$$ {{{params.Xpi_note_html}}}
+    $${{params.X1_line}}$$ {{{params.X1_note_html}}}
+  </p>
+  <p>
+    <b>(c)</b> Compare the band edge with $\pi$ (equivalently $f_s$ with $2B$): $\omega_B = {{params.b_tex}}$, so we are
+    {{{params.regime_html}}}.
+  </p>
+  <p class="text-muted"><small>Modelled on Lecture 17 (notes eq. 16, the recipe from $X_a$ to $X_d$; Example 1: a box at
+    $T = \tfrac{1}{20}$ and $\tfrac{1}{10}$ s; Example 2: a triangle at 150, 100 and 75 Hz) and the $X_d$ sketches of
+    FA2024 Midterm 2 #5(b), SP2025 Midterm 2 #5(a) and SP2021 Midterm 2 #8(b).</small></p>
+</pl-answer-panel>

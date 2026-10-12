@@ -182,6 +182,28 @@ def extract_math(html: str) -> list[str]:
     return [(a or b).strip() for a, b in MATH.findall(text) if (a or b).strip()]
 
 
+DISPLAY_LINT = [
+    (re.compile(r"e\^\{\s*[+-]?\s*j\s*[-+\u2212]"), "sign after j in an exponent (e^{j-...})"),
+    (re.compile(r"(?:\+|(?<![<>])-|\u2212)\s*(?:-|\u2212)(?![-\u2212>])"), "double sign (+ -, - -)"),
+    (re.compile(r"(?<![\d.\w}\]])1\s*(?:\\[,;:!]\s*)?\\(?:cos|sin)\b"), "coefficient 1 written out (1\\cos, 1\\sin)"),
+    (re.compile(r"\}1\s*[a-z]\b"), "a factor 1 glued to a symbol (\\frac{..}{..}1n)"),
+    (re.compile(r"(?<![\d.\w])[01]\s*T(?![\w])"), "0 T or 1 T"),
+]
+
+
+def display_lint(exprs: list[str]) -> list[str]:
+    """Typesetting slips that KaTeX accepts but students would misread (warnings)."""
+    out = []
+    for e in sorted(set(exprs)):
+        for rx, what in DISPLAY_LINT:
+            m = rx.search(e)
+            if m:
+                lo = max(0, m.start() - 25)
+                out.append(f"display lint: {what}: ...{e[lo:m.end() + 25]}...")
+                break
+    return out
+
+
 def katex_check(exprs: list[str]) -> list[str]:
     katex = next((p for p in KATEX_CANDIDATES if p.exists()), None)
     if katex is None or not exprs:
@@ -323,6 +345,7 @@ def run_question(qid: str, gen_seeds: list[int], pipe_seeds: list[int], verbose:
     katex_problems = katex_check(math_exprs)
     stats["math"] = len(set(math_exprs))
     problems += katex_problems
+    q.warnings += display_lint(math_exprs)
     if verbose and q.warnings:
         for w in sorted(set(q.warnings)):
             print("   warn:", w)

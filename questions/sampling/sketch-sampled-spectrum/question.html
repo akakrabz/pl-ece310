@@ -1,0 +1,82 @@
+<pl-question-panel>
+  <p>
+    The analog signal $x_a(t)$ has the real, even CTFT $X_a(\Omega)$ sketched below ($\Omega$ in rad/s):
+    {{{params.words_html}}},
+    $$X_a(\Omega) = {{params.xa_tex}}$$
+  </p>
+  {{{params.fig_html}}}
+  <p>
+    It is sampled ideally with sampling period $T = {{params.T_tex}}$ s, $x[n] = x_a(nT)$.
+    <b>Sketch the DTFT $X_d(\omega)$ of $x[n]$ for $-\pi \le \omega \le \pi$</b> on the canvas below.
+  </p>
+  <ul>
+    <li>The horizontal axis (labelled $x$) is $\omega/\pi$: $x = 1$ is $\omega = \pi$, $x = 0.5$ is $\omega = \tfrac{\pi}{2}$,
+      $x = -\tfrac{2}{3} \approx -0.667$ is $\omega = -\tfrac{2\pi}{3}$. The grid lines are $0.05$ apart.</li>
+    <li>The vertical axis (labelled $y$) is $X_d(\omega)$ itself, including the factor $\tfrac{1}{T}$.</li>
+    <li>Here $X_d(\omega)$ is piecewise linear, so it is fixed by its corners. With the <b>Corner</b> (point) tool, mark
+      <b>every corner of $X_d$ on $-1 \le x \le 1$</b>: each point where the graph changes slope, and the two ends $x = -1$ and
+      $x = 1$ (also where $X_d = 0$). Only the marked points are graded: every corner must be marked (within about 15 pixels),
+      and any extra point must lie on $X_d$. Points can be dragged after placing them.</li>
+    <li>A <b>Helper line</b> (polyline, in the helper menu) is available to sketch the shape first; it is not graded
+      (draw it as one line).</li>
+  </ul>
+</pl-question-panel>
+
+<pl-sketch answers-name="xd" x-range="-1,1" y-range="{{params.ymin}},{{params.ymax}}" width="720" height="400" enforce-bounds="true">
+  <pl-sketch-tool id="pl" type="polyline" label="Helper line" helper="true"></pl-sketch-tool>
+  <pl-sketch-tool id="pt" type="point" label="Corner" size="11"></pl-sketch-tool>
+  <pl-sketch-grade type="count" tool-id="pt" count="{{params.ncorners}}" mode="at-least" stage="1" weight="0"
+    feedback="Mark every corner of X_d between x = -1 and x = 1, including both ends."></pl-sketch-grade>
+  {{#params.fn_ranges}}
+  <pl-sketch-grade type="less-than" tool-id="pt" function="{{params.fn}}" x-range="{{range}}" stage="1" weight="0"
+    feedback="A point you marked between x = {{lo}} and x = {{hi}} lies above X_d (check the height 1/T, the band edge and the overlaps)."></pl-sketch-grade>
+  <pl-sketch-grade type="greater-than" tool-id="pt" function="{{params.fn}}" x-range="{{range}}" stage="1" weight="0"
+    feedback="A point you marked between x = {{lo}} and x = {{hi}} lies below X_d (check the height 1/T, the band edge and the overlaps)."></pl-sketch-grade>
+  {{/params.fn_ranges}}
+  {{#params.key_points}}
+  <pl-sketch-grade type="match" tool-id="pt" x="{{x}}" y="{{y}}" stage="1" weight="0" feedback="{{fb}}"></pl-sketch-grade>
+  {{/params.key_points}}
+  <pl-sketch-grade type="count" tool-id="pt" count="0" mode="at-least" stage="2" weight="1"
+    feedback="No credit: every check above must pass."></pl-sketch-grade>
+  {{#params.sol_pts}}<pl-sketch-solution tool-id="pt" coordinates="{{c}}"></pl-sketch-solution>
+  {{/params.sol_pts}}
+</pl-sketch>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="The recipe">
+    $X_d(\omega) = \dfrac{1}{T}\sum_{k} X_a\!\left(\dfrac{\omega - 2\pi k}{T}\right)$: rescale the axis by $\omega = \Omega T$
+    (the band edge $\Omega_B$ moves to $\omega_B = \Omega_B T$), multiply every height by $\tfrac{1}{T}$, put a copy at every
+    multiple of $2\pi$, and <b>add</b> the copies wherever they overlap. Only the period $[-\pi, \pi]$ is drawn.
+  </pl-hint>
+  <pl-hint hint-name="Corners and overlaps" show-after-submission="1">
+    The corners of $X_d$ are where a copy starts, ends or bends: $\pm\omega_B$ (and the corners of a flat top) for the copy
+    at $0$, and $\pm(2\pi - \omega_B)$ where the copies at $\pm 2\pi$ begin. If $\omega_B \gt \pi$ those copies reach into
+    $[-\pi, \pi]$: add them to the central one there. Two ramps of opposite slope add to a straight (often flat) line.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    {{#params.named}}These are the numbers of {{{params.source_html}}}. {{/params.named}}The band edge is
+    $\Omega_B = {{params.WB_tex}}$ rad/s, i.e. $B = {{params.B_tex}}$ Hz and a Nyquist rate of $2B = {{params.twoB_tex}}$ Hz;
+    $f_s = \tfrac{1}{T} = {{params.fs_tex}}$ Hz, so $f_s {{params.cmp_tex}} 2B$.
+  </p>
+  <ul>
+    <li>Axis: $\omega = \Omega T$ moves the band edge to $\omega_B = {{params.b_work_tex}}${{#params.trap_note}} and the corner of
+      the flat top to ${{params.c_work_tex}}${{/params.trap_note}}.</li>
+    <li>Height: every copy is scaled by $\tfrac{1}{T}$, so its height is ${{params.H_work_tex}}$. The copy centred at $0$ is
+      $\tfrac{1}{T}X_a\!\left(\tfrac{\omega}{T}\right) = {{params.central_tex}}$.</li>
+    <li>Copies: one centred at every $2\pi k$. We sample {{{params.regime_html}}}.</li>
+  </ul>
+  <p>Value at $\omega = 0$ and at each corner on $0 \lt \omega \le \pi$ (the left half is the mirror image, $X_d$ is even):</p>
+  {{#params.corner_lines}}
+  <p>$${{line}}$$</p>
+  {{/params.corner_lines}}
+  <p>
+    So $X_d(\omega)$ on $[-\pi, \pi]$ is the polyline through these corners $(\omega/\pi,\ X_d)$, the points to mark:
+    $${{params.vertex_list_tex}}.$$
+  </p>
+  <p class="text-muted"><small>Modelled on Lecture 17 (notes eq. 16 and the recipe from $X_a$ to $X_d$; Example 2: a triangle
+    at 150, 100 and 75 Hz) and the $X_d$ sketches of FA2024 Midterm 2 #5(b) and SP2025 Midterm 2 #5(a). A numeric twin of this
+    problem is <code>sampling/sampled-spectrum</code>.</small></p>
+</pl-answer-panel>

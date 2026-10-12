@@ -1,0 +1,8 @@
+{
+  "uuid": "d22f26d0-e72e-4495-a5db-fcf8d048c9bc",
+  "title": "Sampling sinusoids: aliased frequency, phase flip, consistent frequencies",
+  "topic": "Sampling and reconstruction",
+  "tags": ["L17", "midterm2", "fam2-sampling", "numeric", "checkbox", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

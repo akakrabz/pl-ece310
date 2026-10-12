@@ -1,0 +1,47 @@
+<pl-question-panel>
+  <p>The DTFT $X_d(\omega)$ of a sequence $x[n]$ is shown below for $-\pi \le \omega \le \pi$ (like every DTFT, it repeats
+    every $2\pi$){{#params.is_tri}}: a triangle of height ${{params.A_tex}}$ that reaches zero at $\omega = \pm{{params.W_tex}}${{/params.is_tri}}{{#params.is_rect}}:
+    height ${{params.A_tex}}$ for $|\omega| \lt {{params.W_tex}}$ and $0$ for ${{params.W_tex}} \lt |\omega| \le \pi${{/params.is_rect}}.
+    Let
+    $$y[n] = {{params.y_tex}}.$$</p>
+  {{{params.fig_html}}}
+</pl-question-panel>
+
+<p><b>(a)</b> Find the DTFT $Y_d(\omega)$ of $y[n]$ at the three frequencies below. Enter exact values: fractions such as
+  <code>13/7</code> are accepted; decimals need 4 significant digits.</p>
+<div class="mb-1"><pl-number-input answers-name="y1" label="$Y_d\left({{params.wpt1_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="y2" label="$Y_d\left({{params.wpt2_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="y3" label="$Y_d\left({{params.wpt3_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> $Y_d(\omega)$ is built from shifted copies of $X_d(\omega)$. Consider the copy whose centre lies in
+  $0 \lt \omega \le \pi$ (not the one centred at $\omega = 0$). Before any folding back by $2\pi$-periodicity it occupies
+  $\omega_L \le \omega \le \omega_H$; $\omega_L$ may be negative and $\omega_H$ may exceed $\pi$. Enter both edges as multiples
+  of $\pi$ (for $\tfrac{2\pi}{7}$ type <code>2/7</code>).</p>
+<div class="mb-1"><pl-number-input answers-name="wl" label="$\omega_L =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="wh" label="$\omega_H =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Modulation makes shifted copies">
+    $e^{j\omega_0 n}x[n] \leftrightarrow X_d(\omega - \omega_0)$. A cosine is two exponentials, so
+    $x[n]\cos(\omega_0 n) \leftrightarrow \tfrac12 X_d(\omega - \omega_0) + \tfrac12 X_d(\omega + \omega_0)$;
+    $\cos^2\theta = \tfrac12 + \tfrac12\cos 2\theta$; and $(-1)^n = e^{j\pi n}$.
+  </pl-hint>
+  <pl-hint hint-name="Overlaps and wrap-around" show-after-submission="1">
+    Use the <b>periodic</b> $X_d$: a copy that runs past $+\pi$ comes back in at $-\pi$ (and vice versa). Where copies overlap,
+    their heights add.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Lecture 14 (frequency shift and modulation): $$Y_d(\omega) = {{params.Y_tex}},$$ with the $2\pi$-periodic $X_d$.
+    The copies:</p>
+  <ul>{{#params.copies}}<li>{{{line_html}}}</li>{{/params.copies}}</ul>
+  <p><b>(a)</b> Add every copy that covers the frequency (an argument outside $[-\pi, \pi]$ is first moved there by $2\pi$):</p>
+  <ul>{{#params.evals}}<li>{{{line_html}}}</li>{{/params.evals}}</ul>
+  <p><b>(b)</b> The copy centred at ${{params.centre_tex}}$ (height ${{params.copy_height_tex}}$) spans
+    $\omega_L = {{params.wl_tex}}$ to $\omega_H = {{params.wh_tex}}$.{{#params.wraps}} Its part above $\pi$ is the same as
+    the band $[-\pi, {{params.wrap_lo_tex}}]$ of the period $[-\pi, \pi]$.{{/params.wraps}}</p>
+  <p class="text-muted"><small>Modelled on SP2025 MT2 #2 (sketch $Y_d$ for $x[n]\cos(\tfrac{2\pi}{5}n)$ and
+    $x[n]\cos^2(\tfrac{2\pi}{5}n)$: half-height and quarter-height copies, overlaps and the wrap-around at $\pm\pi$), Lecture 14
+    (frequency shift and modulation properties) and the site's Practice 4 (modulation that wraps around).</small></p>
+</pl-answer-panel>

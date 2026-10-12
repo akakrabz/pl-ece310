@@ -1,0 +1,87 @@
+<pl-question-panel>
+  <p><small><em>Ahead of the lectures: this topic is taught after Lecture 17 and appears on past Midterm 2 exams; notation follows those exams.</em></small></p>
+  <p>
+    An <b>ideal D/A converter</b> with sampling period $T$ turns a sequence $x[n]$ into
+    $$y_a(t) = \sum_{n=-\infty}^{\infty} x[n]\,\frac{\sin\big(\pi(t - nT)/T\big)}{\pi(t - nT)/T}$$
+    (each ratio equals $1$ at $t = nT$). A <b>zero-order hold</b> (ZOH) with period $T$ holds each sample instead:
+    its output is $y_{\text{ZOH}}(t) = x[n]$ for $nT \le t \lt (n+1)T$.
+  </p>
+  <p><small>Enter exact values where you can: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant
+    digits (for example <code>0.5774</code> for $1/\sqrt{3}$).</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> The sequence $x[n] = {{params.a.x_tex}}$, defined for all $n$, is applied to an ideal D/A converter with
+  ${{params.a.T_tex}}$. The output can be written $y_a(t) = C\cos(2\pi f_0 t + \phi)$ with $C \gt 0$, $f_0 \ge 0$ and
+  $-\pi \lt \phi \le \pi$. Find $f_0$ in hertz, $C$, and $\phi$ as a multiple of $\pi$ (for $\phi = -\tfrac{2\pi}{7}$ you would type
+  <code>-2/7</code>).</p>
+<div class="mb-1"><pl-number-input answers-name="f0" label="$f_0 =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="amp" label="$C =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="phi" label="$\phi =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> Now take {{{params.b.x_intro_html}}} and ${{params.b.Tb_tex}}$. Find the ZOH output at
+  ${{params.b.t1_tex}}$, and the ideal D/A output at ${{params.b.t2_tex}}$ and at ${{params.b.t3_tex}}$.</p>
+<div class="mb-1"><pl-number-input answers-name="zoh" label="$y_{\text{ZOH}}(t_1) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="ideal_s" label="$y_a(t_2) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="ideal_h" label="$y_a(t_3) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> An analog signal $x_a(t)$ is sampled by an ideal A/D converter at $f_s = {{params.c.fsc_tex}}$ Hz, and the
+  samples $x[n] = x_a(nT)$ go straight into an ideal D/A converter with the same $T$. The output is
+  $y_a(t) = {{params.c.yc_tex}}$ ($t$ in seconds, frequencies in rad/s). Which of these inputs could have produced this
+  output? Select <b>all</b> that apply.</p>
+<pl-checkbox answers-name="inputs" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.inputs_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.inputs_choices}}
+</pl-checkbox>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="What the ideal D/A can output">
+    The ideal D/A is an ideal low-pass interpolator: it rebuilds the one signal with frequencies below $\frac{\pi}{T}$ rad/s
+    ($\frac{f_s}{2}$ Hz) that passes through the samples. So reduce the digital frequency to $(-\pi, \pi]$ first (subtract
+    multiples of $2\pi$; use $\cos(-u) = \cos u$), then replace $n$ by $t/T$: $\omega_0$ rad/sample becomes
+    $\omega_0/T$ rad/s, i.e. $\omega_0/(2\pi T)$ Hz.
+  </pl-hint>
+  <pl-hint hint-name="Sample instants, halfway points, and aliases" show-after-submission="1">
+    At $t = mT$ every term except $n = m$ vanishes, so $y_a(mT) = x[m]$. Halfway, at $t = (m + \tfrac12)T$, each
+    $\sin\big(\pi(t - nT)/T\big) = \pm 1$, so sample $n$ contributes $\pm\dfrac{x[n]}{\pi\,(m - n + \frac12)}$: the two nearest samples get
+    $\frac{2}{\pi}$, the next two $-\frac{2}{3\pi}$, and so on. The ZOH just holds the most recent sample. In (c), an input at $F$ Hz
+    lands at $\omega = 2\pi F/f_s$; it gives the same samples only if $\omega$ reduces to $+\omega_0$ with the same phase, or to
+    $-\omega_0$ with the opposite phase.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> The samples are those of a cosine with digital frequency ${{params.a.w1_tex}}$.
+    {{#params.a.is_alias}}The ideal D/A only produces frequencies with $\lvert\Omega\rvert \lt \pi/T$, so first reduce the digital
+    frequency to $(-\pi, \pi]$:
+    $${{params.a.reduce_tex}}.$$
+    {{{params.a.reduce_why_html}}}{{/params.a.is_alias}}
+    {{#params.a.is_principal}}It already lies in $(0, \pi)$, so nothing needs to be reduced.{{/params.a.is_principal}}
+    The ideal D/A then rebuilds the band-limited cosine through these samples by replacing $n$ with $t/T$, i.e. $\omega_0 n$ with
+    $\omega_0 f_s t$, where $f_s = 1/T = {{params.a.fs_tex}}$ Hz:
+    $$y_a(t) = {{params.a.y_tex}},$$
+    so $f_0 = \dfrac{\omega_0}{2\pi}\,f_s = \dfrac{ {{params.a.w0_tex}} }{2\pi}\cdot {{params.a.fs_tex}} = {{params.a.f0_tex}}$ Hz
+    ($\Omega_0 = {{params.a.Om0_tex}}$ rad/s), $C = {{params.a.A}}$ (the interpolated cosine passes through every sample, so it keeps the samples' amplitude),
+    and $\phi = {{params.a.phi_tex}}$.</p>
+
+  <p><b>(b)</b> ZOH: $t_1 = {{params.b.t1T_tex}}\,T$ lies in $[{{params.b.m1T_tex}}, {{params.b.m1p1T_tex}})$, where the hold outputs the
+    sample taken at the start of the interval: $y_{\text{ZOH}}(t_1) = x[{{params.b.m1}}] = {{params.b.x_m1_tex}}$.</p>
+  <p>Ideal D/A at $t_2 = {{params.b.t2T_tex}}$, a sample instant: ${{params.b.ratio2_tex}}$ is $0$
+    for every $n \ne {{params.b.m2}}$ and $1$ for $n = {{params.b.m2}}$, so the interpolation passes through the samples:
+    $y_a(t_2) = x[{{params.b.m2}}] = {{params.b.x_m2_tex}}$.</p>
+  <p>Ideal D/A at ${{params.b.half_pair_tex}}$, halfway between two sample instants: each
+    $\sin\big(\pi({{params.b.t3T_tex}} - n)\big) = {{params.b.sign3_tex}}$, so sample $n$ contributes
+    $\dfrac{ {{params.b.sign3_tex}}\,x[n]}{\pi({{params.b.t3T_tex}} - n)} = \dfrac{2}{\pi}\cdot\dfrac{ {{params.b.sign3_tex}}\,x[n]}{ {{params.b.den3_tex}} }$:
+    $$y_a(t_3) = {{params.b.half_terms_tex}} = \tfrac{2}{\pi}\cdot {{params.b.R_tex}} \approx {{params.b.val3_tex}}.$$
+    Between the samples the ideal D/A is <i>not</i> a straight line: every nonzero sample's sinc reaches in.</p>
+
+  <p><b>(c)</b> An input $B\cos(\Omega t + \phi)$ gives the samples $B\cos(\omega n + \phi)$ with $\omega = \Omega T = 2\pi F/f_s$;
+    the output is ${{params.c.yc_tex}}$ exactly when $\omega$ reduces to $+{{params.c.w0c_tex}}$ with the same phase, or to
+    $-{{params.c.w0c_tex}}$ with the opposite phase (then $\cos(-\omega_0 n + \phi) = \cos(\omega_0 n - \phi)$):</p>
+  <table class="table table-sm table-bordered" style="width:auto">
+    <tr><th>input</th><th>$F$ (Hz)</th><th>$\omega = 2\pi F/f_s$</th><th>principal</th><th>samples $x[n]$</th><th>D/A output</th><th>match?</th></tr>
+    {{#params.c.crows}}<tr><td>${{in_tex}}$</td><td>${{F_tex}}$</td><td>${{w_tex}}$</td><td>${{wp_tex}}$</td><td>${{samp_tex}}$</td><td>${{out_tex}}$</td><td>{{verdict}}</td></tr>{{/params.c.crows}}
+  </table>
+  <p class="text-muted"><small>Modelled on FA2019 Midterm 2 #8 (D/A of $\delta[n-3]$: ZOH and ideal D/A; the FA2019 key marks the ZOH
+    "not on our Midterm 2", it is here for contrast), SP2025 #1(c), FA2024 #1(c) and FA2023 #1(e) (true/false on the ideal D/A),
+    SP2021 #9 (which inputs give $2\cos(300\pi t)$ at $F_s = 400$ Hz) and SP2023 #8 (a phase decides the alias's sign). The
+    interpolation formula is eq. (3.3) of the 2019 course notes (§3.2), written with the explicit ratio as in the keys.</small></p>
+</pl-answer-panel>

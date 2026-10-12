@@ -1,0 +1,80 @@
+<pl-question-panel>
+  <p>All signals below are defined for every integer $n$ (they never start or stop).</p>
+</pl-question-panel>
+
+<p><b>(a)</b> Consider
+  $$x[n] = {{params.x_tex}}.$$
+  Is $x[n]$ periodic?</p>
+<div class="mb-1">
+<pl-multiple-choice answers-name="periodic" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.periodic_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.periodic_choices}}
+</pl-multiple-choice>
+</div>
+<p>If it is periodic, enter its <b>fundamental</b> period $N_0$ (the smallest positive integer with
+  $x[n + N_0] = x[n]$ for all $n$). If it is not periodic, <b>leave the box empty</b>.</p>
+<div class="mb-1"><pl-integer-input answers-name="N0" label="$N_0 =$" allow-blank="true" blank-value=""
+  placeholder="integer, or leave empty"></pl-integer-input></div>
+
+<p class="mt-3"><b>(b)</b> Which of the following sequences are identical to $x_1[n] = {{params.cos0_tex}}$, i.e. have
+  exactly the same samples for every integer $n$? Select all that apply.</p>
+<pl-checkbox answers-name="same" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.same_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.same_choices}}
+</pl-checkbox>
+
+<p class="mt-3"><b>(c)</b> Find the frequency $\omega_2$ with $0 \le \omega_2 \le \pi$ such that
+  $\cos(\omega_2 n) = \cos\left({{params.w1_n_tex}}\right)$ for every integer $n$.
+  Enter it as a multiple of $\pi$: for $\omega_2 = \tfrac{2\pi}{7}$ type <code>2/7</code>
+  (fractions are accepted; decimals need 4 significant digits).</p>
+<pl-number-input answers-name="w2" label="$\omega_2 =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="When is a discrete-time sinusoid periodic?">
+    $e^{j\omega n}$ and $\cos(\omega n)$ repeat after $N$ samples exactly when $\omega N$ is a multiple of $2\pi$.
+    Write $\dfrac{\omega}{2\pi} = \dfrac{K}{L}$ in <b>lowest terms</b>: the period is $L$. If $\dfrac{\omega}{2\pi}$ is irrational
+    (no $\pi$ in $\omega$, e.g. $\cos(n/3)$), no $N$ works.
+  </pl-hint>
+  <pl-hint hint-name="Sums, products, aliases" show-after-submission="1">
+    A sum of periodic terms repeats after the least common multiple of their periods; for a product, first multiply
+    the exponentials out ($e^{jan}e^{jbn} = e^{j(a+b)n}$, $\cos\theta = \tfrac12(e^{j\theta} + e^{-j\theta})$).
+    Frequencies $2\pi$ apart give identical samples, and $\cos$ is even, so $\cos(\omega n) = \cos((2\pi k \pm \omega)n)$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> A term with frequency $\omega$ has period $L$ when $\dfrac{\omega}{2\pi} = \dfrac{K}{L}$ in lowest terms.</p>
+  {{#params.is_prod}}
+  <p>First multiply out the product (Euler: $\cos\theta = \tfrac12(e^{j\theta} + e^{-j\theta})$, and exponents add):
+    $$x[n] = {{params.x_tex}} = {{params.expansion_tex}}.$$
+    The frequencies that are actually present:</p>
+  {{/params.is_prod}}
+  <table class="table table-sm table-bordered text-center" style="width:auto">
+    <tr><th>term</th><th>$\omega$</th><th>$\omega/2\pi$</th><th>period</th></tr>
+    {{#params.rows}}<tr><td>${{term_tex}}$ {{{note_html}}}</td><td>${{w_tex}}$</td><td>${{ratio_tex}}$</td><td>${{N}}$</td></tr>{{/params.rows}}
+  </table>
+  {{#params.is_periodic}}
+  <p>All periods exist, so $x[n]$ is periodic, and its fundamental period is the least common multiple:
+    $N_0 = \operatorname{lcm}({{params.N_list_tex}}) = {{params.N0_tex}}$.</p>
+  {{/params.is_periodic}}
+  {{#params.is_prod}}
+  <p>{{{params.factor_note_html}}}</p>
+  {{/params.is_prod}}
+  {{#params.is_irr}}
+  <p>The term with $\omega = {{params.irr_w_tex}}$ has $\dfrac{\omega}{2\pi} = {{params.irr_ratio_tex}}$, an irrational number:
+    $\omega N$ is never a multiple of $2\pi$, so that term never repeats, and no other term can make up for it
+    (exponentials of different frequencies are independent). <b>Not periodic</b>; the box stays empty.
+    (Its continuous-time parent is periodic: sampling a periodic signal does not guarantee a periodic sequence.)</p>
+  {{/params.is_irr}}
+  <p><b>(b)</b> Two frequencies give the same cosine samples exactly when they agree modulo $2\pi$ up to a sign
+    ($\omega_0 = {{params.w0_tex}}$ here):</p>
+  <ul>
+    {{#params.same_why}}<li>{{text}}: <b>{{verdict}}</b>. {{{why_html}}}</li>{{/params.same_why}}
+  </ul>
+  <p><b>(c)</b> Subtract multiples of $2\pi$: ${{params.sub_tex}}$.
+    {{#params.needs_flip}}That is above $\pi$; since $\cos$ is even, $\cos(\theta n) = \cos((2\pi - \theta)n)$, giving
+    ${{params.flip_tex}}$.{{/params.needs_flip}}
+    So $\omega_2 = {{params.w2_tex}}$ (type <code>{{params.w2_plain}}</code>).</p>
+  <p class="text-muted"><small>Modelled on Lecture 13 §1 (periodicity of discrete-time sinusoids: periodic only if
+    $\omega_0/2\pi$ is rational; frequencies $2\pi$ apart are the same sequence; the notes' example
+    $\cos(\tfrac{17\pi}{3}n) = \cos(\tfrac{5\pi}{3}n) = \cos(\tfrac{\pi}{3}n)$), the slide 6 concept check
+    ("which signals are equal to $\sin(\tfrac{\pi}{3}n)$?") and Singer and Munson's Fig. 2.4 ($\sin(\tfrac34 n)$ is not periodic).</small></p>
+</pl-answer-panel>

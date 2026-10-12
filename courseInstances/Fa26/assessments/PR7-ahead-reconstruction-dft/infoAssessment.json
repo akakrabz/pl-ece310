@@ -1,0 +1,85 @@
+{
+  "uuid": "946c459b-7204-4111-a3d8-32b773988bae",
+  "type": "Homework",
+  "title": "Ahead of the lectures: reconstruction and the DFT (Midterm 2)",
+  "set": "Practice",
+  "number": "7",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p><strong>Ahead of the lectures.</strong> These topics are taught after Lecture 17 and carry most of the points on past Midterm 2 exams: ideal D/A reconstruction, digital filtering of analog signals (A/D → H<sub>d</sub> → D/A), the DFT and its properties, zero padding, DFT spectral analysis and circular convolution. The questions follow the notation of the recent Midterm 2 keys and the 2019 course notes; come back to them as the lectures arrive.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Reconstruction and digital filtering",
+      "questions": [
+        {
+          "id": "sampling/ideal-reconstruction",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "sampling/ad-filter-da",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "The DFT",
+      "questions": [
+        {
+          "id": "dft/dft-values",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/dft-properties",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/dft-and-dtft",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/spectral-analysis",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/circular-convolution",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "True/False",
+      "questions": [
+        {
+          "id": "sampling/true-false",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

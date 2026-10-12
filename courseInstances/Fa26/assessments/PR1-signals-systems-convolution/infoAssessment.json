@@ -28,7 +28,25 @@
           "triesPerVariant": 3
         },
         {
+          "id": "signals/sampling-and-sequences",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
           "id": "signals/complex-numbers",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "signals/complex-exponentials",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "signals/geometric-sums",
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3
@@ -49,6 +67,12 @@
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3
+        },
+        {
+          "id": "systems/lti-from-io-pairs",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
         }
       ]
     },
@@ -57,6 +81,12 @@
       "questions": [
         {
           "id": "convolution/finite-convolution",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "convolution/convolution-facts",
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3
@@ -92,6 +122,12 @@
       "questions": [
         {
           "id": "lccde/recursion",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "lccde/block-diagram",
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3

@@ -1,0 +1,52 @@
+<pl-question-panel>
+  <p>The pole-zero plots of four causal, stable LTI systems are shown below ($\times$: pole, $\circ$: zero, a small number next to a
+    symbol: its multiplicity; dashed: the unit circle).</p>
+  <p>On the unit circle $z = e^{j\omega}$, a system $H(z) = K\,\dfrac{\prod_k \left(1 - z_k z^{-1}\right)}{\prod_k \left(1 - p_k z^{-1}\right)}$ has
+    $$|H_d(\omega)| = |K|\,\frac{\prod_k \left|e^{j\omega} - z_k\right|}{\prod_k \left|e^{j\omega} - p_k\right|},$$
+    the distances from the point $e^{j\omega}$ to the zeros over the distances to the poles. So a pole close to the unit circle at
+    angle $\omega_0$ makes a peak near $\omega = \omega_0$, and a zero <i>on</i> the circle at angle $\omega_0$ makes an exact null
+    ${|H_d(\omega_0)| = 0.}$</p>
+</pl-question-panel>
+
+<p><b>(a)</b> Match each system to the shape of its magnitude response $|H_d(\omega)|$ on $0 \le \omega \le \pi$.
+  Several systems may have the same shape, and a shape may not occur at all.</p>
+<pl-matching answers-name="ftype" fixed-order="true" fixed-options-order="true" options-placement="bottom">
+  {{#params.stmts}}<pl-statement match="{{match}}"><b>System {{label}}</b>{{{fig_html}}}</pl-statement>{{/params.stmts}}
+  {{#params.type_opts}}<pl-option name="{{name}}">{{text}}</pl-option>{{/params.type_opts}}
+</pl-matching>
+
+<p class="mt-3"><b>(b)</b> System {{params.num_label}} has the transfer function
+  $H(z) = K\,\dfrac{\prod_k \left(1 - z_k z^{-1}\right)}{\prod_k \left(1 - p_k z^{-1}\right)}$ with gain $K = {{params.K_tex}}$, where
+  the $z_k$ and $p_k$ are the zeros and poles in its plot (their values are labelled on the real axis). Find the magnitude
+  response at $\omega = {{params.w0_tex}}$. Enter an exact value: fractions such as <code>12/7</code> are accepted; decimals need
+  4 significant digits.</p>
+<pl-number-input answers-name="mag" label="$\left|H_d({{params.w0_tex}})\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Where are 0 and pi?">
+    The frequency $\omega = 0$ is the point $z = 1$ and $\omega = \pi$ is the point $z = -1$. Look first for zeros on the unit
+    circle (exact nulls), then for poles close to it (peaks).
+  </pl-hint>
+  <pl-hint hint-name="The four shapes" show-after-submission="1">
+    Low-pass: large near $z = 1$, zero at $z = -1$. High-pass: the reverse. Band-pass: zero at both $z = \pm 1$ and a peak in
+    between, where the poles come close to the circle. Notch (band-stop): an exact null at one angle in between, with the gain
+    close to constant elsewhere because a pole sits right next to each zero. For (b), substitute $z^{-1} = 1$ ($\omega = 0$) or
+    $z^{-1} = -1$ ($\omega = \pi$) in $H(z)$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Built on the poles and zeros of Lecture 9 and the magnitude response of Lecture 16: the distance rule is the study site's
+    <i>In Unit 3</i> paragraph of the poles-and-zeros concept page, and Lecture 16, Exercise 1 is its simplest case
+    ($1 - z^{-2}$, zeros at $z = \pm 1$, $|H_d(\omega)| = 2|\sin\omega|$). This is enrichment, not a past-exam problem.
+    Read each plot through
+    $$|H_d(\omega)| = |K|\,\frac{\prod_k \left|e^{j\omega} - z_k\right|}{\prod_k \left|e^{j\omega} - p_k\right|}$$
+    (poles or zeros at the origin do not change the magnitude):</p>
+  <ul>
+    {{#params.why}}<li>System {{label}}: {{{text_html}}}</li>{{/params.why}}
+  </ul>
+  <p><b>(b)</b> System {{params.num_label}}: $H(z) = {{params.H_num_tex}}$. At $\omega = {{params.w0_tex}}$, $z^{-1} = e^{-j{{params.w0_tex}}}$ is
+    {{#params.at_pi}}$-1${{/params.at_pi}}{{^params.at_pi}}$1${{/params.at_pi}}{{#params.num_origin}} (the pole at $z = 0$ contributes the
+    factor $1 - 0\cdot z^{-1} = 1$){{/params.num_origin}}:
+    $${{params.num_work_tex}}.$$</p>
+</pl-answer-panel>

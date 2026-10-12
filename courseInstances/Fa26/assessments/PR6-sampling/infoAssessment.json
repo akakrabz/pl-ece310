@@ -1,0 +1,51 @@
+{
+  "uuid": "3cc209f3-11d3-40f2-a82c-0c8f36ef8f4c",
+  "type": "Homework",
+  "title": "Sampling (L17)",
+  "set": "Practice",
+  "number": "6",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lecture 17 (ideal A/D conversion): Nyquist rates, the DTFT of a sampled signal — answered with numbers and drawn on a canvas — and which analog frequencies a sampler cannot tell apart. Every past Midterm 2 has a problem like these.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "Sampling",
+      "questions": [
+        {
+          "id": "sampling/nyquist-rate",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "sampling/sampled-spectrum",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "sampling/sketch-sampled-spectrum",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "sampling/sinusoid-aliasing",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

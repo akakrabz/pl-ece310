@@ -1,0 +1,8 @@
+{
+  "uuid": "5137e6b6-f4ba-4021-8ed6-3702a43b3be6",
+  "title": "Linear vs circular convolution, and zero padding for the FFT",
+  "topic": "DFT",
+  "tags": ["ahead", "midterm2", "fam2-circconv", "matrix", "integer", "checkbox", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

@@ -1,0 +1,62 @@
+<pl-question-panel>
+  <p><small><em>Ahead of the lectures: this topic is taught after Lecture 17 and appears on past Midterm 2 exams; notation follows those exams.</em></small></p>
+  <p>
+    An analog signal $x_c(t)$ is sampled with sampling frequency $f_s = 1/T$ to give $x[n] = x_c(nT)$, and $N$ samples
+    $\{x[n]\}_{n=0}^{N-1}$ go into the $N$-point DFT $X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn}$, $k = 0, 1, \dots, N-1$.
+  </p>
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> A real signal $x_c(t)$ is sampled at $f_s = {{params.fsa_tex}}$ and $N = {{params.Na}}$ samples are used.</p>
+<p>(i) What is the spacing between adjacent DFT samples, in hertz?</p>
+<pl-number-input answers-name="df" label="$\Delta f =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+<p class="mt-2">(ii) Assuming $x_c(t)$ is bandlimited below $f_s/2$ (no aliasing), which analog frequency in $\left(-\tfrac{f_s}{2}, \tfrac{f_s}{2}\right]$
+  does the index $k = {{params.k_hi}}$ correspond to, in hertz?</p>
+<pl-number-input answers-name="f_hi" label="$f =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+<p class="mt-2">(iii) Now $x_c(t)$ is no longer assumed bandlimited below $f_s/2$. What is the smallest frequency $f \gt f_s/2$ of a cosine
+  $\cos(2\pi f t)$ that lands exactly on bin $k = {{params.k_lo}}$ (that is, gives the same samples as a cosine at $\frac{ {{params.k_lo}}\,f_s}{N}$), in hertz?</p>
+<pl-number-input answers-name="f_alias" label="$f =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> A continuous-time signal $x_c(t) = A_1\cos(\Omega_1 t + \phi_1) + A_2\cos(\Omega_2 t + \phi_2)$ with integer amplitudes
+  $A_1, A_2 \gt 0$, unknown phases and $\Omega_1 \lt \Omega_2$ is sampled at a rate of $f_s = {{params.fsb}}$ Hz for ${{params.Db_tex}}$ {{params.Db_unit}}
+  to produce $\{x[n]\}_{n=0}^{ {{params.Nbm1}} }$; there is no aliasing. The magnitude of the ${{params.Nb}}$-point DFT is plotted below.</p>
+{{{params.fig_html}}}
+<p>Find the amplitudes and the analog frequencies (in rad/s, entered as multiples of $\pi$: type <code>3</code> for $3\pi$ rad/s).</p>
+<div class="mb-1"><pl-number-input answers-name="A1" label="$A_1 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="A2" label="$A_2 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="W1" label="$\Omega_1 =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="W2" label="$\Omega_2 =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="From bins to hertz">
+    Bin $k$ sits at the digital frequency $\omega_k = \frac{2\pi k}{N}$, and sampling maps $\Omega$ to $\omega = \Omega T$, i.e.
+    $f = \frac{\omega}{2\pi} f_s$. Bins with $k \gt \frac N2$ are negative frequencies: $\omega_k$ and $\omega_k - 2\pi$ are the same
+    digital frequency.
+  </pl-hint>
+  <pl-hint hint-name="Heights and aliases" show-after-submission="1">
+    $A\cos(\omega_0 n + \phi) = \frac A2 e^{j\phi}e^{j\omega_0 n} + \frac A2 e^{-j\phi}e^{-j\omega_0 n}$: with a whole number of periods in the
+    $N$ samples, each exponential puts $N\cdot\frac{A}{2}$ in one bin ($k_0$ and $N - k_0$) and nothing elsewhere. A frequency $f$ lands
+    on the same bin as $f + m f_s$ for every integer $m$; a cosine also reaches bin $k$ through its negative-frequency half.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> (i) The $N$ bins split one period $f_s$ evenly: $\Delta f = \frac{f_s}{N} = \frac{ {{params.fsa}} }{ {{params.Na}} } = {{params.dfa}}$ Hz.</p>
+  <p>(ii) $k = {{params.k_hi}} \gt \frac{N}{2}$: $\omega_k = \frac{2\pi\cdot {{params.k_hi}}}{ {{params.Na}} }$ is the same digital frequency as
+    $\omega_k - 2\pi = -\frac{2\pi\cdot {{params.Nm_hi}}}{ {{params.Na}} }$, so
+    $f = -{{params.Nm_hi}}\cdot\Delta f = {{params.f_hi}}$ Hz (for a real signal, the mirror image of the $+{{params.f_hi_abs}}$ Hz component
+    at $k = {{params.Nm_hi}}$).</p>
+  <p>(iii) Bin $k$ collects every $f = \frac{k f_s}{N} + m f_s$ (FA2024 #6), and a real cosine at $f$ also has a component at $-f$.
+    Bin ${{params.k_lo}}$ is at ${{params.f_lo}}$ Hz, so it sees $\pm {{params.f_lo}}$ Hz plus multiples of $f_s$; above $\frac{f_s}{2} = {{params.fs_half}}$ Hz the
+    smallest is $f = f_s - {{params.f_lo}} = {{params.f_alias}}$ Hz, whose negative-frequency half $-{{params.f_alias}} + {{params.fsa}} = {{params.f_lo}}$ Hz lands on bin ${{params.k_lo}}$.</p>
+  <p><b>(b)</b> $N = f_s \cdot ({{params.Db_tex}}\ \text{s}) = {{params.Nb}}$ and bin $k$ is at $\Omega_k = \frac{2\pi k}{N}f_s = {{params.Om_per_bin_tex}}\,k$ rad/s.
+    The stems at $k \gt {{params.halfN}}$ are the negative-frequency halves ($k = {{params.mk2}} = {{params.Nb}} - {{params.k2}}$ and
+    $k = {{params.mk1}} = {{params.Nb}} - {{params.k1}}$), so there are two cosines, at $k = {{params.k1}}$ and $k = {{params.k2}}$.
+    Each cosine puts $\frac{N A}{2} = {{params.Nb_half}}A$ in each of its two bins (the phases only change the angle of $X[k]$):</p>
+  <p>$$A_1 = \frac{ {{params.h1}} }{ {{params.Nb_half}} } = {{params.A1v}},\qquad A_2 = \frac{ {{params.h2}} }{ {{params.Nb_half}} } = {{params.A2v}},$$
+    $$\Omega_1 = {{params.Om_per_bin_tex}}\cdot {{params.k1}} = {{params.W1v}}\pi\ \text{rad/s}\ ({{params.f1}}\ \text{Hz}),\qquad
+      \Omega_2 = {{params.Om_per_bin_tex}}\cdot {{params.k2}} = {{params.W2v}}\pi\ \text{rad/s}\ ({{params.f2}}\ \text{Hz}).$$</p>
+  <p class="text-muted"><small>Modelled on FA2019 Midterm 2 #2 (bins in hertz), FA2024 #6 (which analog frequencies reach bin $k$) and #9
+    (amplitudes and frequencies from a DFT plot), SP2023 #10 and SP2025 #9 (a cosine with a whole number of periods gives two stems of height $\frac{NA}{2}$).
+    2019 course notes, Sections 2.6 and 2.6.1.</small></p>
+</pl-answer-panel>

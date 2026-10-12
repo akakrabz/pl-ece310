@@ -1,0 +1,189 @@
+{
+  "uuid": "719499e3-f788-42ed-bef4-eec555a1ac29",
+  "type": "Exam",
+  "title": "Mock Midterm 2",
+  "set": "Mock exam",
+  "number": "2",
+  "multipleInstance": true,
+  "text": "<p>Nine problems in the shape of a past ECE 310 Midterm 2 (the seven exams FA2019–SP2025), with fresh random numbers every time you start a new instance. 2 hours. Each problem has three attempts worth 10, 7 and 4 points. Work on paper first, as on the real exam; the worked solutions are visible once you finish.</p><p>The Fall 2026 scope has not been announced. Problems 1–6 cover Lectures 13–17. Problems 7–9 (digital filtering of analog signals and the DFT) are taught after Lecture 17: practise them first in Practice 7, or leave them for later.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        },
+        "durationMinutes": 120
+      },
+      "afterComplete": {
+        "questions": {
+          "hidden": false
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "True/False",
+      "questions": [
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "dtft/true-false"
+            },
+            {
+              "id": "sampling/true-false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "DTFT and frequency response",
+      "questions": [
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "dtft/inverse-dtft-ideal"
+            },
+            {
+              "id": "dtft/modulation"
+            },
+            {
+              "id": "dtft/dtft-quantities"
+            },
+            {
+              "id": "dtft/symmetry-and-existence"
+            }
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "freqresp/magnitude-phase-fir"
+            },
+            {
+              "id": "freqresp/phase-and-group-delay"
+            }
+          ]
+        },
+        {
+          "id": "freqresp/sinusoidal-response",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sampling",
+      "questions": [
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "sampling/sampled-spectrum"
+            },
+            {
+              "id": "sampling/sketch-sampled-spectrum"
+            }
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "sampling/sinusoid-aliasing"
+            },
+            {
+              "id": "sampling/nyquist-rate"
+            },
+            {
+              "id": "sampling/ideal-reconstruction"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ahead of the lectures: filtering and the DFT",
+      "questions": [
+        {
+          "id": "sampling/ad-filter-da",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "dft/dft-properties"
+            },
+            {
+              "id": "dft/dft-values"
+            }
+          ]
+        },
+        {
+          "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "dft/spectral-analysis"
+            },
+            {
+              "id": "dft/dft-and-dtft"
+            },
+            {
+              "id": "dft/circular-convolution"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+<pl-question-panel>
+  <p>
+    {{#params.has_given}}{{{params.given_html}}}. Consider{{/params.has_given}}{{^params.has_given}}Consider{{/params.has_given}}
+    the continuous-time signal
+    $${{params.sig_tex}}{{^params.post_html}}.{{/params.post_html}}{{#params.post_html}},{{/params.post_html}}$$
+    {{#params.post_html}}{{{params.post_html}}}.{{/params.post_html}}
+    It is to be sampled ideally, $x[n] = {{params.name_tex}}\big|_{t = nT}$, with sampling rate $f_s = \tfrac{1}{T}$.
+  </p>
+  <p><small>Frequencies in hertz: an angular frequency $\Omega$ in rad/s is $f = \tfrac{\Omega}{2\pi}$ Hz. Enter exact values:
+    fractions such as <code>1/250</code> are accepted; decimals need 4 significant digits.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> The highest frequency $B$ present in ${{params.name_tex}}$, in hertz:</p>
+<pl-number-input answers-name="B" label="$B =$" suffix="Hz" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> The Nyquist rate, in hertz:</p>
+<pl-number-input answers-name="fN" label="$f_{\text{Nyquist}} =$" suffix="Hz" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> The Nyquist period $T_N$, in seconds (the Nyquist criterion requires $T \lt T_N$):</p>
+<pl-number-input answers-name="TN" label="$T_N =$" suffix="s" comparison="relabs" rtol="1e-3" atol="1e-9"></pl-number-input>
+
+<p class="mt-3"><b>(d)</b> Which of these sampling rates satisfy the Nyquist criterion of Lecture 17? Select all that apply.</p>
+<pl-checkbox answers-name="rates" order="fixed" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.rate_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.rate_choices}}
+</pl-checkbox>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Where does the spectrum end?">
+    A sinusoid at $\Omega_0$ rad/s is a pair of impulses at $\pm\Omega_0$, i.e. $f_0 = \tfrac{\Omega_0}{2\pi}$ Hz.
+    $\tfrac{\sin(\Omega_c t)}{\pi t}$ is a box on $\lvert\Omega\rvert \lt \Omega_c$. Products in time convolve spectra
+    (band edges add), convolutions in time multiply spectra (the smaller edge wins), $x(at)$ scales every frequency by $a$,
+    and multiplying by $\cos(\Omega_0 t)$ shifts the spectrum by $\pm\Omega_0$.
+  </pl-hint>
+  <pl-hint hint-name="Rate and period" show-after-submission="1">
+    Lecture 17: the copies of the spectrum do not overlap when $f_s \gt 2B$. The Nyquist rate is $2B$ in hertz (not in rad/s),
+    and $T_N = \tfrac{1}{2B}$. The inequality is strict: sampling exactly at $2B$ is not enough
+    (a sine at $B$ sampled at $2B$ gives $\sin(\pi n) = 0$).
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    <b>(a)</b> {{{params.expl_html}}}. So the band edge of ${{params.name_tex}}$ is $\Omega_B = {{params.WB_tex}}$ rad/s and
+    $B = \tfrac{\Omega_B}{2\pi} = {{params.B_tex}}$ Hz.
+  </p>
+  <p><b>(b)</b> $f_{\text{Nyquist}} = 2B = {{params.fN_tex}}$ Hz.</p>
+  <p><b>(c)</b> $T_N = \tfrac{1}{2B} = {{params.TN_tex}}$ s $= {{params.TN_dec}}$ s; sampling without aliasing needs $T \lt T_N$.</p>
+  <p><b>(d)</b> The criterion is $f_s \gt 2B = {{params.fN_tex}}$ Hz (strict):</p>
+  <ul>
+    {{#params.rate_lines}}<li>{{{line_html}}}</li>{{/params.rate_lines}}
+  </ul>
+  <p class="text-muted"><small>Modelled on Lecture 17 (bandlimited signals, the Nyquist criterion $f_s \gt 2B$, notes eqs. 17&ndash;21),
+    the Nyquist-rate parts of FA2019 Midterm 2 #9(a), FA2024 #5(a), SP2023 #7(a), SP2021 #8(a), FA2021 #5(a), and the
+    True/False items SP2021 #1(b) ($x_c(2t)$) and SP2023 #1(b) ($x_c(3t)$).</small></p>
+</pl-answer-panel>

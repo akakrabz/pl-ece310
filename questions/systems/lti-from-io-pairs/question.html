@@ -1,0 +1,58 @@
+<pl-question-panel>
+  <p>
+    An unknown discrete-time system produced the following three input&ndash;output pairs (finite sequences; the arrow
+    marks the sample at $n = 0$, and all samples not shown are zero):
+  </p>
+  {{{params.pairs_html}}}
+  <p>
+    Nothing else is known about the system: it may or may not be linear, and it may or may not be time-invariant.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> What do these three pairs show? (Choose the strongest conclusion that the data force.)</p>
+<pl-multiple-choice answers-name="verdict" order="fixed" hide-letter-keys="true">
+  {{#params.verdict_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.verdict_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(b)</b> Whatever your answer to (a): <em>if</em> the system were LTI, pair 1 would determine its impulse
+  response $h[n]$. Using that $h[n]$, find the output for the new input
+  $$v[n] = {{params.v_tex}}.$$
+  Enter the index of the first nonzero output sample and the output samples from the first to the last nonzero one as a
+  row vector (for example <code>[25, 0, -30]</code>).</p>
+<div class="mb-1"><pl-integer-input answers-name="wfirst" label="$n_{\text{first}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-matrix-input answers-name="wrow" label="$v * h =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One counterexample is enough">
+    Look for relations among the <em>inputs</em>. If one input is a pure shift of another, time-invariance forces the same
+    shift between their outputs. If one input is a linear combination of others ($c\,x_2$, $x_2 + d\,x_1$), linearity forces
+    the same combination of outputs. An LTI system must in addition satisfy $y = x * h$ with one $h$ for all pairs.
+    A relation that the outputs violate disproves the corresponding property.
+  </pl-hint>
+  <pl-hint hint-name="What cannot be decided" show-after-submission="1">
+    A linear system may map linearly independent inputs to any outputs; a time-invariant system may map inputs that are
+    not shifts of one another to any outputs. So a property is disproved only by a relation that involves it alone.
+    For (b): if $\delta[n - m] \mapsto y_1[n]$ for an LTI system, then $\delta[n] \mapsto y_1[n + m]$, i.e. $h[n] = y_1[n + m]$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Pair 1 has the input $x_1[n] = {{params.x1_tex}}$, a shifted impulse. An LTI system maps $\delta[n]$ to
+    $h[n]$ and hence $\delta[n - m]$ to $h[n - m]$, so pair 1 alone would fix $h[n] = y_1[{{params.m_back}}] = {{params.h_tex}}$.</p>
+  <ul>
+    {{#params.why_lines}}<li>{{{line_html}}}</li>{{/params.why_lines}}
+  </ul>
+  <p>LTI test with that $h$:</p>
+  <ul>
+    {{#params.lti_checks}}<li>{{{line_html}}}</li>{{/params.lti_checks}}
+  </ul>
+  <p>{{{params.concl_html}}}</p>
+  <p><b>(b)</b> With $h[n] = y_1[{{params.m_back}}] = {{params.h_tex}}$ ($y_1$ starts at $n = {{params.y1start}}$, so $h$ starts
+    at $n = {{params.hstart}}$), the convolution starts at
+    $n = {{params.vstart}} + ({{params.hstart}}) = {{params.wstart}}$ and
+    $$v[n] * h[n] = {{params.w_tex}}.$$</p>
+  <p class="text-muted"><small>Modelled on Lecture 3 (definitions of linearity and time-invariance: one counterexample
+    disproves a property), Lecture 4 (an LTI system is fully described by $h[n]$, $y = x * h$), HW2 #4 (impulse
+    response from an input&ndash;output pair) and the Midterm 1 True/False statements FA2023 #1(d), FA2024 #1(a)
+    ("the output of a system with impulse response $h$ is $x * h$" &mdash; only for LTI systems).</small></p>
+</pl-answer-panel>

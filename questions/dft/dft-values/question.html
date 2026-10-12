@@ -1,0 +1,94 @@
+<pl-question-panel>
+  <p><small><em>Ahead of the lectures: this topic is taught after Lecture 17 and appears on past Midterm 2 exams; notation follows those exams.</em></small></p>
+  <p>
+    The $N$-point DFT of a length-$N$ signal $\{x[n]\}_{n=0}^{N-1}$ is
+    $$X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn},\qquad k = 0, 1, \dots, N-1.$$
+    Let
+    $$\{x[n]\}_{n=0}^{ {{params.Nm1}} } = {{params.x_tex}}$$
+    be a length-${{params.N}}$ signal with ${{params.N}}$-point DFT $\{X[k]\}_{k=0}^{ {{params.Nm1}} }$.
+  </p>
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits
+    (for example <code>1.414</code> for $\sqrt{2}$).</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> Compute $X[0]$ and $X[{{params.half}}]$.</p>
+<div class="mb-1"><pl-number-input answers-name="X0" label="$X[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="XH" label="$X[{{params.half}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> Compute the real and imaginary parts of $X[{{params.k0}}]$.</p>
+<div class="mb-1"><pl-number-input answers-name="re" label="$\mathrm{Re}\{X[{{params.k0}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="im" label="$\mathrm{Im}\{X[{{params.k0}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> Compute the energy of the DFT values, $\displaystyle\sum_{k=0}^{ {{params.Nm1}} } \lvert X[k]\rvert^2$.</p>
+<pl-number-input answers-name="P" label="$\sum_k \lvert X[k]\rvert^2 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+{{#params.inv_x0}}
+<p class="mt-3"><b>(d)</b> A different length-${{params.Nv}}$ signal $\{v[n]\}_{n=0}^{ {{params.Nvm1}} }$ has the ${{params.Nv}}$-point DFT
+  $$\{V[k]\}_{k=0}^{ {{params.Nvm1}} } = {{params.V_tex}}.$$
+  Find $v[0]$.</p>
+<pl-number-input answers-name="v0" label="$v[0] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+{{/params.inv_x0}}
+{{#params.inv_vec}}
+<p class="mt-3"><b>(d)</b> A different length-$4$ signal $\{v[n]\}_{n=0}^{3}$ has the $4$-point DFT
+  $$\{V[k]\}_{k=0}^{3} = {{params.V_tex}}.$$
+  Find $v[n]$ for $n = 0, 1, 2, 3$, as a row vector (entries separated by commas inside brackets, e.g. <code>[2, -1, 0]</code>).</p>
+<pl-matrix-input answers-name="v" label="$v =$" comparison="relabs" rtol="1e-6" atol="1e-6"></pl-matrix-input>
+{{/params.inv_vec}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Free values and the inverse DFT">
+    $e^{-j\frac{2\pi}{N}\cdot 0\cdot n} = 1$ and $e^{-j\frac{2\pi}{N}\frac{N}{2}n} = e^{-j\pi n} = (-1)^n$, so $X[0]$ and $X[N/2]$ are plain
+    (alternating) sums. The inverse DFT is $x[n] = \frac{1}{N}\sum_{k=0}^{N-1} X[k]\,e^{j\frac{2\pi}{N}kn}$: note the $\frac1N$
+    and the <b>plus</b> sign in the exponent; at $n = 0$ it is the average of the DFT values.
+  </pl-hint>
+  <pl-hint hint-name="One bin, and Parseval" show-after-submission="1">
+    For $X[k_0]$ list $e^{-j\frac{2\pi}{N}k_0 n} = \cos\frac{2\pi k_0 n}{N} - j\sin\frac{2\pi k_0 n}{N}$ for each $n$ (the minus sign
+    makes the imaginary part $-\sum_n x[n]\sin\frac{2\pi k_0 n}{N}$), multiply by $x[n]$ and add.
+    Parseval's relation for the DFT is $\sum_{n=0}^{N-1}\lvert x[n]\rvert^2 = \frac{1}{N}\sum_{k=0}^{N-1}\lvert X[k]\rvert^2$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>
+    <b>(a)</b> At $k = 0$ every exponential is $1$, and at $k = {{params.half}} = \frac{N}{2}$ it is $e^{-j\pi n} = (-1)^n$:
+    $$X[0] = \sum_{n} x[n] = {{params.X0_terms_tex}} = {{params.X0_tex}},$$
+    $$X[{{params.half}}] = \sum_{n} (-1)^n x[n] = {{params.XH_terms_tex}} = {{params.XH_tex}}.$$
+  </p>
+  <p>
+    <b>(b)</b> One term per sample, $X[{{params.k0}}] = \sum_{n} x[n]\,{{params.W_tex}}$:
+  </p>
+  {{{params.table_html}}}
+  <p>
+    Adding the last column:
+    $$X[{{params.k0}}] = {{params.Xk_tex}},$$
+    so $\mathrm{Re}\{X[{{params.k0}}]\} = {{params.re_tex}}{{#params.re_irr}} \approx {{params.re_dec}}{{/params.re_irr}}$ and
+    $\mathrm{Im}\{X[{{params.k0}}]\} = {{params.im_tex}}{{#params.im_irr}} \approx {{params.im_dec}}{{/params.im_irr}}$.
+    (With $e^{+j}$ in the definition you would get the complex conjugate, with the wrong sign of the imaginary part.)
+  </p>
+  <p>
+    <b>(c)</b> Parseval's relation for the $N$-point DFT, $\sum_n \lvert x[n]\rvert^2 = \frac1N\sum_k \lvert X[k]\rvert^2$, gives without computing any other bin
+    $$\sum_{k=0}^{ {{params.Nm1}} } \lvert X[k]\rvert^2 = N\sum_{n=0}^{ {{params.Nm1}} }\lvert x[n]\rvert^2 = {{params.N}}\left({{params.sq_terms_tex}}\right) = {{params.N}}\cdot {{params.E_tex}} = {{params.P_tex}}.$$
+  </p>
+  {{#params.inv_x0}}
+  <p>
+    <b>(d)</b> The inverse DFT at $n = 0$ is the average of the DFT values, $v[0] = \frac{1}{N}\sum_{k} V[k]\,e^{j\frac{2\pi}{N}k\cdot 0} = \frac1N\sum_k V[k]$.
+    The imaginary parts cancel in the conjugate pairs $V[k]$, $V[{{params.Nv}} - k]$:
+    $$v[0] = \frac{1}{ {{params.Nv}} }\left[{{params.Vsum_terms_tex}}\right] = \frac{ {{params.Vsum_tex}} }{ {{params.Nv}} }{{params.v0_eq_tex}}.$$
+  </p>
+  {{/params.inv_x0}}
+  {{#params.inv_vec}}
+  <p>
+    <b>(d)</b> For $N = 4$, $e^{j\frac{2\pi}{4}kn} = j^{kn}$, so $v[n] = \frac14\sum_{k=0}^{3} V[k]\,j^{kn}$. With
+    $V_1 + V_3 = 2\,\mathrm{Re}\{V_1\} = {{params.reV1_tex}}$ and $j\,(V_1 - V_3) = j\cdot 2j\,\mathrm{Im}\{V_1\} = {{params.jdiff_tex}}$:
+  </p>
+  <p>
+    $$\begin{aligned}
+    {{#params.inv_lines}}{{line_tex}} \\ {{/params.inv_lines}}
+    \end{aligned}$$
+    so $v[n] = {{params.v_tex}}$ (real, as it must be: $V_0$ and $V_2$ are real and $V_3 = V_1^*$).
+  </p>
+  {{/params.inv_vec}}
+  <p class="text-muted"><small>Modelled on SP2023 Midterm 2 #9(a) ($X_0$ and $X_3$ of a length-6 signal), SP2025 #7(a), FA2021 #3(a)
+    and SP2021 #5 ($x[0]$ from the DFT values; the inverse DFT of SP2023 #1(d) and SP2025 #1(b)). DFT definition and Parseval's relation:
+    2019 course notes, Sections 2.5 and 2.5.1.9.</small></p>
+</pl-answer-panel>

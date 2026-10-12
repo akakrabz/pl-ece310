@@ -1,0 +1,70 @@
+<pl-question-panel>
+  <p>
+    We want to locate the pattern (template)
+    $$t[n] = {{params.t_tex}}$$
+    in the input
+    $$x[n] = {{params.x_tex}} \qquad (x[n] = 0 \text{ outside } 0 \le n \le {{params.Lm1}}),$$
+    where the arrow marks the sample at $n = 0$. The input contains a scaled copy of the template plus some
+    small integer noise.
+  </p>
+  {{{params.fig_html}}}
+  <p>
+    Following Lecture 12, we filter $x$ with the <b>matched filter</b> $h[n]$ of the template and look for the
+    largest (most positive) output sample of $y[n] = x[n] * h[n]$.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> The matched filter $h[n]$: the index of its first nonzero sample, and its samples from the first to the last
+  nonzero one as a row vector (for example <code>[4, 0, -1]</code>).</p>
+<div class="mb-1"><pl-integer-input answers-name="hfirst" label="$n_{\text{first}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-matrix-input answers-name="hrow" label="$h =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input></div>
+
+<p class="mt-3"><b>(b)</b> The output $y[n]$ has a unique largest (most positive) sample. At which index $n$ is it, and what
+  is its value?</p>
+<div class="mb-1"><pl-integer-input answers-name="npeak" label="$n_{\text{peak}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="ypeak" label="$y[n_{\text{peak}}] =$"></pl-integer-input></div>
+
+<p class="mt-3"><b>(c)</b> Another output sample:</p>
+<pl-integer-input answers-name="yn1" label="$y[{{params.n1}}] =$"></pl-integer-input>
+
+<p class="mt-3"><b>(d)</b> A raw output sample also grows with the loudness of the input. The <b>normalized score</b>
+  divides it by the largest value the Cauchy&ndash;Schwarz inequality allows for the input samples under the template:
+  $$\rho[n] = \frac{y[n]}{\sqrt{\sum_{m} t[m]^2}\;\sqrt{\sum_{k = {{params.win_lo_tex}} }^{ {{params.win_hi_tex}} } x[k]^2}}, \qquad -1 \le \rho[n] \le 1.$$
+  Find the normalized score at the peak. Enter a decimal with 4 significant digits (or an exact fraction if it is one).</p>
+<pl-number-input answers-name="rho" label="$\rho[n_{\text{peak}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Flip, then slide">
+    The matched filter is the time-reversed template, $h[n] = t[-n]$: the sample of $t$ at index $m$ moves to index $-m$.
+    Then $y[n] = \sum_k x[k]\,h[n-k] = \sum_k x[k]\,t[k-n]$: the template itself, moved so that its sample $t[0]$ sits
+    at $k = n$, multiplied sample by sample with $x$ and added.
+  </pl-hint>
+  <pl-hint hint-name="Where the peak lands" show-after-submission="1">
+    $y[n]$ is largest where the input window under the shifted template looks most like the template. If the copy in $x$
+    is $c\,t[n - n_0]$, the peak is at $n = n_0$ (not at the end of the copy). For $\rho$, use the three input samples
+    under the template at the peak.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Reversing the template, $h[n] = t[-n] = {{params.h_tex}}$: it starts at
+    $n = {{params.hstart}}$ (the last sample of $t$ moves to the most negative index).</p>
+  <p><b>(b)</b> Two flips cancel: $y[n] = \sum_k x[k]\,h[n-k] = \sum_k x[k]\,t[k-n]$, the inner product of $x$ with the
+    template shifted to start at $k = {{params.win_lo_tex}}$. All output samples:</p>
+  {{{params.ytable_html}}}
+  <p>The largest (most positive) is $y[{{params.n0_peak}}] = {{params.y0}}$: the template lines up with the input samples
+    $x[{{params.k_lo}}], \dots, x[{{params.k_hi}}] = {{params.win_tex}}$, and
+    $y[{{params.n0_peak}}] = {{params.y0_terms_tex}} = {{params.y0}}$.
+    The input holds ${{params.copy_tex}}${{#params.noisy_copy}} with noise on top{{/params.noisy_copy}}, so the peak sits at the index of the
+    shift of the copy, $n_{\text{peak}} = {{params.n0_peak}}$.</p>
+  <p><b>(c)</b> $y[{{params.n1}}] = \sum_{k = {{params.y1_klo}} }^{ {{params.y1_khi}} } x[k]\,t[{{params.k_minus_n1_tex}}] = {{params.y1_terms_tex}} = {{params.y1}}$.</p>
+  <p><b>(d)</b> Template energy $\sum_m t[m]^2 = {{params.et_tex}}$; energy of the window under the template at the peak
+    $= {{params.ew_tex}}$. So
+    $$\rho[{{params.n0_peak}}] = {{params.rho_tex}}.$$
+    {{#params.exact_copy}}The window is an exact positive multiple of the template, so Cauchy&ndash;Schwarz holds with equality: $\rho = 1$.{{/params.exact_copy}}
+    {{#params.noisy_copy}}Below $1$ because the noise makes the window only approximately a multiple of the template; $\rho = 1$ exactly for a scaled copy.{{/params.noisy_copy}}</p>
+  <p class="text-muted"><small>Modelled on Lecture 12 (notes &sect;1.1, eqs. 1&ndash;2: matched filter $\tilde h[n] = h[-n]$ and
+    $y[n] = \sum_k x[k]\,h[k-n]$; slides 3&ndash;5, the sawtooth example). The normalization is the Cauchy&ndash;Schwarz
+    bound from the course site's Lecture 12 page (&sect;3, "loud is not the same as similar"). Lecture 12 is not tested
+    on homeworks or exams.</small></p>
+</pl-answer-panel>

@@ -1,0 +1,82 @@
+<pl-question-panel>
+  <p>
+    An LTI system has the impulse response
+    $$h[n] = {{params.h_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero). The samples from
+    $n = {{params.n_first}}$ to $n = {{params.n_last}}$ are {{params.sym_word}} about their centre, so the frequency
+    response can be written as
+    $$H_d(\omega) = {{params.form_tex}},$$
+    where $\alpha$ is a real constant and $A(\omega)$ is a <b>real-valued</b> function of $\omega$.
+  </p>
+</pl-question-panel>
+
+<p class="small text-muted">Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant
+  digits (for example <code>1.732</code> for $\sqrt{3}$). Enter angles and frequencies as multiples of $\pi$: for
+  $\tfrac{3\pi}{4}$ type <code>3/4</code>.</p>
+
+<p><b>(a)</b> The delay $\alpha$ in the linear-phase factor $e^{-j\alpha\omega}$:</p>
+<pl-number-input answers-name="alpha" label="$\alpha =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> The real amplitude $A(\omega)$. Type <code>w</code> for $\omega$; <code>cos</code>, <code>sin</code>,
+  <code>exp(...)</code> and <code>j</code> are accepted (for example <code>cos(2*w)^2 + 1/3</code> is valid syntax). Use
+  fractions, not decimals: <code>cos(3*w/2)</code>, not <code>cos(1.5*w)</code>.</p>
+<pl-symbolic-input answers-name="A" variables="w" allow-complex="true" imaginary-unit-for-display="j"
+  label="$A(\omega) =$" size="45" display="block"></pl-symbolic-input>
+
+<p class="mt-3"><b>(c)</b> The magnitude response at two frequencies:</p>
+<div class="mb-1"><pl-number-input answers-name="mag_a" label="$\left|H_d\!\left({{params.fa_tex}}\right)\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="mag_b" label="$\left|H_d\!\left({{params.fb_tex}}\right)\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(d)</b> The phase response at $\omega = {{params.f1_tex}}$, as a <b>principal value</b> in $(-\pi, \pi]$
+  (an angle off by a multiple of $2\pi$ is marked wrong), as a multiple of $\pi$:</p>
+<pl-number-input answers-name="phase" label="$\angle H_d\!\left({{params.f1_tex}}\right) =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(e)</b> The group delay $\tau(\omega) = -\dfrac{d\angle H_d(\omega)}{d\omega}$ in samples, at the frequencies where
+  $H_d(\omega) \ne 0$:</p>
+<pl-number-input answers-name="tau" label="$\tau(\omega) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(f)</b> The smallest frequency $\omega$ in $(0, \pi]$ at which $|H_d(\omega)| = 0$, as a multiple of $\pi$:</p>
+<pl-number-input answers-name="wzero" label="$\omega =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Pull out the centre">
+    $H_d(\omega) = \sum_n h[n]\,e^{-j\omega n}$. Factor out $e^{-j\omega M}$, where $M$ is the midpoint of the first and
+    last nonzero samples, and pair the remaining terms: $e^{jk\omega} + e^{-jk\omega} = 2\cos k\omega$,
+    $e^{jk\omega} - e^{-jk\omega} = 2j\sin k\omega$.
+  </pl-hint>
+  <pl-hint hint-name="Magnitude, sign and slope" show-after-submission="1">
+    $|H_d(\omega)| = |A(\omega)|$, never negative. Where $A(\omega) \lt 0$ write $A = |A|\,e^{\pm j\pi}$: the phase is
+    $-\alpha\omega$ ({{#params.is_anti}}$+\tfrac{\pi}{2}$ for the $j$, {{/params.is_anti}}$\pm\pi$ for the sign), then reduce it to
+    $(-\pi, \pi]$. The group delay is minus the slope of the phase between the jumps.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Modelled on Lecture 16, &sect;3 (pull out a linear-phase factor; Examples 1&ndash;2, $\{1, 0, \pm 1\}$) and &sect;7 (group delay),
+    and on SP2025 Midterm 2 #3, FA2024 #3 and SP2023 #5 (HW6 #6 is the same trick).</p>
+  <p><b>(a)&ndash;(b)</b> From the definition,
+    $$H_d(\omega) = \sum_n h[n]\,e^{-j\omega n} = {{params.def_tex}}.$$
+    The samples from $n = {{params.n_first}}$ to $n = {{params.n_last}}$ are {{params.sym_word}} about their centre
+    $n = {{params.alpha_tex}}$, so
+    {{^params.alpha_zero}}factor out ${{params.lin_tex}}$ and {{/params.alpha_zero}}pair the terms with ${{params.euler_tex}}$:
+    $$H_d(\omega) = {{params.lin_tex}}\left[{{params.pair_tex}}\right] = {{params.jpre_tex}}\,{{params.lin_tex}}\left({{params.A_tex}}\right).$$
+    Hence $\alpha = {{params.alpha_tex}}$ and $A(\omega) = {{params.A_tex}}$ (any equivalent real expression, e.g. with
+    exponentials, is accepted).</p>
+  <p><b>(c)</b> Since $\left|{{params.jpre_tex}}\,e^{-j\alpha\omega}\right| = 1$, $|H_d(\omega)| = |A(\omega)|$:</p>
+  <ul>
+    {{#params.mag_rows}}<li>$\omega = {{w_tex}}$: $A {{A_val_tex}}$, so $|H_d| {{mag_tex}}{{#irr}} \approx {{dec}}{{/irr}}$.</li>{{/params.mag_rows}}
+  </ul>
+  <p><b>(d)</b> At $\omega = {{params.f1_tex}}$,
+    {{#params.A1_neg}}$A {{params.A1_tex}} \lt 0$, and $-1 = e^{\pm j\pi}$. The phase is ${{params.rule_tex}}${{/params.A1_neg}}{{^params.A1_neg}}$A {{params.A1_tex}} \gt 0$, so
+    no $\pm\pi$ is added: the phase is ${{params.rule_tex}}${{/params.A1_neg}}{{#params.show_sum}}:
+    $${{params.raw_ph_tex}} = {{params.raw_ph_sum_tex}}{{#params.ph_needs_wrap}} \;\to\; {{params.ph_tex}}\ \text{(principal value)}{{/params.ph_needs_wrap}}.$${{/params.show_sum}}{{^params.show_sum}}
+    $= {{params.ph_tex}}$.{{/params.show_sum}}
+    So $\angle H_d\!\left({{params.f1_tex}}\right) = {{params.ph_tex}}$, i.e. ${{params.ph_plain}}\cdot\pi.$
+    {{#params.A1_neg}}Without the $\pm\pi$ of the negative amplitude one would get ${{params.alt_tex}}$: wrong.{{/params.A1_neg}}{{^params.A1_neg}}Adding
+    $\pm\pi$ here, where $A$ is positive, would give ${{params.alt_tex}}$: wrong.{{/params.A1_neg}}</p>
+  <p><b>(e)</b> Between its jumps the phase is a line of slope $-\alpha$, so the group delay is uniform:
+    $\tau(\omega) = {{params.alpha_tex}}$ samples. The $\pm\pi$ jumps (sign changes of $A$) and the $2\pi$ wraps do not count.</p>
+  <p><b>(f)</b> $|H_d(\omega)| = 0$ where $A(\omega) = 0$. On $(0, \pi]$ that happens at
+    $\omega = {{params.zeros_tex}}${{#params.several_zeros}}; the smallest is ${{params.wzero_tex}}${{/params.several_zeros}},
+    so the answer is ${{params.wzero_plain}}\cdot\pi$.</p>
+</pl-answer-panel>

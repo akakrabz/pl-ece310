@@ -1,0 +1,8 @@
+{
+  "uuid": "5426a44b-ba9f-4cf9-b372-33b2a622f47d",
+  "title": "Series and parallel FIR blocks: overall impulse response and H(z)",
+  "topic": "Transfer functions",
+  "tags": ["L4", "L10", "midterm1", "integer", "matrix", "symbolic", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

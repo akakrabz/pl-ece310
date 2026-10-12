@@ -22,6 +22,12 @@
       "title": "z-transform and ROC",
       "questions": [
         {
+          "id": "ztransform/polynomial-transforms",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
           "id": "ztransform/z-transform-pair",
           "autoPoints": 2,
           "maxAutoPoints": 6,

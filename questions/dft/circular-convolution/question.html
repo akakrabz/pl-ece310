@@ -1,0 +1,63 @@
+<pl-question-panel>
+  <p><small><em>Ahead of the lectures: this topic is taught after Lecture 17 and appears on past Midterm 2 exams; notation follows those exams.</em></small></p>
+  <p>
+    Consider the finite-length sequences
+    $${{params.x_tex}} \qquad\text{and}\qquad {{params.h_tex}},$$
+    both zero outside the indices shown, and let $y[n] = x[n] * h[n]$ be their (linear) convolution.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Let $X[k]$ and $H[k]$ be the ${{params.Nc}}$-point DFTs of $x[n]$ and $h[n]$ (each zero-padded to length ${{params.Nc}}$), and
+  let $y_{ {{params.Nc}} }[n]$, $0 \le n \le {{params.Nm1}}$, be the inverse ${{params.Nc}}$-point DFT of $Y[k] = X[k]H[k]$. Enter
+  $y_{ {{params.Nc}} }[0], \dots, y_{ {{params.Nc}} }[{{params.Nm1}}]$ as a row vector (for a two-sample answer you would type
+  <code>[1, -2]</code>).</p>
+<pl-matrix-input answers-name="yN" label="$y_{ {{params.Nc}} } =$" comparison="relabs" rtol="1e-9" atol="1e-9" weight="2"></pl-matrix-input>
+
+<p class="mt-3"><b>(b)</b> What is the smallest DFT length $N$ for which the inverse $N$-point DFT of $X[k]H[k]$ (both sequences zero-padded
+  to length $N$) equals the linear convolution $y[n]$?</p>
+<pl-integer-input answers-name="Nmin" label="$N_{\min} =$"></pl-integer-input>
+
+<p class="mt-3"><b>(c)</b> At which indices $n$ does the ${{params.Nc}}$-point result of part (a) differ from the linear convolution, i.e.
+  $y_{ {{params.Nc}} }[n] \ne y[n]$? Select <b>all</b> that apply.</p>
+<pl-checkbox answers-name="diff" partial-credit="net-correct" order="fixed" display="inline" hide-letter-keys="true">
+  {{#params.diff_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.diff_choices}}
+</pl-checkbox>
+
+<p class="mt-3"><b>(d)</b> Two other sequences, $\{u[n]\}_{n=0}^{ {{params.Pm1}} }$ and $\{v[n]\}_{n=0}^{ {{params.Qm1}} }$, are to be linearly convolved
+  with a radix-2 FFT: both are zero-padded to a common length $N$ that is a power of 2, and $u * v$ is computed as
+  $\mathrm{FFT}^{-1}\{\mathrm{FFT}\{u\}\cdot\mathrm{FFT}\{v\}\}$. What is the minimum number of zeros that must be appended to each sequence?</p>
+<div class="mb-1"><pl-integer-input answers-name="zu" label="$\text{zeros appended to } u:$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="zv" label="$\text{zeros appended to } v:$"></pl-integer-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Linear first, then wrap">
+    The linear convolution of lengths $L_1$ and $L_2$ has $L_1 + L_2 - 1$ samples. A product of $N$-point DFTs is an $N$-point
+    <b>circular</b> convolution, $\sum_{m=0}^{N-1} x[m]\,h[\langle n - m\rangle_N]$, which equals the linear result with every
+    sample beyond $n = N - 1$ wrapped around: $y_N[n] = \sum_r y[n + rN]$, $0 \le n \le N-1$.
+  </pl-hint>
+  <pl-hint hint-name="Where the overflow lands" show-after-submission="1">
+    The sample $y[N + i]$ is added to $y[i]$: the overflow lands at the <b>start</b> of the block, not at its end, and it is added, not
+    dropped. Nothing wraps once $N \ge L_1 + L_2 - 1$. A radix-2 FFT also needs $N$ to be a power of 2, and both sequences are
+    padded to the same $N$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> First the linear convolution, $L_1 + L_2 - 1 = {{params.L1}} + {{params.L2}} - 1 = {{params.L}}$ samples (shift and add):</p>
+  {{{params.table_html}}}
+  <p>$$y[n] = {{params.y_tex}},\qquad 0 \le n \le {{params.Lm1}}\qquad ({{params.sumcheck_tex}}).$$
+    A product of ${{params.Nc}}$-point DFTs is the ${{params.Nc}}$-point circular convolution
+    $y_{ {{params.Nc}} }[n] = \sum_{m=0}^{ {{params.Nm1}} } x[m]\,h[\langle n - m\rangle_{ {{params.Nc}} }]$, which is the linear result
+    with {{{params.wrap_phrase_html}}}:
+    $$y_{ {{params.Nc}} }[n] = {{params.wrap_tex}} = {{params.yN_tex}}.$$</p>
+  <p><b>(b)</b> Nothing wraps when $N \ge L_1 + L_2 - 1 = {{params.L}}$; for any smaller $N$ the last sample $y[{{params.Lm1}}] \ne 0$ lands on top of
+    an earlier one. So $N_{\min} = {{params.L}}$ (pad $x$ with ${{params.L}} - {{params.L1}}$ zeros and $h$ with ${{params.L}} - {{params.L2}}$).</p>
+  <p><b>(c)</b> {{{params.c_expl_html}}}</p>
+  <p><b>(d)</b> $u * v$ has ${{params.P}} + {{params.Q}} - 1 = {{params.M}}$ samples, so the DFT length must be at least ${{params.M}}$; the smallest
+    power of 2 that is at least ${{params.M}}$ is $N = {{params.N2}}$. Both sequences are padded to that length: $u$ gets
+    ${{params.N2}} - {{params.P}} = {{correct_answers.zu}}$ zeros and $v$ gets ${{params.N2}} - {{params.Q}} = {{correct_answers.zv}}$ zeros
+    (a plain DFT of length ${{params.M}}$ would need only ${{params.Qm1}}$ and ${{params.Pm1}}$).</p>
+  <p class="text-muted"><small>Modelled on FA2021 Midterm 2 #6 (linear convolution, then the 6-point circular one with $y[6], y[7]$ wrapped onto
+    $n = 0, 1$, and "is $N = 7$ enough?"), FA2019 #11 (zeros for a DFT and for a radix-2 FFT; the FA2019 key marks this "not on our
+    Midterm 2") and the true/false items FA2019 #1(g)&ndash;(h); circular convolution property from the 2019 course notes, §2.5.1.8.</small></p>
+</pl-answer-panel>

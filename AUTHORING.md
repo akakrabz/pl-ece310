@@ -20,7 +20,7 @@ The whole suite takes ~15 min on one core (some checkers are slow on purpose: ex
 grids). Run the topic folders in parallel when you need everything:
 
 ```bash
-for t in signals systems convolution lccde ztransform stability dtft; do
+for t in signals systems convolution lccde ztransform stability dtft freqresp sampling dft; do
   python3 tools/test_questions.py --only "$t/" --no-course > "/tmp/pl-$t.log" 2>&1 &
 done; wait; tail -n 2 /tmp/pl-*.log; python3 tools/test_questions.py --only none   # course checks
 ```
@@ -33,7 +33,7 @@ done; wait; tail -n 2 /tmp/pl-*.log; python3 tools/test_questions.py --only none
 | `tools/plsim.py` | runs one question through PrairieLearn's pipeline: `generate → prepare → render → test → parse → grade`, with the real element code, Mustache and JSON round-trips (see its docstring for the API) |
 | `tools/test_questions.py` | the runner: course JSON vs PrairieLearn's schemas, template lint, `--gen-seeds` variants through `generate` + checker, `--seeds` variants through render + PrairieLearn's **Test** button (correct / incorrect / invalid) + extra submissions + KaTeX compile of every `$…$` |
 | `tools/checks/<id with / → __>.py` | independent answer check for one question (`check`, `submissions`, see §5) |
-| `tools/checklib.py` | helpers for checkers: SymPy parsing, `zsum` (overflow-safe truncated z-transform sums), `impulse_response` (lfilter) |
+| `tools/checklib.py` | helpers for checkers: SymPy parsing, `zsum` (overflow-safe truncated z-transform sums), `impulse_response` (lfilter), `sketch_raw` (a `pl-sketch` submission drawn from graph coordinates) |
 | `tools/preview.py` | renders a variant (question, submission, answer panels) to HTML/PNG for a visual check |
 | `tools/test_lib.py` | self-test of `serverFilesCourse/ece310` against scipy / truncated sums |
 
@@ -55,9 +55,12 @@ questions/<topic-folder>/<slug>/
 tools/checks/<topic-folder>__<slug>.py   independent checker
 ```
 
-Topic folders: `signals`, `systems`, `convolution`, `lccde`, `ztransform`, `stability`, `dtft`.
-Topics and tags are declared in `infoCourse.json` (tags: `L1`…`L14`, `hw1`…`hw5`, `midterm1`,
-`fam-*` exam families, input types `numeric integer symbolic MC checkbox matrix`, `easy medium hard`).
+Topic folders: `signals`, `systems`, `convolution`, `lccde`, `ztransform`, `stability`, `dtft`,
+`freqresp` (frequency response, magnitude and phase), `sampling` (A/D, D/A, aliasing), `dft`.
+Topics and tags are declared in `infoCourse.json` (tags: `L1`…`L17`, `ahead` (material taught after
+Lecture 17, learned from past exams and the 2019 notes), `hw1`…`hw6`, `midterm1`, `midterm2`,
+`fam-*` Midterm 1 and `fam2-*` Midterm 2 exam families, input types
+`numeric integer symbolic MC checkbox matrix matching sketch`, `easy medium hard`).
 
 ### server.py rules
 
@@ -136,12 +139,64 @@ Topics and tags are declared in `infoCourse.json` (tags: `L1`…`L14`, `hw1`…`
 - Every question gets `<pl-hidden-hints>` (one free hint, one after a submission) and a
   `<pl-answer-panel>` with the full worked solution, written from generated LaTeX.
 
+### More elements: dropdowns, matching, sketches, figures
+
+All of these run through the harness with PrairieLearn's real element code (Test button included).
+Official examples to copy from: `exampleCourse/questions/element/{matching,sketch,sketchAdvanced}` in
+the PrairieLearn repository.
+
+- **Inline dropdown**: `pl-dropdown` is deprecated; use `<pl-multiple-choice display="dropdown"
+  hide-letter-keys="true" answers-name="...">` (same option list and probes as any multiple choice).
+- **`pl-matching`** (match each statement to one option, e.g. pole–zero plots to filter types):
+  statements and options may hold HTML, SVG included. After prepare, `params[name]` is
+  `[statements, options]` as displayed and `correct[name]` is the list of option indices; a raw
+  submission sets `"<name>-dropdown-<i>"` (statement `i`) to the option index as a string.
+- **`pl-sketch`** (draw a graph, autograded by criteria; PrairieLearn needs the `sketchresponse`
+  package, which `setup_harness.sh` fetches): read `docs/elements/pl-sketch.md`. Choose
+  `x-range`/`y-range` in units students can hit (plot $\omega/\pi$ on $[-1, 1]$, not $\omega$ in radians)
+  and give every graded tool a `pl-sketch-solution` (the Test button submits it). Three traps,
+  all upstream sketchresponse behaviour that PrairieLearn shares:
+  1. **The browser smooths polylines and splines.** A student's polyline is sent as
+     `fitCurve(points, 0)` — a C¹ cubic Bézier through the clicked vertices — so a correct
+     triangle drawn with three clicks bulges past a tight `match-function`/`less-than` band at the
+     apex. PrairieLearn's Test button sends straight segments and cannot see this. For a
+     piecewise-linear answer (a spectrum), **grade the corners with the `point` tool** (`match`
+     per corner, `count`, plus bands that the points must satisfy) and offer the polyline as an
+     ungraded `helper="true"` tool for drawing (see `sampling/sketch-sampled-spectrum`).
+  2. `match-function` decides "steep" segments with angles in **data units**: with a y-range much
+     larger than the x-range almost every segment counts as steep and is compared along x. Keep
+     the two ranges comparable or use `less-than`/`greater-than` bands.
+  3. `defined-in`/`undefined-in` convert pixel gaps with the canvas end instead of its width, so
+     gaps count double on a range symmetric about 0 (factor (x_end − x_start)/x_end in general):
+     raise `tolerance` accordingly.
+
+  In a checker, `checklib.sketch_raw(params, name, {tool_id: [[(x, y), …]]})` turns a drawing in
+  graph coordinates into the raw submission (`"<name>-sketchresponse-submission"`) exactly as a
+  browser sends it (polylines/splines re-fitted like the browser), so probes look like
+  `(sketch_raw(params, "xd", {"pt": [[c] for c in wrong_corners]}), {"xd": 0})`. Probe the exact
+  drawing, every vertex moved by a few pixels (must score 1), and the classic wrong drawings
+  (wrong height, wrong edge, the copies drawn without adding the overlap) (must score 0).
+- **Figures** (spectra, pole–zero plots, block diagrams, stem plots): build an inline SVG string in
+  `server.py`, put it in `params["fig_html"]` and insert it with triple braces `{{{params.fig_html}}}`.
+  Start from `ece310.svg` (`plot`, `stem`, `pole_zero`) so figures look alike across the course.
+  Use a `viewBox`, `width="100%"` with a `style="max-width:…px"`, dark strokes on a transparent
+  background, text ≥ 12 px in `<text>` elements (no `$…$` inside SVG: math is not typeset there —
+  write `π` and `ω` as Unicode). Label axes and the values students must read off the figure; never
+  draw what another part asks for. `pl-figure` with a dynamic `file()` is not supported by the harness.
+
 ### Course notation (match the lectures and exams)
 
 `x[n]`, `h[n]`, `y[n]`, `δ[n]`, `u[n]`; sequences with an arrow under the `n = 0` sample
 (`fmt.tex_seq`); transforms in powers of $z^{-1}$, always with the ROC written `|z| > a`;
 LCCDE in the Lecture 9 form $y[n] + \sum_k a_k y[n-k] = \sum_k b_k x[n-k]$ (same `b, a` as
-`scipy.signal.lfilter`); "LTI" (older exams say "LSI"); DTFT written $X_d(\omega)$.
+`scipy.signal.lfilter`); "LTI" (older exams say "LSI"); DTFT written $X_d(\omega)$, frequency
+response $H_d(\omega)$; analog frequency $\Omega$ in rad/s or $f$ in Hz (always say which),
+digital frequency $\omega = \Omega T$, sampling period $T$, sampling rate $f_s = 1/T$, bandlimit $B$ in Hz
+(Lecture 17); $N$-point DFT $X[k] = \sum_{n=0}^{N-1} x[n] e^{-j2\pi kn/N}$.
+
+Angles and digital frequencies are entered **as multiples of $\pi$** (`suffix="$\cdot\,\pi$"`, a
+student types `3/4` for $\tfrac{3\pi}{4}$), principal angles in $(-\pi, \pi]$. An angle of exactly $\pm\pi$
+has two spellings (`1` and `-1`): avoid such variants or accept both in `grade()`.
 
 ## 4. The shared library `serverFilesCourse/ece310`
 
@@ -153,6 +208,8 @@ LCCDE in the Lecture 9 form $y[n] + \sum_k a_k y[n-k] = \sum_k b_k x[n-k]$ (same
 | `seq` | `conv` (with start indices), `trim_seq`, `value` |
 | `mc` | `choices` (correct + distinct distractors, shuffled), `yes_no`, `true_false` |
 | `answers` | `symbolic(expr, integer=("n",))` — correct answer for `pl-symbolic-input` in `n` (see §3) |
+| `svg` | inline SVG figures: `plot` (piecewise-linear spectra, impulses as arrows, dashed guides), `stem` (sequences, \|X[k]\|), `pole_zero` (z-plane with unit circle), `fmt_pi`, `fmt_num` (tick labels) |
+| `w1_signals` … `w8_dft` | helpers written for one group of questions (the prefix is the writer slot of the October 2026 round): `w1_signals` (principal angles, multiples of π, exact surds — L1–L2), `w2_diagrams` (direct-form block diagrams as SVG — L5), `w4_dtft` (DTFT figures and helpers — L13–L14), `w5_freqresp` (exact polar forms, angle helpers — L15–L16), `w6_sampling` (exact X_d of sampled piecewise-linear spectra, pl-sketch function strings — L17), `w7_analog` (A/D → H_d → D/A chain figure, analog-frequency LaTeX), `w8_dft` (exact DFT values in ℚ(√2), ℚ(√3)) — reuse them, read their docstrings |
 | `convlib`, `zinv`, `lccde`, `systems_bank` | helpers written for particular questions (convolution closed forms; inverse-z formatting; LCCDE/H(z) formatting and exact recursion; the vetted system-property bank with LaTeX, flags and reasons) — reuse them, read their docstrings |
 
 Treat the library as read-only from a question; if a helper is missing, write it in your
@@ -178,7 +235,10 @@ For `pl-multiple-choice`/`pl-checkbox`, `params[name]` is the element's option l
 submit a key (or a list of keys) and find options by their `html`.
 
 A question is done when
-1. `python3 tools/test_questions.py --only <id> --seeds 25 --gen-seeds 300 -v` prints `OK` with no warnings;
+1. `python3 tools/test_questions.py --only <id> --seeds 25 --gen-seeds 300 -v` prints `OK` with no warnings
+   (warnings include "display lint": typesetting slips KaTeX accepts but students misread — `e^{j-…}`,
+   `n - -1`, `1\cos`, `1T`, `\frac{2\pi}{4}1n`; the lint sees the first 8 seeds, so a checker that
+   builds text should scan it for such slips over all its variants);
 2. at least ~90 % of the variants are distinct (the runner prints the count);
 3. the checker covers every answer and at least two equivalent forms and two classic mistakes;
 4. you looked at `tools/preview.py <id> --seed … --submit correct --png` for two seeds.

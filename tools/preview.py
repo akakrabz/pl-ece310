@@ -30,7 +30,7 @@ def page(title: str, sections: list[tuple[str, str]]) -> str:
     if bs.exists():
         css.append(bs.read_text())
     for el in ("pl-number-input", "pl-integer-input", "pl-symbolic-input", "pl-multiple-choice", "pl-checkbox",
-               "pl-matrix-input", "pl-string-input", "pl-hidden-hints"):
+               "pl-matrix-input", "pl-string-input", "pl-hidden-hints", "pl-matching", "pl-sketch"):
         for f in (plsim.PL_APP / "elements" / el).glob("*.css"):
             css.append(f.read_text())
     katex = next((d for d in KATEX_DIRS if (d / "katex.min.js").exists()), None)

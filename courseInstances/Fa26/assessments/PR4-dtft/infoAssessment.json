@@ -1,10 +1,10 @@
 {
   "uuid": "55049b98-e8c1-4d43-8614-f838a8493ea1",
   "type": "Homework",
-  "title": "Discrete-time Fourier transform (L13–L14)",
+  "title": "Template matching and the DTFT (L12–L14)",
   "set": "Practice",
   "number": "4",
-  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 13–14, Homework 5. Not on Midterm 1.</p>",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 12–14, Homework 5–6. Not on Midterm 1; Lecture 12 (template matching) is not tested on homework or exams, the rest is Midterm 2 material.</p>",
   "accessControl": [
     {
       "dateControl": {
@@ -19,8 +19,25 @@
   ],
   "zones": [
     {
+      "title": "Template matching",
+      "questions": [
+        {
+          "id": "convolution/template-matching",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
       "title": "DTFT",
       "questions": [
+        {
+          "id": "dtft/periodicity",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
         {
           "id": "dtft/dtft-quantities",
           "autoPoints": 2,
@@ -34,13 +51,31 @@
           "triesPerVariant": 3
         },
         {
-          "id": "dtft/frequency-response",
+          "id": "dtft/inverse-dtft-ideal",
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3
         },
         {
           "id": "dtft/dtft-properties",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dtft/modulation",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dtft/symmetry-and-existence",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dtft/frequency-response",
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3

@@ -1,0 +1,71 @@
+<pl-question-panel>
+  <p>
+    The input
+    $$x[n] = {{params.x_tex}}$$
+    (the arrow marks the sample at $n = 0$; all samples not shown are zero) is applied to an FIR LTI system with
+    transfer function
+    $$H(z) = {{params.H_tex}}.$$
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Find the z-transform $X(z)$. Type <code>z^(-2)</code> or <code>1/z^2</code> for $z^{-2}$, e.g.
+  <code>5*z^2 - 1 + 4*z^(-5)</code>; any equivalent form is accepted.</p>
+<pl-symbolic-input answers-name="X" variables="z" label="$X(z) =$" size="40"></pl-symbolic-input>
+
+<p class="mt-3"><b>(b)</b> What is the region of convergence of $X(z)$?</p>
+<pl-multiple-choice answers-name="roc" order="fixed" hide-letter-keys="true">
+  {{#params.roc_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.roc_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(c)</b> Find the impulse response $h[n]$ of the system: the index of its first nonzero sample, and its
+  samples from the first to the last nonzero one as a row vector, zeros in between included
+  (for example <code>[4, 0, -1, 2]</code>).</p>
+<div class="mb-1"><pl-integer-input answers-name="nh" label="$n_{\text{first}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-matrix-input answers-name="h" label="$h =$" comparison="relabs" rtol="1e-9" atol="1e-9"></pl-matrix-input></div>
+
+<p class="mt-3"><b>(d)</b> The output is $y[n] = x[n] * h[n]$, so $Y(z) = X(z)\,H(z)$. Find the output sample
+  $y[{{params.k_tex}}]$, which is the coefficient of ${{params.zk_tex}}$ in $Y(z)$.</p>
+<pl-integer-input answers-name="yk" label="$y[{{params.k_tex}}] =$"></pl-integer-input>
+
+<p class="mt-3"><b>(e)</b> Evaluate $Y(z)$ at $z = {{params.z0_tex}}$.</p>
+<pl-integer-input answers-name="Yz" label="$Y({{params.z0_tex}}) =$"></pl-integer-input>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="One power of z per sample">
+    $\delta[n-k] \leftrightarrow z^{-k}$, so a finite sequence transforms term by term: the sample $x[k]$ becomes
+    $x[k]\,z^{-k}$. A sample at a <b>negative</b> index $k$ gives a <b>positive</b> power $z^{\lvert k\rvert}$. Read
+    $H(z)$ backwards the same way: the coefficient of $z^{-n}$ is $h[n]$.
+  </pl-hint>
+  <pl-hint hint-name="ROC, products and special points" show-after-submission="1">
+    Negative powers of $z$ blow up at $z = 0$; positive powers blow up as $z \to \infty$. In $Y(z) = X(z)H(z)$ the term
+    $z^{-k}$ collects every product $x[m]z^{-m}\cdot h[k-m]z^{-(k-m)}$, which is the convolution sum. At $z = 1$ every
+    power of $z$ equals $1$, so $Y(1) = X(1)\,H(1) = \sum_n x[n]\cdot\sum_n h[n]$; at $z = -1$ each sample picks up the
+    sign $(-1)^n$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Each sample $x[k]$ contributes $x[k]\,z^{-k}$:
+    $$X(z) = \sum_n x[n]\,z^{-n} = {{params.X_def_tex}} = {{params.X_tex}}.$$
+    Any equivalent form is accepted, e.g. the same terms over a common power of $z$.</p>
+  <p><b>(b)</b> {{{params.roc_why_html}}}</p>
+  <p><b>(c)</b> The coefficient of $z^{-n}$ in $H(z)$ is $h[n]$ (a positive power $z^{m}$ is $z^{-n}$ with $n = -m$):</p>
+  {{{params.h_table_html}}}
+  <p>So $h[n] = {{params.h_tex}}$: the first nonzero sample is at $n = {{correct_answers.nh}}$, the last at
+    $n = {{params.h_last}}$, and the row vector has ${{params.h_len}}$ entries, <code>{{params.h_plain}}</code>{{#params.has_gaps}}
+    (the missing powers of $z$ are zero samples and must be listed){{/params.has_gaps}}.</p>
+  <p><b>(d)</b> The coefficient of ${{params.zk_tex}}$ in $X(z)H(z)$ collects the products $x[m]z^{-m}\cdot h[\ell]z^{-\ell}$
+    with $m + \ell = {{params.k_tex}}$; the nonzero ones have $(m, \ell) = {{params.yk_pairs_tex}}$:
+    $$\begin{aligned} y[{{params.k_tex}}] &amp;= \sum_m x[m]\,h[{{params.k_tex}} - m] = {{params.yk_sum_tex}} \\ &amp;= {{params.yk_vals_tex}} = {{params.yk_tex}}. \end{aligned}$$
+    (The whole output, for reference: $Y(z) = {{params.Y_tex}}$, i.e. $y[n] = {{params.y_tex}}$.)</p>
+  <p><b>(e)</b> The convolution property holds at every $z$: $Y({{params.z0_tex}}) = X({{params.z0_tex}})\,H({{params.z0_tex}})$.
+    Here ${{params.z0_rule_tex}}$:
+    $$X({{params.z0_tex}}) = {{params.Xz0_tex}},$$
+    $$H({{params.z0_tex}}) = {{params.Hz0_tex}},$$
+    $$Y({{params.z0_tex}}) = ({{params.X0}})\cdot({{params.H0}}) = {{params.Yz0_tex}}.$$
+    Check with the samples of $y$ listed in (d): they give ${{params.sum_check_tex}}$ as well.</p>
+  <p class="text-muted small">Modelled on Lecture 6 &sect;2 (the z-transform $X(z) = \sum_n x[n]z^{-n}$), Lecture 7 notes &sect;1,
+    ROC rule 5, and slide 6 (finite-length signals: the whole plane except perhaps $z = 0$ or $z = \infty$), Lecture 7 (convolution
+    property $x_1 * x_2 \leftrightarrow X_1X_2$), HW3 #1(a), #1(e) and #3(a), FA2025 Midterm 1 #5(b) and FA2019 Midterm 1 #5
+    (finite-length signals: "$z \ne 0$" is part of the answer).</p>
+</pl-answer-panel>

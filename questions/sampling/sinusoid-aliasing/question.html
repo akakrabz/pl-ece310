@@ -1,0 +1,61 @@
+<pl-question-panel>
+  <p>
+    The analog signal
+    $${{params.xa_tex}}$$
+    ($t$ in seconds) is sampled ideally at $f_s = {{params.fs_tex}}$ Hz, $x[n] = x_a(nT)$ with $T = \tfrac{1}{f_s}$.
+  </p>
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.
+    Enter frequencies and phases as multiples of $\pi$: for $\tfrac{3\pi}{4}$ type <code>3/4</code>.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> Write the samples as $x[n] = {{params.A_tex}}\cos(\omega n + \phi)$ with $0 \lt \omega \lt \pi$ and the principal
+  phase $-\pi \lt \phi \lt \pi$.</p>
+<div class="mb-1"><pl-number-input answers-name="w" label="$\omega =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="phi" label="$\phi =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> The lowest frequency $f \ge 0$ (in hertz) of an analog sinusoid whose samples at $f_s = {{params.fs_tex}}$ Hz
+  are exactly the $x[n]$ of part (a):</p>
+<pl-number-input answers-name="fmin" label="$f_{\min} =$" suffix="Hz" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> A different experiment.
+  {{#params.b_freq}}The signal $x_a(t) = {{params.b_sig_tex}}$ is sampled at $f_s = {{params.b_fs_tex}}$ Hz and gives
+  $${{params.xn_b_tex}}.$$ Which of the following values of $f$ are possible? Select all that apply.{{/params.b_freq}}
+  {{#params.b_period}}The signal $x_a(t) = {{params.b_sig_tex}}$ is sampled with period $T$ and gives
+  $${{params.xn_b_tex}}.$$ Which of the following sampling periods are consistent with this? Select all that apply.{{/params.b_period}}
+</p>
+<pl-checkbox answers-name="cands" order="fixed" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.b_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.b_choices}}
+</pl-checkbox>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Sample symbolically">
+    $x_a(nT)$ replaces $t$ by $n/f_s$: $\cos(2\pi f_0 t + \theta)$ becomes $\cos(\omega_0 n + \theta)$ with
+    $\omega_0 = 2\pi f_0/f_s$. Adding $2\pi$ to $\omega_0$ changes no sample. A sine is $\sin\alpha = \cos(\alpha - \tfrac{\pi}{2})$.
+  </pl-hint>
+  <pl-hint hint-name="Folding flips the phase" show-after-submission="1">
+    If $\omega_0$ reduced mod $2\pi$ lands in $(\pi, 2\pi)$, write it as $2\pi - \omega$: $\cos\big((2\pi - \omega)n + \phi\big)
+    = \cos(-\omega n + \phi) = \cos(\omega n - \phi)$. The frequency folds back and the <b>phase changes sign</b>. For a sine (or a
+    cosine with a phase) only $+\omega_0 + 2\pi k$ reproduces the samples; $\sin(-\omega n) = -\sin(\omega n)$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Sampling gives the digital frequency $${{params.raw_tex}}.$$
+    {{#params.is_sin}}First write the sine as a cosine: $${{params.sin_tex}}.$${{/params.is_sin}}
+    {{{params.step_html}}} So
+    $${{params.xn_tex}},$$
+    $\omega = {{params.w_frac}}\cdot\pi$ and $\phi = {{params.phi_frac}}\cdot\pi$.</p>
+  <p><b>(b)</b> Every analog frequency $f$ with $2\pi f/f_s \equiv \pm\omega \pmod{2\pi}$ (with the matching phase) gives these samples;
+    the smallest is the one that lands directly on $\omega \in (0, \pi)$:
+    $$f_{\min} = {{params.fmin_tex}}\ \text{Hz}.$$
+    {{#params.aliased}}It is not the original $f_0$: the samples cannot tell $f_0$ from its alias.{{/params.aliased}}
+    {{^params.aliased}}Here it is $f_0$ itself: $f_0 \lt f_s/2$, so nothing aliased.{{/params.aliased}}</p>
+  <p><b>(c)</b> We need ${{params.b_rule_tex}}$ for some integer $k$: {{{params.b_kind_html}}}.</p>
+  <ul>
+    {{#params.b_lines}}<li>{{{line_html}}}</li>{{/params.b_lines}}
+  </ul>
+  <p class="text-muted"><small>Modelled on Lecture 17 &sect;1.1 (notes eqs. 12&ndash;14: sampling $\sin(\Omega t)$ gives
+    $\omega = \Omega T$) and &sect;8 of the study site's Lecture 17 page (a sampled sinusoid is defined only modulo $2\pi$
+    and, for a cosine, up to sign), SP2025 Midterm 2 #6(a) (which $T$ give $\sin(\tfrac{\pi}{2}n)$), FA2023 #3 (which $\Omega_0$), SP2023 #8(a)
+    (a phased cosine fixes the sign), SP2021 #1(a) and #9(b).</small></p>
+</pl-answer-panel>
