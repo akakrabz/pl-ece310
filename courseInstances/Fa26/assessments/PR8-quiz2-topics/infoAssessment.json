@@ -1,0 +1,85 @@
+{
+  "uuid": "de7517db-c536-49cd-94e7-f7b1594a177e",
+  "type": "Homework",
+  "title": "Quiz 2 topics: DTFT values, Parseval, symmetry, phase (L13–L16)",
+  "set": "Practice",
+  "number": "8",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>The questions students found hardest on Quiz 2 (Oct 2026): Parseval without the squares, the DTFT of a finite sequence by hand and at one frequency, eigenfunctions, Hermitian symmetry as a test for a real x[n], and the principal phase in (−π, π].</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "DTFT by hand",
+      "questions": [
+        {
+          "id": "dtft/dtft-of-finite-sequence",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dtft/dtft-at-frequency",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dtft/dtft-quantities",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Parseval and symmetry",
+      "questions": [
+        {
+          "id": "dtft/parseval-inner-product",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dtft/real-valued-test",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Frequency response and phase",
+      "questions": [
+        {
+          "id": "freqresp/sinusoidal-response",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/principal-phase",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/magnitude-phase-fir",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

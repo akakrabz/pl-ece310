@@ -1,0 +1,46 @@
+<pl-question-panel>
+  <p>
+    The phase response $\angle H_d(\omega)$ is reported as a <b>principal value</b> in $(-\pi, \pi]$, the full circle, not the
+    range $(-\tfrac{\pi}{2}, \tfrac{\pi}{2})$ of $\tan^{-1}$.
+  </p>
+</pl-question-panel>
+
+<p class="small text-muted">Enter every angle in <b>radians</b>, as the principal value in $(-\pi, \pi]$, with at least 4 significant
+  digits (type <code>0.1234</code>, not <code>0.12</code>). An angle off by a
+  multiple of $2\pi$ is marked wrong. On the negative real axis both <code>3.1416</code> and <code>-3.1416</code> are accepted.</p>
+
+<p><b>(a)</b> At a frequency $\omega_1$ a system has $H_d(\omega_1) = {{params.za_tex}}$. Find its phase.</p>
+<pl-number-input answers-name="za" label="$\angle H_d(\omega_1) =$" suffix="$\text{rad}$" comparison="relabs" rtol="1e-3" atol="1e-3"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> At another frequency $\omega_2$, $H_d(\omega_2) = {{params.zb_tex}}$. Find its phase.</p>
+<pl-number-input answers-name="zb" label="$\angle H_d(\omega_2) =$" suffix="$\text{rad}$" comparison="relabs" rtol="1e-3" atol="1e-3"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> A second system has
+  $$H_d(\omega) = {{params.lin_tex}}\,A(\omega),\qquad A(\omega) = {{params.A_tex}}\quad(\text{real}).$$
+  Find the principal phase at the three frequencies below.</p>
+<div class="mb-1"><pl-number-input answers-name="w1" label="$\angle H_d\!\left({{params.f1_tex}}\right) =$" suffix="$\text{rad}$" comparison="relabs" rtol="1e-3" atol="1e-3"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="w2" label="$\angle H_d\!\left({{params.f2_tex}}\right) =$" suffix="$\text{rad}$" comparison="relabs" rtol="1e-3" atol="1e-3"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="w3" label="$\angle H_d\!\left({{params.f3_tex}}\right) =$" suffix="$\text{rad}$" comparison="relabs" rtol="1e-3" atol="1e-3"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Quadrant first">
+    $\tan^{-1}(b/a)$ only returns angles in $(-\tfrac{\pi}{2}, \tfrac{\pi}{2})$: it cannot tell $a + jb$ from $-a - jb$.
+    Find the quadrant of $a + jb$ first; if $a \lt 0$, add $\pi$ (when $b \ge 0$) or subtract $\pi$ (when $b \lt 0$).
+  </pl-hint>
+  <pl-hint hint-name="Sign of A, then wrap" show-after-submission="1">
+    $|e^{-jM\omega}| = 1$, so the phase is $-M\omega$ where $A(\omega) \gt 0$ and $-M\omega \pm \pi$ where $A(\omega) \lt 0$
+    ($-1 = e^{\pm j\pi}$). Then add or subtract multiples of $2\pi$ until the angle lies in $(-\pi, \pi]$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Lecture 16, &sect;2&ndash;4: principal angle in $(-\pi, \pi]$; a negative real factor adds $\pm\pi$; a linear phase wraps by $2\pi$.</p>
+  <p><b>(a), (b)</b></p>
+  <ul>
+    {{#params.zrows}}<li>$H_d(\omega_{ {{lab}} }) = {{z_tex}}$: $\;{{steps}}$</li>{{/params.zrows}}
+  </ul>
+  <p><b>(c)</b> $\angle H_d = -{{params.M_tex}}\omega$ if $A \gt 0$; $-{{params.M_tex}}\omega + \pi$ if $A \lt 0$; then reduce to $(-\pi, \pi]$.</p>
+  <ul>
+    {{#params.wrows}}<li>$\omega = {{w_tex}}$: $\;{{A_line}}$; $\;{{steps}}$</li>{{/params.wrows}}
+  </ul>
+</pl-answer-panel>

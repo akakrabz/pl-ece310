@@ -160,9 +160,29 @@
       "description": "Lecture 17"
     },
     {
+      "name": "L18",
+      "color": "gray1",
+      "description": "Lecture 18"
+    },
+    {
+      "name": "L19",
+      "color": "gray1",
+      "description": "Lecture 19"
+    },
+    {
+      "name": "L20",
+      "color": "gray1",
+      "description": "Lecture 20"
+    },
+    {
+      "name": "L21",
+      "color": "gray1",
+      "description": "Lecture 21"
+    },
+    {
       "name": "ahead",
       "color": "orange1",
-      "description": "Ahead of the lectures (as of Oct 12, 2026): Midterm 2 material taught after Lecture 17, learned from past Midterm 2 exams and the 2019 course notes"
+      "description": "Ahead of the lectures: Midterm 2 material taught after Lecture 21, learned from past Midterm 2 exams and the 2019 course notes"
     },
     {
       "name": "hw1",
@@ -193,6 +213,16 @@
       "name": "hw6",
       "color": "gray2",
       "description": "Modelled on Fall 2026 Homework 6"
+    },
+    {
+      "name": "hw7",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 7"
+    },
+    {
+      "name": "quiz2",
+      "color": "pink1",
+      "description": "Quiz 2 (HW5–7, Lectures 13–18)"
     },
     {
       "name": "midterm1",

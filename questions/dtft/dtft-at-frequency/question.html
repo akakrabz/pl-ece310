@@ -1,0 +1,53 @@
+<pl-question-panel>
+  <p>
+    Let $X_d(\omega)$ be the DTFT of the real finite-length sequence
+    $$x[n] = {{params.x_tex}},$$
+    where the arrow marks the sample at $n = 0$ (all samples not shown are zero).
+    Evaluate $X_d(\omega)$ at the given frequencies directly from the definition.
+  </p>
+</pl-question-panel>
+
+<p class="text-muted small">Fractions such as <code>-7/2</code> are accepted; values with $\sqrt{3}$ need decimals with 4 significant digits.</p>
+
+<p><b>(a)</b> $\omega = {{params.w1_tex}}$</p>
+<div class="mb-1"><pl-number-input answers-name="re1" label="$\mathrm{Re}\{X_d({{params.w1_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="im1" label="$\mathrm{Im}\{X_d({{params.w1_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> $\omega = {{params.w2_tex}}$</p>
+<div class="mb-1"><pl-number-input answers-name="re2" label="$\mathrm{Re}\{X_d({{params.w2_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="im2" label="$\mathrm{Im}\{X_d({{params.w2_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+{{#params.has3}}
+<p class="mt-3"><b>(c)</b> $\omega = {{params.w3_tex}}$</p>
+<div class="mb-1"><pl-number-input answers-name="re3" label="$\mathrm{Re}\{X_d({{params.w3_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="im3" label="$\mathrm{Im}\{X_d({{params.w3_tex}})\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+{{/params.has3}}
+
+<p class="mt-3"><b>({{params.mp_letter}})</b> At $\omega = {{params.wm_tex}}$: the magnitude, and the <b>principal</b> phase in $(-\pi, \pi]$
+  in radians (a decimal with 4 significant digits; an angle off by $2\pi$ is marked wrong).</p>
+<div class="mb-1"><pl-number-input answers-name="mag" label="$\left|X_d({{params.wm_tex}})\right| =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="ph" label="$\angle X_d({{params.wm_tex}}) =$" suffix="$\text{rad}$" comparison="relabs" rtol="1e-3" atol="1e-3"></pl-number-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Unit-circle values">
+    $X_d(\omega_0) = \sum_n x[n]\,e^{-j\omega_0 n}$ with the true index $n$ (where the arrow is).
+    $e^{-j\pi n} = (-1)^n$, $e^{-j\pi n/2} = (-j)^n$, $e^{j\pi n/2} = j^n$, and
+    $e^{-j\pi n/3} = \cos\tfrac{\pi n}{3} - j\sin\tfrac{\pi n}{3}$ repeats every 6 samples.
+  </pl-hint>
+  <pl-hint hint-name="Which quadrant?" show-after-submission="1">
+    $\arctan(\mathrm{Im}/\mathrm{Re})$ only returns angles in $(-\tfrac{\pi}{2}, \tfrac{\pi}{2})$. If $\mathrm{Re} \lt 0$, add $\pi$
+    (when $\mathrm{Im} \gt 0$) or subtract $\pi$ (when $\mathrm{Im} \lt 0$). A negative real number has phase $\pi$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p>Modelled on Quiz 2 (Oct 2026, &ldquo;$X_d(\omega_0)$ for a finite sequence&rdquo;) and HW5 #1; DTFT definition from Lecture 13.
+    $X_d(\omega_0) = \sum_n x[n]\,e^{-j\omega_0 n}$: multiply the rows and add.</p>
+  {{{params.table_html}}}
+  <p><b>(a)</b> $X_d({{params.w1_tex}}) = {{params.X1_tex}}{{params.X1_approx_tex}}$.</p>
+  <p><b>(b)</b> $X_d({{params.w2_tex}}) = {{params.X2_tex}}{{params.X2_approx_tex}}$.</p>
+  {{#params.has3}}<p><b>(c)</b> $X_d({{params.w3_tex}}) = {{params.X3_tex}}{{params.X3_approx_tex}}$.</p>{{/params.has3}}
+  <p><b>({{params.mp_letter}})</b> $X_d({{params.wm_tex}}) = {{params.Xm_tex}}$:
+    $|X_d| = \sqrt{\mathrm{Re}^2 + \mathrm{Im}^2} = {{params.mag_chain_tex}}$;
+    ${{params.phase_line_tex}}$.</p>
+</pl-answer-panel>

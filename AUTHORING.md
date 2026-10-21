@@ -57,8 +57,9 @@ tools/checks/<topic-folder>__<slug>.py   independent checker
 
 Topic folders: `signals`, `systems`, `convolution`, `lccde`, `ztransform`, `stability`, `dtft`,
 `freqresp` (frequency response, magnitude and phase), `sampling` (A/D, D/A, aliasing), `dft`.
-Topics and tags are declared in `infoCourse.json` (tags: `L1`…`L17`, `ahead` (material taught after
-Lecture 17, learned from past exams and the 2019 notes), `hw1`…`hw6`, `midterm1`, `midterm2`,
+Topics and tags are declared in `infoCourse.json` (tags: `L1`…`L21`, `ahead` (material taught after
+Lecture 21, learned from past exams and the 2019 notes), `hw1`…`hw7`, `quiz2` (Quiz 2: HW5–7,
+Lectures 13–18), `midterm1`, `midterm2`,
 `fam-*` Midterm 1 and `fam2-*` Midterm 2 exam families, input types
 `numeric integer symbolic MC checkbox matrix matching sketch`, `easy medium hard`).
 

@@ -1,9 +1,8 @@
 # ECE 310 — PrairieLearn course (randomized practice)
 
-60 randomized PrairieLearn "v3" questions for ECE 310 (Digital Signal Processing), covering every
-lecture so far (Lectures 1–17, Homework 1–6) with conceptual, symbolic and numerical questions, plus
-the Midterm 2 topics that come after Lecture 17 (ideal D/A, digital filtering of analog signals, the
-DFT; tag `ahead`), learned from the seven past Midterm 2 exams and the 2019 course notes.
+65 randomized PrairieLearn "v3" questions for ECE 310 (Digital Signal Processing), covering every
+lecture so far (Lectures 1–21, Homework 1–7) with conceptual, symbolic and numerical questions, plus
+DFT spectral analysis, which comes after Lecture 21 (tag `ahead`), learned from the seven past Midterm 2 exams and the 2019 course notes.
 Every variant is a new random problem — new signals, poles, coefficients — with "exam-nice"
 numbers, an autograded answer and a worked solution in the answer panel that names the lecture,
 homework or past-exam problem it is modelled on. Each question has an independent checker that
@@ -11,7 +10,7 @@ recomputes its answers with numpy/scipy/SymPy, and the whole course is tested of
 PrairieLearn's own element code (see [Testing](#testing-without-a-prairielearn-server)).
 
 ```
-infoCourse.json                       topics, tags (lectures L1–L17, ahead, hw1–hw6, exam families fam-*/fam2-*), assessment sets
+infoCourse.json                       topics, tags (lectures L1–L21, ahead, hw1–hw7, quiz2, exam families fam-*/fam2-*), assessment sets
 courseInstances/Fa26/
   infoCourseInstance.json             publishing dates
   assessments/
@@ -21,7 +20,8 @@ courseInstances/Fa26/
     PR4-dtft/                         Practice 4  (L12–L14: template matching, the DTFT)
     PR5-frequency-response/           Practice 5  (L15–L16: frequency response, magnitude and phase)
     PR6-sampling/                     Practice 6  (L17: ideal A/D conversion)
-    PR7-ahead-reconstruction-dft/     Practice 7  (after L17: D/A, A/D → H_d → D/A, the DFT)
+    PR7-ahead-reconstruction-dft/     Practice 7  (L18–L21: D/A, A/D → H_d → D/A, the DFT, circular convolution)
+    PR8-quiz2-topics/                 Practice 8  (Quiz 2 topics: DTFT values, Parseval, symmetry, phase)
     ME1-mock-midterm1/                Mock Midterm 1: 10 problems in past-exam shape, 2 h, retakeable
     ME2-mock-midterm2/                Mock Midterm 2: 9 problems in past-exam shape, 2 h, retakeable
 questions/<topic>/<slug>/             info.json, server.py, question.html
