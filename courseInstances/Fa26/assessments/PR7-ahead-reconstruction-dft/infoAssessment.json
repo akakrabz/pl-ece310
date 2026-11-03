@@ -4,7 +4,7 @@
   "title": "Reconstruction, aliasing and the DFT (L18–L21)",
   "set": "Practice",
   "number": "7",
-  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 18–21: ideal D/A reconstruction, digital filtering of analog signals (A/D → H<sub>d</sub> → D/A), aliasing, the DFT, zero padding, modulo indexing, DFT properties and circular convolution. DFT spectral analysis is still ahead of the lectures; it follows the recent Midterm 2 keys.</p>",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 18–21: ideal D/A reconstruction, digital filtering of analog signals (A/D → H<sub>d</sub> → D/A), aliasing, the DFT, zero padding, modulo indexing, DFT properties and circular convolution. DFT spectral analysis and windows (L22–L23) are in Practice 9.</p>",
   "accessControl": [
     {
       "dateControl": {
@@ -81,6 +81,41 @@
       "questions": [
         {
           "id": "sampling/true-false",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "New: Midterm 2 shapes (Nov 2026)",
+      "questions": [
+        {
+          "id": "sampling/two-rate-system",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "sampling/max-bandwidth-filter",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/zero-padding-bins",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/dft-manipulations",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/conjugate-symmetry",
           "autoPoints": 2,
           "maxAutoPoints": 6,
           "triesPerVariant": 3

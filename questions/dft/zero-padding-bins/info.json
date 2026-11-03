@@ -1,0 +1,8 @@
+{
+  "uuid": "cf9d85e0-3c4e-4e9c-9e2f-5f4222e12b02",
+  "title": "Which bins hold X_d(ω), and how many zeros to pad",
+  "topic": "DFT",
+  "tags": ["L20", "hw9", "midterm2", "fam2-dft", "checkbox", "integer", "numeric", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

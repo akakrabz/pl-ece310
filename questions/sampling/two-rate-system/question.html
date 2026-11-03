@@ -1,0 +1,78 @@
+<pl-question-panel>
+  <p>
+    A sampling system has an ideal A/D converter with sampling period $T_1$ ($x[n] = x_a(nT_1)$) followed by an ideal D/A converter
+    with period $T_2$:
+  </p>
+  {{{params.chain_html}}}
+  <p>For all parts of this problem,
+    $${{params.xa_tex}}$$
+    with $t$ in seconds and frequencies in rad/s.</p>
+  <p><small>Enter exact values: fractions such as <code>2/45</code> are accepted; decimals need 4 significant digits.
+    Enter frequencies as multiples of $\pi$: for $\tfrac{3\pi}{4}$ type <code>3/4</code>, for $30\pi$ rad/s type <code>30</code>.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> Let $T_1 = {{params.T1_tex}}$ s and $T_2 = {{params.T2_tex}}$ s. Write the samples and the output as
+  $${{params.ax_form_tex}},\qquad {{params.ay_form_tex}},$$
+  with $0 \le \omega_1, \omega_2 \le \pi$ and $\Omega_1', \Omega_2' \ge 0$ (rad/s).</p>
+<div class="mb-1"><pl-number-input answers-name="w1" label="$\omega_1 =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="w2" label="$\omega_2 =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Wa1" label="$\Omega_1' =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Wa2" label="$\Omega_2' =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> Let $T_1 = T_2 = {{params.Tb_tex}}$ s. Write the output as
+  $${{params.b_form_tex}},$$
+  where the $b_1$ term comes from ${{params.comp1_tex}}$, the $b_2$ term from ${{params.comp2_tex}}$, and
+  $\Omega_1', \Omega_2' \ge 0$. The coefficients $b_1, b_2$ may be negative.</p>
+<div class="mb-1"><pl-number-input answers-name="b1" label="$b_1 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Wb1" label="$\Omega_1' =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="b2" label="$b_2 =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Wb2" label="$\Omega_2' =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> Now the two converters share one period, $T_1 = T_2 = T$, and the output is
+  $${{params.yc_tex}}.$$
+  Find every sampling period $T$ for which this happens. Enter the <b>largest</b> such $T$ and <b>how many</b> such $T$ there are.</p>
+<div class="mb-1"><pl-number-input answers-name="Tmax" label="$T_{\max} =$" suffix="$\text{s}$" comparison="relabs" rtol="1e-3" atol="1e-9"></pl-number-input></div>
+<div class="mb-1"><pl-integer-input answers-name="count" label="$\text{number of such } T =$"></pl-integer-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Two rules">
+    The A/D maps $\Omega$ to $\omega = \Omega T_1$; reduce $\omega$ by multiples of $2\pi$ to $(-\pi, \pi]$, then use
+    $\sin(-\theta) = -\sin\theta$ and $\cos(-\theta) = \cos\theta$ to make the frequency non-negative. The ideal D/A maps
+    $\omega$ back to $\Omega' = \omega / T_2$ (its own period, not $T_1$).
+  </pl-hint>
+  <pl-hint hint-name="When does a term disappear?" show-after-submission="1">
+    A sine sampled at a multiple of $\pi$ gives $\sin(k\pi n) = 0$ for every $n$; a cosine sampled at a multiple of $2\pi$ gives
+    the constant $\cos(2\pi k n) = 1$. A term that must come out unchanged must not alias: $\Omega T \lt \pi$. A term that must come
+    out at another frequency is an alias: $\Omega T = \pm\Omega_{\text{out}} T + 2\pi k$, and for a sine only the $+$ keeps its sign.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.named}}<p>These are the numbers of {{params.src_html}}.</p>{{/params.named}}
+  <p><b>(a)</b> A/D at $T_1$:
+    $${{params.a_w_tex}},$$
+    both below $\pi$, so nothing aliases: $${{params.a_x_tex}}.$$
+    The D/A at $T_2$ maps each digital frequency to $\Omega' = \omega / T_2$:
+    $${{params.a_W_tex}}\ \text{rad/s},$$
+    $${{params.a_y_tex}}.$$
+    {{{params.a_ratio_html}}}</p>
+  <p><b>(b)</b> Same period in both converters, $T = {{params.Tb_tex}}$ s.</p>
+  <ul>
+    <li>First term: {{{params.b1_html}}}</li>
+    <li>Second term: {{{params.b2_html}}}</li>
+  </ul>
+  <p>So $${{params.b_x_tex}},$$ and with ${{params.b_W_tex}}$:
+    $${{params.b_y_tex}}.$$
+    {{#params.b_flip}}The aliased sine comes back with a minus sign: $b_2$ is negative.{{/params.b_flip}}
+    {{^params.b_flip}}No sign change here: $b_2$ keeps the sign of the input term.{{/params.b_flip}}</p>
+  <p><b>(c)</b> {{{params.c_html}}}</p>
+  <p class="text-muted"><small>
+    Same shape as FA2025 Midterm 2 #4 (A/D at $T_1$, D/A at $T_2$: (a) $T_1 = \tfrac{1}{100}$, $T_2 = \tfrac{1}{20}$; (b) $T = \tfrac{1}{60}$,
+    $\sin(\tfrac{3\pi}{2}n) = -\sin(\tfrac{\pi}{2}n)$).
+    {{#params.is_kill}}Part (c) is FA2025 #4(c): $y_a(t) = \sin(20\pi t)$ from $\sin(20\pi t) + \sin(90\pi t)$ needs $T = \tfrac{k}{90}$, $k = 1, \dots, 4$.{{/params.is_kill}}
+    {{#params.is_dc}}Part (c) is SP2023 #8(b): $2\cos(100\pi t + \tfrac{\pi}{4}) + \cos(300\pi t)$ gives $2\cos(100\pi t + \tfrac{\pi}{4}) + 1$ only for
+    $T = \tfrac{1}{150}$ s ($\tfrac{2}{150}$ sends $300\pi$ to DC too, but aliases $100\pi$).{{/params.is_dc}}
+    {{#params.is_alias}}Part (c) is SP2025 #6(c): $\sin(30\pi t) + \sin(100\pi t)$ gives $\sin(10\pi t) + \sin(30\pi t)$ only for $T = \tfrac{1}{45}$ s
+    ($f_s = 55$ Hz gives $-\sin(10\pi t)$).{{/params.is_alias}}
+    Background: Lecture 17 (sampling a sinusoid, $\omega = \Omega T$), the ideal D/A of the 2019 notes &sect;3.2.</small></p>
+</pl-answer-panel>

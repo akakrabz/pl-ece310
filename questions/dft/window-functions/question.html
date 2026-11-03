@@ -1,0 +1,107 @@
+<pl-question-panel>
+  <p>
+    A finite record $\{x[n]\}_{n=0}^{N-1}$ is an infinitely long signal multiplied by a window $w[n]$, so its DTFT is
+    $\frac{1}{2\pi}X_d(\omega) * W_d(\omega)$: every cosine $A\cos(\omega_0 n)$ becomes two shifted copies $\frac{A}{2}W_d(\omega \mp \omega_0)$
+    of the window's spectrum. The rectangular window is $r[n] = 1$ and the Hamming window is
+    $h[n] = 0.54 - 0.46\cos\left(\frac{2\pi n}{N-1}\right)$, both for $0 \le n \le N-1$ (and $0$ otherwise).
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Levels in dB compare amplitudes. Give both answers to 3 significant digits.</p>
+<p>(i)
+  {{#params.a_lect}}The {{params.a_win}} window's tallest side lobe lies ${{params.aL}}$ dB below its main-lobe peak (a level of $-{{params.aL}}$ dB).{{/params.a_lect}}
+  {{#params.a_other}}A window's tallest side lobe lies ${{params.aL}}$ dB below its main-lobe peak (a level of $-{{params.aL}}$ dB).{{/params.a_other}}
+  What fraction of the main-lobe peak height is that side lobe (an amplitude ratio)?</p>
+<pl-number-input answers-name="ratio" label="$\dfrac{\text{side lobe}}{\text{main-lobe peak}} =$" comparison="sigfig" digits="3"></pl-number-input>
+<p class="mt-2">(ii) A weak tone has amplitude $A_w = \tfrac{1}{ {{params.am}} }A_s$, where $A_s$ is the amplitude of a strong tone.
+  What is its level relative to the strong tone, $20\log_{10}\frac{A_w}{A_s}$, in dB?</p>
+<pl-number-input answers-name="db" label="$20\log_{10}\dfrac{A_w}{A_s} =$" suffix="$\text{dB}$" comparison="sigfig" digits="3"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> A signal with a strong and a weak tone is recorded for $N = {{params.bN}}$ samples:
+  $$x[n] = {{params.b_sig}},\qquad 0 \le n \le {{params.bNm1}}.$$
+  The frequencies are far enough apart that the two main lobes do not merge with either window; only the heights matter here.
+  With which window does the weaker tone's main lobe rise above the stronger tone's tallest side lobe? Select all that apply.</p>
+<pl-checkbox answers-name="vis" partial-credit="net-correct" order="fixed" hide-letter-keys="true">
+  {{#params.b_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.b_choices}}
+</pl-checkbox>
+
+<p class="mt-3"><b>(c)</b> (i) A record has $N = {{params.cN}}$ samples. How wide (null to null) is the main lobe of the Hamming window's DTFT?
+  Enter it as a multiple of $\pi$: for $\tfrac{2\pi}{9}$ type <code>2/9</code>
+  (exact values: fractions are accepted; decimals need 4 significant digits).</p>
+<pl-number-input answers-name="W_ham" label="$\text{main-lobe width} =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+<p class="mt-2">(ii)
+  {{#params.c_dig}}Two tones of equal amplitude have frequencies $\omega_1 = {{params.c_w1}}$ and $\omega_2 = {{params.c_w2}}$.{{/params.c_dig}}
+  {{#params.c_notes}}A piano recording sampled at $f_s = {{params.c_fs_tex}}$ holds two notes of similar amplitude played together,
+  {{params.c_n1}} ($\approx {{params.c_f1}}$ Hz) and {{params.c_n2}} ($\approx {{params.c_f2}}$ Hz).{{/params.c_notes}}
+  What is the smallest number of samples $N$ that gives full-lobe separation of their main lobes with a rectangular window,
+  and with a Hamming window?</p>
+<div class="mb-1"><pl-integer-input answers-name="N_rect" label="$N_{\text{rect}} =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="N_ham" label="$N_{\text{Hamming}} =$"></pl-integer-input></div>
+
+<p class="mt-3"><b>(d)</b>
+  {{#params.d_sp25}}Mark True or False: {{params.d_statement}}{{/params.d_sp25}}
+  {{#params.d_fa19}}Mark True or False: the DTFT of the finite-length signal $x[n] = \cos\left({{params.d_w0}} n\right)$, $n = 0, 1, \dots, {{params.d_Nm1}}$
+  is given by the formula $${{params.d_formula}}{{#params.d_shifted}},$$ where $R_d(\omega)$ is the DTFT of the length-${{params.d_N}}$ rectangular
+  window $r[n]$.{{/params.d_shifted}}{{#params.d_impulses}}.$${{/params.d_impulses}}{{/params.d_fa19}}
+  {{#params.d_choice}}You must analyse
+  $$x[n] = {{params.d_sig}},\qquad 0 \le n \le {{params.d_Nm1}},$$
+  and you may apply only one window before the DFT. Which window would you choose, and why?{{/params.d_choice}}</p>
+<pl-multiple-choice answers-name="d" order="fixed" hide-letter-keys="true">
+  {{#params.d_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.d_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Decibels">
+    An amplitude ratio $r$ is $20\log_{10} r$ dB: every factor of $10$ is $20$ dB and a factor of $2$ is about $6$ dB, so $-L$ dB is the ratio
+    $10^{-L/20}$. A cosine's lobe has height proportional to its amplitude, so compare the weak tone's amplitude with the strong tone's
+    as a fraction, just like a side lobe compared with its main lobe.
+  </pl-hint>
+  <pl-hint hint-name="The two windows" show-after-submission="1">
+    Rectangular: main lobe $\frac{4\pi}{N}$ wide (edges $\pm\frac{2\pi}{N}$ from the peak), tallest side lobe $-13$ dB. Hamming: main lobe
+    $\frac{8\pi}{N}$ wide, tallest side lobe $-42$ dB. Full-lobe separation of two tones needs $\lvert\omega_2 - \omega_1\rvert$ larger than
+    the main-lobe width; in hertz, $\Delta\omega = \frac{2\pi\,\Delta f}{f_s}$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> (i) $-{{params.aL}}$ dB is the amplitude ratio $10^{-{{params.aL}}/20} \approx {{params.a_ratio_s}}$.
+    {{#params.a_lect}}(Lecture 23: the rectangular window's $-13$ dB is "between 0.1 and 0.2" of the main lobe, Hamming's $-42$ dB "under 1/100".){{/params.a_lect}}
+    (ii) $20\log_{10}\tfrac{1}{ {{params.am}} } = -20\log_{10}{{params.am}} = -20\,({{params.a_log_s}}) \approx {{params.a_db_s}}$ dB.
+    {{#params.a_lecture_m}}(The lecture's $\frac{1}{50}$ tone: about $-34$ dB, above Hamming's $-42$ dB, below the rectangular $-13$ dB.){{/params.a_lecture_m}}</p>
+  <p><b>(b)</b> The weak tone has amplitude ${{params.b_Aw}}$ against ${{params.b_As}}$: a ratio of ${{params.b_ratio_tex}}$, about ${{params.b_ratio_db}}$ dB.
+    Each lobe's height is proportional to its tone's amplitude, so the weak tone's main lobe is ${{params.b_ratio_tex}}$ of the strong main lobe, while
+    the strong tone's tallest side lobe is $-13$ dB $\approx 0.22$ of it with the rectangular window and $-42$ dB $\approx 0.008$ with the Hamming window.</p>
+  <ul>
+    <li>Rectangular: {{#params.b_rect_ok}}${{params.b_ratio_tex}} \gt 0.22$, the weak lobe rises above the side lobes.{{/params.b_rect_ok}}{{#params.b_rect_no}}${{params.b_ratio_tex}} \lt 0.22$, the weak lobe is buried under the strong tone's side lobes.{{/params.b_rect_no}}</li>
+    <li>Hamming: ${{params.b_ratio_tex}} \gt 0.008$, the weak lobe rises above the side lobes (both lobes are twice as wide, and the separation of ${{params.b_dw}}$ still keeps them from merging).</li>
+  </ul>
+  {{#params.b_lect}}<p>This is Lecture 23's eq. 16 (Figures 2 and 4): with the rectangular window the strong lobe has height $\frac{64}{2} = 32$ and side lobes of about
+    $0.22\cdot 32 \approx 7$, the weak lobe only $\frac{0.1\cdot 64}{2} = 3.2$, so it is masked; the Hamming window makes both components clearly visible.</p>{{/params.b_lect}}
+  <p><b>(c)</b> (i) The Hamming main lobe is twice the rectangular one: $\frac{8\pi}{N} = \frac{8\pi}{ {{params.cN}} } = {{params.c_wham_tex}}\pi$
+    (rectangular: ${{params.c_wrect_tex}}\pi$).</p>
+  {{#params.c_dig}}<p>(ii) $\Delta\omega = {{params.c_w2}} - {{params.c_w1}} = {{params.c_dw}}$. Full-lobe separation needs $\Delta\omega \gt$ the main-lobe width:
+    rectangular $\frac{4\pi}{N} \lt \Delta\omega \iff N \gt \frac{4\pi}{ {{params.c_dw}} } = {{params.c_b_rect}} \approx {{params.c_b_rect_dec}}$, so $N_{\text{rect}} = {{params.c_Nrect}}$;
+    Hamming $\frac{8\pi}{N} \lt \Delta\omega \iff N \gt {{params.c_b_ham}} \approx {{params.c_b_ham_dec}}$, so $N_{\text{Hamming}} = {{params.c_Nham}}$
+    (about twice as many: round up each bound, do not double the rounded number).</p>{{/params.c_dig}}
+  {{#params.c_notes}}<p>(ii) Lecture 23 Exercise 1: $\Delta\omega = \frac{2\pi\,\Delta f}{f_s}$ with $\Delta f = {{params.c_f2}} - {{params.c_f1}} = {{params.c_df}}$ Hz, so the rectangular
+    condition $N \gt \frac{4\pi}{\Delta\omega}$ becomes $N \gt \frac{2f_s}{\Delta f} = \frac{2\cdot {{params.c_fs}} }{ {{params.c_df}} } = {{params.c_b_rect}} \approx {{params.c_b_rect_dec}}$:
+    $N_{\text{rect}} = {{params.c_Nrect}}$ (about ${{params.c_T_rect}}$ s of sound). Hamming doubles the bound: $N \gt \frac{4f_s}{\Delta f} = {{params.c_b_ham}} \approx {{params.c_b_ham_dec}}$,
+    $N_{\text{Hamming}} = {{params.c_Nham}}$ (round up each bound, do not double the rounded number).</p>{{/params.c_notes}}
+  {{#params.d_sp25}}<p><b>(d)</b> <b>{{params.d_truth_word}}.</b> Same shape as SP2025 MT2 #1(f){{#params.d_exam_stmt}} (this is the exam's statement){{/params.d_exam_stmt}}:
+    the Hamming window has much lower sidelobes ($-42$ dB vs $-13$ dB) but a main lobe twice as wide ($\frac{8\pi}{N}$ vs $\frac{4\pi}{N}$).
+    The trade-off: narrow main lobes or low sidelobes, not both.</p>{{/params.d_sp25}}
+  {{#params.d_fa19}}<p><b>(d)</b> <b>{{params.d_truth_word}}.</b> Same shape as FA2019 MT2 #1(c){{#params.d_exam_stmt}} (this is the exam's statement){{/params.d_exam_stmt}}.
+    Impulses at $\pm\omega_0$ belong to the infinitely long cosine. The ${{params.d_N}}$ samples are that cosine times the rectangular window $r[n]$, so by the
+    windowing property the DTFT is $\frac{1}{2\pi}\left[\pi\delta(\omega - \omega_0) + \pi\delta(\omega + \omega_0)\right] * R_d(\omega) = \tfrac12 R_d(\omega - \omega_0) + \tfrac12 R_d(\omega + \omega_0)$:
+    two periodic sincs with main lobes ${{params.d_main_w}}\pi$ wide and side lobes, nonzero almost everywhere.</p>{{/params.d_fa19}}
+  {{#params.d_choice}}<p><b>(d)</b> $\Delta\omega = {{params.d_dw}}$; main lobes: rectangular $\frac{4\pi}{ {{params.d_N}} } = {{params.d_rect_w_dec}}\pi$,
+    Hamming $\frac{8\pi}{ {{params.d_N}} } = {{params.d_ham_w_dec}}\pi$; amplitude ratio ${{params.d_ratio_tex}}$ ($\approx {{params.d_ratio_db}}$ dB).</p>
+    {{#params.d_close}}<p>The tones are close and of similar amplitude (well above $-13$ dB). The rectangular main lobes separate ($\Delta\omega \gt {{params.d_rect_w_dec}}\pi$),
+    the Hamming ones would merge ($\Delta\omega \lt {{params.d_ham_w_dec}}\pi$): choose the <b>rectangular window</b> for its narrower main lobe.
+    (Lecture 23: "if the frequencies are extremely close and you have reason to believe the amplitudes are relatively similar, you're safe to use the rectangular window.")</p>{{/params.d_close}}
+    {{#params.d_weak}}<p>The tones are far apart ($\Delta\omega$ exceeds even the Hamming width), but the weaker one is ${{params.d_ratio_db}}$ dB down: below the rectangular
+    window's $-13$ dB side lobes, above Hamming's $-42$ dB. Choose the <b>Hamming window</b> for its lower side lobes; its wider main lobes cost nothing here.
+    (Lecture 23: if "we easily surpass our half-lobe and full-lobe separation criteria, then I can afford to widen my main lobes.")</p>{{/params.d_weak}}{{/params.d_choice}}
+  <p class="text-muted"><small>Lecture 23 §2–3.1 (eqs. 8–21, slides 7–13), Exercise 1 and the lectures of Oct 26–28. (d) reproduces SP2025 Midterm 2 #1(f)
+    (T/F bank Q40) and FA2019 Midterm 2 #1(c), or the lecture's "which window" decision.</small></p>
+</pl-answer-panel>

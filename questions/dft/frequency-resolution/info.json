@@ -1,0 +1,8 @@
+{
+  "uuid": "fd1a9b21-3faa-4474-9583-22753ed443c1",
+  "title": "Frequency resolution: samples and seconds to separate tones; bracketing a leaky DFT peak",
+  "topic": "DFT",
+  "tags": ["L22", "L23", "hw9", "midterm2", "fam2-spectral", "numeric", "MC", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

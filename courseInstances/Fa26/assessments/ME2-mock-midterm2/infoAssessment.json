@@ -1,11 +1,11 @@
 {
   "uuid": "719499e3-f788-42ed-bef4-eec555a1ac29",
   "type": "Exam",
-  "title": "Mock Midterm 2",
+  "title": "Mock Midterm 2 (long)",
   "set": "Mock exam",
   "number": "2",
   "multipleInstance": true,
-  "text": "<p>Nine problems in the shape of a past ECE 310 Midterm 2 (the seven exams FA2019–SP2025), with fresh random numbers every time you start a new instance. 2 hours. Each problem has three attempts worth 10, 7 and 4 points. Work on paper first, as on the real exam; the worked solutions are visible once you finish.</p><p>The Fall 2026 scope has not been announced. Problems 1–6 cover Lectures 13–17. Problems 7–9 (digital filtering of analog signals and the DFT) are taught after Lecture 17: practise them first in Practice 7, or leave them for later.</p>",
+  "text": "<p>18 problems drawn at random from the whole Midterm 2 pool — about twice a real Midterm 2 — with fresh random numbers and a different selection of problems every time you start a new instance. 4 hours, the real exam's pace (about 13 minutes a problem). Each problem has three attempts worth 10, 7 and 4 points. Work on paper first, with one handwritten sheet and no calculator, as on the real exam; the worked solutions are visible once you finish.</p><p>Fall 2026 scope (Wed Nov 4, 7–9 pm): Lectures 13–23, HW5–9 — the DTFT, frequency response, magnitude and phase, sampling and reconstruction, A/D → filter → D/A, the DFT and its properties, spectral analysis and windows. Computing a circular convolution and the FFT are not on it, so they are not in this mock. Every problem in the pool, untimed: Mock Midterm 2 (untimed, every question).</p>",
   "accessControl": [
     {
       "dateControl": {
@@ -15,7 +15,7 @@
         "due": {
           "date": null
         },
-        "durationMinutes": 120
+        "durationMinutes": 240
       },
       "afterComplete": {
         "questions": {
@@ -29,7 +29,7 @@
       "title": "True/False",
       "questions": [
         {
-          "numberChoose": 1,
+          "numberChoose": 2,
           "autoPoints": [
             10,
             7,
@@ -41,16 +41,19 @@
             },
             {
               "id": "sampling/true-false"
+            },
+            {
+              "id": "dft/true-false"
             }
           ]
         }
       ]
     },
     {
-      "title": "DTFT and frequency response",
+      "title": "Unit 3 · DTFTs and inverse DTFTs",
       "questions": [
         {
-          "numberChoose": 1,
+          "numberChoose": 2,
           "autoPoints": [
             10,
             7,
@@ -68,11 +71,34 @@
             },
             {
               "id": "dtft/symmetry-and-existence"
+            },
+            {
+              "id": "dtft/dtft-of-finite-sequence"
+            },
+            {
+              "id": "dtft/dtft-properties"
+            },
+            {
+              "id": "dtft/parseval-inner-product"
+            },
+            {
+              "id": "dtft/real-valued-test"
+            },
+            {
+              "id": "dtft/dtft-at-frequency"
+            },
+            {
+              "id": "dtft/periodicity"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "Unit 3 · Magnitude, phase and group delay",
+      "questions": [
         {
-          "numberChoose": 1,
+          "numberChoose": 2,
           "autoPoints": [
             10,
             7,
@@ -84,24 +110,49 @@
             },
             {
               "id": "freqresp/phase-and-group-delay"
+            },
+            {
+              "id": "freqresp/principal-phase"
+            },
+            {
+              "id": "freqresp/noncausal-fir"
+            },
+            {
+              "id": "freqresp/phase-jump-test"
             }
-          ]
-        },
-        {
-          "id": "freqresp/sinusoidal-response",
-          "autoPoints": [
-            10,
-            7,
-            4
           ]
         }
       ]
     },
     {
-      "title": "Sampling",
+      "title": "Unit 3 · LTI response to sinusoids",
       "questions": [
         {
           "numberChoose": 1,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "freqresp/sinusoidal-response"
+            },
+            {
+              "id": "freqresp/response-from-plots"
+            },
+            {
+              "id": "dtft/frequency-response"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 4 · Sampling, aliasing and reconstruction",
+      "questions": [
+        {
+          "numberChoose": 3,
           "autoPoints": [
             10,
             7,
@@ -113,43 +164,28 @@
             },
             {
               "id": "sampling/sketch-sampled-spectrum"
-            }
-          ]
-        },
-        {
-          "numberChoose": 1,
-          "autoPoints": [
-            10,
-            7,
-            4
-          ],
-          "alternatives": [
-            {
-              "id": "sampling/sinusoid-aliasing"
             },
             {
               "id": "sampling/nyquist-rate"
             },
             {
+              "id": "sampling/sinusoid-aliasing"
+            },
+            {
               "id": "sampling/ideal-reconstruction"
+            },
+            {
+              "id": "sampling/two-rate-system"
             }
           ]
         }
       ]
     },
     {
-      "title": "Ahead of the lectures: filtering and the DFT",
+      "title": "Unit 4 · A/D → digital filter → D/A",
       "questions": [
         {
-          "id": "sampling/ad-filter-da",
-          "autoPoints": [
-            10,
-            7,
-            4
-          ]
-        },
-        {
-          "numberChoose": 1,
+          "numberChoose": 2,
           "autoPoints": [
             10,
             7,
@@ -157,15 +193,56 @@
           ],
           "alternatives": [
             {
+              "id": "sampling/ad-filter-da"
+            },
+            {
+              "id": "sampling/max-bandwidth-filter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 5 · DFT values, zero padding and DFT properties",
+      "questions": [
+        {
+          "numberChoose": 3,
+          "autoPoints": [
+            10,
+            7,
+            4
+          ],
+          "alternatives": [
+            {
+              "id": "dft/dft-values"
+            },
+            {
+              "id": "dft/dft-and-dtft"
+            },
+            {
+              "id": "dft/zero-padding-bins"
+            },
+            {
+              "id": "dft/modulo-indexing"
+            },
+            {
               "id": "dft/dft-properties"
             },
             {
-              "id": "dft/dft-values"
+              "id": "dft/dft-manipulations"
+            },
+            {
+              "id": "dft/conjugate-symmetry"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "title": "Unit 5 · Spectral analysis and windows",
+      "questions": [
         {
-          "numberChoose": 1,
+          "numberChoose": 3,
           "autoPoints": [
             10,
             7,
@@ -176,10 +253,19 @@
               "id": "dft/spectral-analysis"
             },
             {
-              "id": "dft/dft-and-dtft"
+              "id": "dft/periodic-sinc-reading"
             },
             {
-              "id": "dft/circular-convolution"
+              "id": "dft/leakage-check"
+            },
+            {
+              "id": "dft/frequency-resolution"
+            },
+            {
+              "id": "dft/window-functions"
+            },
+            {
+              "id": "dft/dft-plot-matching"
             }
           ]
         }

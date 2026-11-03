@@ -1,0 +1,164 @@
+<pl-question-panel>
+  <p><small><em>Lectures 22&ndash;23 (spectral analysis: leakage, lobe separation, windows); the shapes of past Midterm 2 problems.</em></small></p>
+  {{#params.l23}}
+  {{#params.story_generic}}
+  <p>A recording contains {{#params.two_tones}}two{{/params.two_tones}}{{^params.two_tones}}three{{/params.two_tones}} tones of similar amplitudes,
+    at ${{params.tones_tex}}$. It is sampled at $f_s = \frac{1}{T} = {{params.fs_tex}}$ (no aliasing), $N$ consecutive samples are kept, and the DFT
+    of the $N$ samples is used to tell the tones apart.</p>
+  {{/params.story_generic}}
+  {{#params.story_guitar}}
+  <p>A guitar in standard tuning plays a chord, which you record at $f_s = \frac{1}{T} = {{params.fs_tex}}$; all notes present have similar amplitudes.
+    The three lowest notes of the guitar are ${{params.tones_tex}}$, and the notes get further apart in hertz as the pitch rises. You keep $N$
+    consecutive samples and want to separate every pair of recorded notes in the DFT.</p>
+  {{/params.story_guitar}}
+  {{#params.story_piano}}
+  <p>Your friend plays three notes of equal amplitudes on a piano: ${{params.tones_tex}}$. The audio is sampled at $f_s = \frac{1}{T} = {{params.fs_tex}}$,
+    $N$ consecutive samples are kept, and the DFT of the $N$ samples is used to identify the notes.</p>
+  {{/params.story_piano}}
+  <p>Use the lobe-separation criteria of Lecture 23 for every pair of tones. They are strict inequalities: enter the <b>bound</b> that $N$
+    (or the recording time) must exceed.</p>
+  {{/params.l23}}
+  {{#params.rec}}
+  <p>A continuous-time signal $x_c(t)$ made of several tones of similar amplitudes is sampled at a rate of ${{params.fs}}$ Hz for
+    ${{params.D_tex}}$ {{params.D_unit}} to produce a discrete-time signal $x[n]$ with length $L = {{params.L}}$, and its DFT is used to find the tones.
+    Use the lobe-separation criteria of Lecture 23 (strict inequalities: enter the bound).</p>
+  {{/params.rec}}
+  {{#params.fa23}}
+  <p>Suppose that you are given a signal $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$, where $x[n] = \cos(\lambda_0 n)$ for an unknown frequency
+    $0 \lt \lambda_0 \lt \pi$. The magnitude of its DFT (of length ${{params.N}}$) is plotted below; the values of the tallest stem in
+    $0 \le k \le \frac{N}{2}$ and of its two neighbours are written above them.</p>
+  {{{params.fig1_html}}}
+  {{/params.fa23}}
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.
+    {{#params.fa23}}Frequencies are entered as multiples of $\pi$: type <code>3/8</code> for $\tfrac{3\pi}{8}$.{{/params.fa23}}</small></p>
+</pl-question-panel>
+
+{{#params.l23}}
+<p><b>(a)</b> With the rectangular window (simply keeping $N$ samples), full-lobe separation requires $N \gt N_{\text{full}}$ and half-lobe
+  separation requires $N \gt N_{\text{half}}$. Find both bounds.</p>
+<div class="mb-1"><pl-number-input answers-name="Nf" label="$N_{\text{full}} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Nh" label="$N_{\text{half}} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> For full-lobe separation the recording must last longer than $T_{\text{full}}$ seconds. Find $T_{\text{full}}$.</p>
+<pl-number-input answers-name="Tf" label="$T_{\text{full}} =$" suffix="$\text{s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> A Hamming window is applied to the $N$ samples instead. Full-lobe separation then requires $N \gt N_{\text{Ham}}$. Find $N_{\text{Ham}}$.</p>
+<pl-number-input answers-name="Nham" label="$N_{\text{Ham}} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(d)</b> The sampling rate is {{params.fs_change}}, to $f_s' = {{params.fs2_tex}}$, and the same tones are recorded. What happens to the
+  full-lobe bound $N_{\text{full}}$ (rectangular window) and to the minimum recording time?</p>
+<pl-multiple-choice answers-name="fsmc" hide-letter-keys="true">
+  {{#params.fs_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.fs_choices}}
+</pl-multiple-choice>
+{{/params.l23}}
+
+{{#params.rec}}
+<p><b>(a)</b> With the rectangular window (the $L$ samples as they are), two tones whose frequencies differ by $\Delta f$ Hz are separated with
+  full-lobe separation when $\Delta f \gt \Delta f_{\text{full}}$, and with half-lobe separation when $\Delta f \gt \Delta f_{\text{half}}$. Find both bounds in hertz.</p>
+<div class="mb-1"><pl-number-input answers-name="dff" label="$\Delta f_{\text{full}} =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="dfh" label="$\Delta f_{\text{half}} =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> The same full-lobe condition as a digital frequency: $\lvert\omega_2 - \omega_1\rvert \gt \Delta\omega_{\text{full}}$. Find $\Delta\omega_{\text{full}}$
+  (as a multiple of $\pi$: type <code>1/8</code> for $\tfrac{\pi}{8}$).</p>
+<pl-number-input answers-name="dwf" label="$\Delta\omega_{\text{full}} =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(c)</b> A Hamming window is applied to the $L$ samples instead. Full-lobe separation then needs $\Delta f \gt \Delta f_{\text{Ham}}$. Find $\Delta f_{\text{Ham}}$.</p>
+<pl-number-input answers-name="dfham" label="$\Delta f_{\text{Ham}} =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(d)</b> Back to the rectangular window: $x[n]$ is zero-padded to a total length of $N = {{params.Np}}$ and the $N$-point DFT is used.
+  What happens to the smallest spacing $\Delta f_{\text{full}}$ that full-lobe separation guarantees?</p>
+<pl-multiple-choice answers-name="pad" hide-letter-keys="true">
+  {{#params.pad_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.pad_choices}}
+</pl-multiple-choice>
+{{/params.rec}}
+
+{{#params.fa23}}
+<p><b>(a)</b> From the DFT plot, estimate the unknown frequency $\lambda_0$.</p>
+<pl-number-input answers-name="lam" label="$\lambda_0 \approx$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input>
+
+<p class="mt-3"><b>(b)</b> Find the smallest possible interval $[a, b]$ such that you would be sure that the unknown frequency satisfies
+  $a \le \lambda_0 \le b$.</p>
+<div class="mb-1"><pl-number-input answers-name="a" label="$a =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="b" label="$b =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> Your friend applies some processing to the input signal and obtains the following DFT plot (the value of its tallest stem in
+  $0 \le k \le {{params.N}}$ is written above it). What processing did she apply?</p>
+{{{params.fig2_html}}}
+<pl-multiple-choice answers-name="proc" hide-letter-keys="true">
+  {{#params.proc_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.proc_choices}}
+</pl-multiple-choice>
+{{/params.fa23}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Lobes">
+    A length-$N$ cosine at $\omega_0$ has a main lobe of width $\frac{4\pi}{N}$ centred at $\omega_0$ (zeros at $\omega_0 \pm \frac{2\pi}{N}$), and its
+    height grows with the number of samples, $\frac{AN}{2}$. The DFT evaluates the DTFT at $\omega_k = \frac{2\pi k}{N}$; a tone at $f$ Hz sits at
+    $\omega = \frac{2\pi f}{f_s}$.
+  </pl-hint>
+  <pl-hint hint-name="Criteria and windows" show-after-submission="1">
+    Full-lobe: $\lvert\omega_2 - \omega_1\rvert \gt \frac{4\pi}{N}$; half-lobe: $\lvert\omega_2 - \omega_1\rvert \gt \frac{2\pi}{N}$, applied to the closest pair.
+    A Hamming window doubles the main-lobe width ($\frac{8\pi}{N}$). Zero padding does not change the DTFT; it only evaluates it on a finer grid, so
+    the old DFT values reappear at every other bin.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.l23}}
+  <p>Only the closest pair matters: if it is separated, every pair is. Adjacent spacings: ${{params.gaps_tex}}$ Hz, so the closest pair is
+    ${{params.f1}}$ and ${{params.f2}}$ Hz, $\Delta f = {{params.df}}$ Hz, and
+    $$\Delta\omega = \lvert\omega_2 - \omega_1\rvert = (\Omega_2 - \Omega_1)T = {{params.dw_tex}}\ \text{rad/sample}.$$</p>
+  <p><b>(a)</b> $$N \gt \frac{4\pi}{\Delta\omega} = \frac{2 f_s}{\Delta f} = N_{\text{full}} = {{params.Nf}},\qquad
+    N \gt \frac{2\pi}{\Delta\omega} = \frac{f_s}{\Delta f} = N_{\text{half}} = {{params.Nh}}.$$</p>
+  <p><b>(b)</b> $$NT \gt N_{\text{full}}\,T = \frac{ {{params.Nf}} }{f_s} = \frac{2}{\Delta f} = {{params.Tf_tex}}\ \text{s}\ (\approx {{params.Tf_dec}}\ \text{s});$$
+    half-lobe needs only $\frac{1}{\Delta f} = {{params.Th_tex}}$ s.</p>
+  <p><b>(c)</b> The Hamming main lobe is twice as wide, $\frac{8\pi}{N}$, so every bound doubles:
+    $N \gt \frac{8\pi}{\Delta\omega} = \frac{4 f_s}{\Delta f} = N_{\text{Ham}} = {{params.Nham}}$ (the price of its much lower side lobes).</p>
+  <p><b>(d)</b> $N_{\text{full}} = \frac{2 f_s}{\Delta f}$ is proportional to $f_s$: at $f_s' = {{params.fs2_tex}}$ it becomes ${{params.Nf2_tex}}$ ({{params.Nf2_word}}),
+    because $\Delta\omega = \frac{2\pi\Delta f}{f_s}$ changes the other way. The time $N_{\text{full}}T = \frac{2}{\Delta f}$ does not depend on $f_s$:
+    resolution is set by how long you record, not by how fast you sample.</p>
+  <p class="text-muted"><small>Same shape as Lecture 23 Exercise 1 / slide Example 1 (guitar E2 $\approx 82$ Hz, F2 $\approx 87$ Hz at $8$ kHz: $N \gt 3200$, $0.4$ s;
+    doubling or halving $f_s$ keeps $0.4$ s), HW9 #5 (piano notes, $f_s = 1.2$ kHz), and the Hamming facts of SP2025 MT2 #1(f) and FA2025 MT2 #8
+    (main lobe twice as wide).</small></p>
+  {{/params.l23}}
+  {{#params.rec}}
+  <p>Each tone gives a main lobe of width $\frac{4\pi}{L}$ (zeros $\frac{2\pi}{L}$ on either side of its peak), and a tone at $f$ Hz sits at
+    $\omega = \frac{2\pi f}{f_s}$, so $\Delta\omega = \frac{2\pi\,\Delta f}{f_s}$.</p>
+  <p><b>(a)</b> Full-lobe: $\frac{2\pi\,\Delta f}{f_s} \gt \frac{4\pi}{L} \iff \Delta f \gt \frac{2 f_s}{L} = \frac{2}{D}$, so
+    $\Delta f_{\text{full}} = \frac{2\cdot {{params.fs}}}{ {{params.L}} } = {{params.dff_tex}}$ Hz. Half-lobe: $\Delta f \gt \frac{f_s}{L} = \frac{1}{D}$, so
+    $\Delta f_{\text{half}} = {{params.dfh_tex}}$ Hz. Only the duration $D = \frac{L}{f_s}$ matters.</p>
+  <p><b>(b)</b> $\Delta\omega_{\text{full}} = \frac{4\pi}{L} = \frac{4\pi}{ {{params.L}} } = {{params.dwf_tex}}$ (Lecture 23, eq. 9).</p>
+  <p><b>(c)</b> The Hamming main lobe is twice as wide, $\frac{8\pi}{L}$: $\Delta f_{\text{Ham}} = \frac{4 f_s}{L} = \frac{4}{D} = {{params.dfham_tex}}$ Hz.</p>
+  <p><b>(d)</b> Unchanged: zero padding adds only zeros, so the DTFT, and with it the main-lobe width $\frac{4\pi}{L}$, stays the same; the $N$-point
+    DFT just evaluates that DTFT on a finer grid (bins ${{params.bin_tex}}$ Hz apart). A spacing that full-lobe separation does not guarantee with
+    $L$ samples (two lobes that run together) is still one merged lobe after padding. Only a longer recording narrows the lobes.</p>
+  <p class="text-muted"><small>Same setting as FA2021 MT2 #7 ($\cos(10\pi t)$ sampled at 100 Hz for 5 s, $L = 500$, zero-padded to $N = 1024$), with
+    FA2023 MT2 #6(c) and FA2019 MT2 #1(a) (zero padding does not change the DTFT) and Lecture 23 eq. 9.</small></p>
+  {{/params.rec}}
+  {{#params.fa23}}
+  <p><b>(a)</b> Bin $k$ sits at $\omega_k = \frac{2\pi k}{N}$. The tallest bin in $0 \le k \le \frac N2$ is $k = {{params.ks}}$ ($k = {{params.Nmks}}$ is its mirror,
+    the same frequency $-\lambda_0$), so
+    $$\lambda_0 \approx \omega_{ {{params.ks}} } = {{params.est_raw_tex}} = {{params.est_tex}}.$$</p>
+  <p><b>(b)</b> The main lobe is centred at $\lambda_0$. Bin ${{params.ks}}$ is the tallest, so the centre is within half a bin of it; and
+    {{#params.right}}$\lvert X[{{params.ksp1}}]\rvert \approx {{params.v_hi}} \gt \lvert X[{{params.ksm1}}]\rvert \approx {{params.v_lo}}$: the centre is to the
+    right of bin ${{params.ks}}$.{{/params.right}}{{^params.right}}$\lvert X[{{params.ksm1}}]\rvert \approx {{params.v_lo}} \gt \lvert X[{{params.ksp1}}]\rvert \approx {{params.v_hi}}$:
+    the centre is to the left of bin ${{params.ks}}$.{{/params.right}} Hence
+    $$a = {{params.a_tex}} \le \lambda_0 \le {{params.b_tex}} = b\qquad\left(\text{the half bin is } {{params.half_tex}}\right).$$
+    (The plot was made with $\lambda_0 = {{params.lam_true_tex}} \approx {{params.lam_true_dec}}\pi$, i.e. ${{params.kfrac_tex}}$ bins.)</p>
+  {{#params.proc_pad}}
+  <p><b>(c)</b> The new plot has ${{params.M}}$ bins, and its even bins repeat the old values ($\lvert X'[{{params.two_ks}}]\rvert \approx {{params.v_2ks}} = \lvert X[{{params.ks}}]\rvert$);
+    its tallest stem (${{params.v_k2}}$) is about as tall as the old peak, not twice as tall. So she <b>zero-padded</b> with ${{params.N}}$ zeros: the DTFT is
+    unchanged and is evaluated twice as densely, which does not improve the resolution (the lobe is still $\frac{4\pi}{ {{params.N}} }$ wide).
+    ${{params.M}}$ samples of the cosine would double the peak (height $\frac{N'}{2}$), upsampling would repeat the ${{params.N}}$-point DFT twice, and a
+    Hamming window would lower the peak to about half.</p>
+  {{/params.proc_pad}}
+  {{#params.proc_long}}
+  <p><b>(c)</b> The new plot has ${{params.M}}$ bins and its tallest stem (${{params.v_k2}}$) is much <b>taller</b> than the old peak (${{params.v_ks}}$), with a narrower lobe:
+    the lobe height grows with the number of samples ($\frac{N'}{2}$ for a unit cosine) and the width shrinks to $\frac{4\pi}{N'}$, so she used
+    <b>${{params.M}}$ samples</b> of the cosine. Zero padding would keep the heights (its even bins would repeat the old values), upsampling would repeat
+    the ${{params.N}}$-point DFT twice, and a Hamming window would lower the peak.</p>
+  {{/params.proc_long}}
+  <p class="text-muted"><small>Same shape as FA2023 MT2 #6 (32-point DFT of $\cos(\lambda_0 n)$, tallest bin $k = 7$, $\lvert X[8]\rvert \gt \lvert X[6]\rvert$:
+    $\lambda_0 \approx \frac{7\pi}{16}$, $\frac{7\pi}{16} \le \lambda_0 \le \frac{15\pi}{32}$; the friend zero-padded to 64), with the FA2025 MT2 #8 alternative
+    (32 samples instead of 16: taller, narrower lobes) and FA2021 MT2 #7(b) (padding gives a finer grid, not a better peak).</small></p>
+  {{/params.fa23}}
+</pl-answer-panel>

@@ -1,0 +1,84 @@
+{
+  "uuid": "b8060e45-eb5a-428c-8cbb-0150cea599e9",
+  "type": "Homework",
+  "title": "Spectral analysis and windows (L22–L23)",
+  "set": "Practice",
+  "number": "9",
+  "text": "<p>Every question generates a new random variant each time you ask for one. A question is worth 6 points: 2 for the first correct variant, and more for consecutive correct variants. You get 3 tries per variant; after a submission a second hint unlocks and the full worked solution is shown once you have used your tries or answered correctly.</p><p>Lectures 22–23 (HW9): the periodic sinc, leakage, reading a DFT plot, full- and half-lobe resolution, rectangular vs Hamming windows, and the four-DFT matching problem of the Fall 2025 Midterm 2 — on Midterm 2 \"to the extent used on homework, mostly identifying frequencies\".</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "The finite cosine",
+      "questions": [
+        {
+          "id": "dft/periodic-sinc-reading",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/leakage-check",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Reading DFT plots",
+      "questions": [
+        {
+          "id": "dft/spectral-analysis",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/dft-plot-matching",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "Resolution and windows",
+      "questions": [
+        {
+          "id": "dft/frequency-resolution",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "dft/window-functions",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    },
+    {
+      "title": "True/False",
+      "questions": [
+        {
+          "id": "dft/true-false",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
+    }
+  ]
+}

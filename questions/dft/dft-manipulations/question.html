@@ -1,0 +1,117 @@
+<pl-question-panel>
+  <p><small><em>Lectures 20&ndash;21 and HW9;
+    {{#params.is_dup}}same shape as FA2025 Midterm 2 #7 (with numbers).{{/params.is_dup}}
+    {{#params.is_inter}}the dual of FA2025 Midterm 2 #7.{{/params.is_inter}}
+    {{#params.is_dec}}the dual of zero padding (FA2025 Midterm 2 #6(b), FA2024 #1(d)).{{/params.is_dec}}
+    {{#params.is_hw9}}same shape as HW9 #2(b).{{/params.is_hw9}}
+    {{#params.is_fa21}}same shape as FA2021 Midterm 2 #3(b).{{/params.is_fa21}}</em></small></p>
+  <p>
+    The $N$-point DFT is $X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn}$ and the inverse DFT is
+    $x[n] = \frac{1}{N}\sum_{k=0}^{N-1} X[k]\,e^{j\frac{2\pi}{N}kn}$; $\langle n\rangle_N$ is $n$ modulo $N$.
+  </p>
+  <p>
+    Let $\{x[n]\}_{n=0}^{ {{params.Nm1}} } = {{params.x_tex}}$ be a length-${{params.N}}$ signal with ${{params.N}}$-point DFT
+    $\{X[k]\}_{k=0}^{ {{params.Nm1}} } = {{params.X_names_tex}}$.
+  </p>
+</pl-question-panel>
+
+{{#params.real_kind}}
+<p><b>(a)</b> We build a new length-${{params.M}}$ DFT from these values:
+  $$\{Y[k]\}_{k=0}^{ {{params.Mm1}} } = {{params.Y_list_tex}}.$$
+  Let $\{y[n]\}_{n=0}^{ {{params.Mm1}} }$ be its ${{params.M}}$-point inverse DFT. Determine $y[n]$ for $0 \le n \le {{params.Mm1}}$, as a row
+  vector (entries separated by commas inside brackets, e.g. <code>[2, -1, 0]</code>).</p>
+<pl-matrix-input answers-name="y" label="$y =$" comparison="relabs" rtol="1e-6" atol="1e-6"></pl-matrix-input>
+
+<p class="mt-3"><b>(b)</b> The same construction applied to <b>any</b> length-$N$ signal $x[n]$ with $N$-point DFT $X[k]$
+  {{#params.is_dup}}($Y[k] = X[\langle k\rangle_N]$, $k = 0, 1, \dots, 2N-1$: the $N$ values written twice){{/params.is_dup}}
+  {{#params.is_inter}}($Y[2k] = X[k]$ and $Y[2k+1] = 0$, $k = 0, 1, \dots, N-1$: a zero after each value){{/params.is_inter}}
+  {{#params.is_dec}}($Y[k] = X[2k]$, $k = 0, 1, \dots, \frac{N}{2} - 1$, for even $N$: every other value){{/params.is_dec}}
+  {{#params.is_hw9}}($Y[k] = X[k] + X[\langle k - \frac{N}{2}\rangle_N]$, $k = 0, 1, \dots, N-1$, for even $N$){{/params.is_hw9}}
+  gives the inverse DFT $y[n]$. Which statement is true for every such $x[n]$?</p>
+{{/params.real_kind}}
+{{#params.is_fa21}}
+<p><b>(a)</b> Use properties of the DFT to determine $Y[k]$ for $k = 0, 2, 4, 6$, where $Y[k]$ is the $8$-point DFT of
+  $${{params.y_def_tex}},\qquad n = 0, 1, \dots, 7.$$
+  Enter $[Y[0], Y[2], Y[4], Y[6]]$ as a row vector; complex entries are typed like <code>2+3j</code> or <code>-j</code>, with no spaces or
+  <code>*</code> inside an entry (e.g. <code>[1, -2+3j, 0]</code>).</p>
+<pl-matrix-input answers-name="Y" label="$[Y[0], Y[2], Y[4], Y[6]] =$" allow-complex="true" comparison="relabs" rtol="1e-6" atol="1e-6"></pl-matrix-input>
+
+<p class="mt-3"><b>(b)</b> For <b>any</b> length-$8$ signal $x[n]$ with DFT $X[k]$ (not only this one, and for every $k$), which formula gives
+  the DFT $Y[k]$ of ${{params.y_def_tex}}$?</p>
+{{/params.is_fa21}}
+<pl-multiple-choice answers-name="gen" hide-letter-keys="true">
+  {{#params.gen_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.gen_choices}}
+</pl-multiple-choice>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Write the inverse DFT out">
+    Plug the new list into the inverse-DFT sum of its own length and split the sum where the list repeats or has zeros. The identities that
+    do the work: $e^{j\frac{2\pi}{2N}(k+N)n} = e^{j\frac{2\pi}{2N}kn}(-1)^n$, $e^{j\frac{2\pi}{2N}(2k)n} = e^{j\frac{2\pi}{N}kn}$ (which is
+    $N$-periodic in $n$), and $e^{-j\frac{2\pi}{N/2}k(n + N/2)} = e^{-j\frac{2\pi}{N/2}kn}$.
+    For the properties: $x[\langle n - m\rangle_N] \leftrightarrow e^{-j\frac{2\pi}{N}km}X[k]$,
+    $x[\langle -n\rangle_N] \leftrightarrow X[\langle -k\rangle_N]$, $e^{j\frac{2\pi}{N}\ell n}x[n] \leftrightarrow X[\langle k - \ell\rangle_N]$.
+  </pl-hint>
+  <pl-hint hint-name="Check one sample" show-after-submission="1">
+    Check $y[0]$: it is $\frac{1}{M}$ times the sum of all $M$ values in the new list, and $\sum_k X[k] = N x[0]$.
+    {{#params.is_fa21}}For $Y$: $Y[0] = \sum_n y[n]$ can be computed directly from the eight values of $y[n]$.{{/params.is_fa21}}
+    Compare the lengths too: the new DFT has {{#params.real_kind}}${{params.M}}${{/params.real_kind}}{{#params.is_fa21}}$8${{/params.is_fa21}}
+    values, so $y[n]$ has that many samples.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.is_dup}}
+  <p><b>(a), (b)</b> (FA2025 Midterm 2 #7.) $Y[k] = X[k]$ for $0 \le k \le N-1$ and $Y[k] = X[k - N]$ for $N \le k \le 2N - 1$. In the
+    length-$2N$ inverse DFT, split the sum at $k = N$ and put $k = m + N$ in the second half:
+    $$\begin{aligned}
+    y[n] &amp;= \frac{1}{2N}\sum_{k=0}^{N-1}X[k]e^{j\frac{2\pi k}{2N}n} + \frac{1}{2N}\sum_{m=0}^{N-1}X[m]e^{j\frac{2\pi (m+N)}{2N}n} \\
+    &amp;= \frac{1 + (-1)^n}{2N}\sum_{k=0}^{N-1}X[k]e^{j\frac{\pi k}{N}n},
+    \end{aligned}$$
+    because $e^{j\frac{2\pi N}{2N}n} = e^{j\pi n} = (-1)^n$. For odd $n$ the factor $1 + (-1)^n$ is $0$; for $n = 2r$ it is $2$ and
+    $e^{j\frac{\pi k}{N}2r} = e^{j\frac{2\pi k}{N}r}$, so $y[2r] = \frac1N\sum_k X[k]e^{j\frac{2\pi k}{N}r} = x[r]$. Hence
+    $y[2n] = x[n]$, $y[2n+1] = 0$: repeating the DFT upsamples the signal by $2$. Here
+    $$\{y[n]\}_{n=0}^{ {{params.Mm1}} } = {{params.work_tex}} = {{params.y_tex}}.$$</p>
+  {{/params.is_dup}}
+  {{#params.is_inter}}
+  <p><b>(a), (b)</b> Only the even-indexed values are nonzero, $Y[2k] = X[k]$. The length-$2N$ inverse DFT keeps only those terms:
+    $$y[n] = \frac{1}{2N}\sum_{k=0}^{N-1}X[k]\,e^{j\frac{2\pi (2k)}{2N}n} = \frac12\cdot\frac1N\sum_{k=0}^{N-1}X[k]\,e^{j\frac{2\pi k}{N}n}
+    = \tfrac12\,x[\langle n\rangle_N],$$
+    since the length-$N$ inverse-DFT formula is $N$-periodic in $n$. So $y$ is two copies of $x$ at half height (the dual of FA2025 #7:
+    zeros inserted in frequency repeat the signal in time). Here
+    $$\{y[n]\}_{n=0}^{ {{params.Mm1}} } = {{params.work_tex}} = {{params.y_tex}}.$$</p>
+  {{/params.is_inter}}
+  {{#params.is_dec}}
+  <p><b>(a), (b)</b> Write $Y[k] = X[2k]$ from the definition and split the time sum into its two halves:
+    $$Y[k] = \sum_{n=0}^{N-1}x[n]\,e^{-j\frac{2\pi (2k)}{N}n} = \sum_{n=0}^{N/2-1}\big(x[n] + x[n + \tfrac N2]\big)\,e^{-j\frac{2\pi}{N/2}kn},$$
+    because $e^{-j\frac{2\pi}{N/2}k(n + N/2)} = e^{-j\frac{2\pi}{N/2}kn}$. This is the $\frac N2$-point DFT of $x[n] + x[n + \frac N2]$:
+    keeping every other DFT value folds (aliases) the signal in time; it does not decimate it ($x[2n]$ is a different signal).
+    Here
+    $$\{y[n]\}_{n=0}^{ {{params.Mm1}} } = {{params.work_tex}} = {{params.work2_tex}} = {{params.y_tex}}.$$</p>
+  {{/params.is_dec}}
+  {{#params.is_hw9}}
+  <p><b>(a), (b)</b> (HW9 #2.) Frequency shift: $e^{j\frac{2\pi}{N}\ell n}x[n] \leftrightarrow X[\langle k - \ell\rangle_N]$ with
+    $\ell = \frac N2 = {{params.h}}$, and $e^{j\frac{2\pi}{N}\frac N2 n} = e^{j\pi n} = (-1)^n$. By linearity
+    $$y[n] = x[n] + (-1)^n x[n] = \left(1 + (-1)^n\right)x[n],$$
+    i.e. $2x[n]$ at even $n$ and $0$ at odd $n$ (not a circular shift: the shift is in $k$, so $x$ is modulated). In HW9 #2, $X[k] = 0$ for
+    $k \ge 4$, so $X[k] + X[\langle k - 4\rangle_8]$ is the list $\{A, B, C, D, A, B, C, D\}$. Here
+    $$\{y[n]\}_{n=0}^{ {{params.Mm1}} } = {{params.work_tex}} = {{params.y_tex}}.$$</p>
+  {{/params.is_hw9}}
+  {{#params.is_fa21}}
+  <p><b>(a)</b> (FA2021 Midterm 2 #3.) First the DFT of $x$ at even $k$: $x[n + 4] = x[n]$, so
+    $X[k] = \left(1 + (-1)^k\right)\sum_{n=0}^{3}x[n]\,e^{-j\frac{2\pi}{8}kn}$ (zero at odd $k$), with $\{x[n]\}_{n=0}^{3} = {{params.base_tex}}$:
+    $${{params.Xeven_tex}}.$$
+    Then the properties, one at a time:</p>
+  <ul>
+    <li>$z[n] = x[\langle {{params.m}} - n\rangle_8] = x[\langle -(n - {{params.m}})\rangle_8]$: circular reversal, then a circular delay by ${{params.m}}$
+      (as in FA2024 #8), so ${{params.Z_tex}}$.</li>
+    <li>${{params.cexp_tex}}$ is a modulation, so $Y[k] = Z[{{params.shift_tex}}]$.</li>
+  </ul>
+  <p>Together, {{params.ok_formula_tex}}, which is the answer to (b). At even $k$:</p>
+  {{{params.table_html}}}
+  <p>$$[Y[0], Y[2], Y[4], Y[6]] = {{params.Yrow_tex}}.$$</p>
+  {{/params.is_fa21}}
+  <p class="text-muted"><small>Modelled on FA2025 Midterm 2 #7 (repeating a DFT: $y[2n] = x[n]$, $y[2n+1] = 0$), its dual and the
+    dual of zero padding (FA2025 #6(b), FA2024 #1(d)), HW9 #2 and FA2021 #3(b) ($y[n] = x[\langle 3 - n\rangle_8]\,j^n$). Phase ramps,
+    sign flips and permuted lists (FA2019 #4, SP2021 #4, SP2025 #7(b), #8, SP2023 #9(b), FA2024 #8) are in the question
+    &ldquo;DFT properties&rdquo;.</small></p>
+</pl-answer-panel>

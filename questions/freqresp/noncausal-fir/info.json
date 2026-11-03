@@ -1,0 +1,8 @@
+{
+  "uuid": "c6033422-9425-4df3-9942-0c2c6c2fd038",
+  "title": "Two- and three-tap FIRs, causal or not: magnitude, principal phase, π jumps, group delay",
+  "topic": "Frequency response",
+  "tags": ["L15", "L16", "hw6", "midterm2", "fam2-magphase", "numeric", "integer", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

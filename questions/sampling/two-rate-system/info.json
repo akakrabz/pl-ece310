@@ -1,0 +1,8 @@
+{
+  "uuid": "3b3161b3-00a6-4419-ae0a-8af7ff7277ce",
+  "title": "Two sinusoids through A/D at T1 and D/A at T2: output frequencies, sign flips, which T",
+  "topic": "Sampling and reconstruction",
+  "tags": ["L17", "L18", "L19", "hw8", "midterm2", "fam2-sampling", "numeric", "integer", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

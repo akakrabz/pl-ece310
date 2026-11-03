@@ -1,0 +1,81 @@
+<pl-question-panel>
+  <p><small><em>Lecture 20; same shape as FA2025 Midterm 2 #6 (with FA2024 #7{{#params.hz}} and FA2019 #2{{/params.hz}}).</em></small></p>
+  <p>
+    Let $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$ be a <b>real-valued</b> length-${{params.N}}$ signal with DFT
+    $\{X[k]\}_{k=0}^{ {{params.Nm1}} }$ and DTFT $X_d(\omega)$.
+    {{#params.hz}}The samples were taken from an analog signal at $f_s = {{params.fs}}$ Hz: $x[n] = x_a(n/f_s)$.{{/params.hz}}
+    The DFT is $X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn}$.
+  </p>
+</pl-question-panel>
+
+<p><b>(a)</b> Which of the following relationships are true? Select all that apply.</p>
+<pl-checkbox answers-name="rel" partial-credit="net-correct" hide-letter-keys="true" order="fixed">
+  {{#params.rel_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.rel_choices}}
+</pl-checkbox>
+
+<p class="mt-3"><b>(b)</b> We zero pad $x[n]$ with $L$ zeros to obtain $\{y[n]\}_{n=0}^{ {{params.Nm1}}+L}$ with DFT
+  $\{Y[k]\}_{k=0}^{ {{params.Nm1}}+L}$.
+  {{#params.dig}}We want to ensure that $Y[k]$ evaluates $X_d\left({{params.w1_tex}}\right)$ and $X_d\left({{params.w2_tex}}\right)$
+  for some values of $k$.{{/params.dig}}
+  {{#params.hz}}We want to ensure that the values $Y[k]$ include the spectrum of the samples at the analog frequencies
+  $f_1 = {{params.F1}}$ Hz and $f_2 = {{params.F2}}$ Hz exactly (on a bin, not between two bins).{{/params.hz}}
+  Which of the following values of $L$ will accomplish this? Select all that apply.</p>
+<pl-checkbox answers-name="Lset" partial-credit="net-correct" hide-letter-keys="true" order="fixed">
+  {{#params.L_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.L_choices}}
+</pl-checkbox>
+
+<p class="mt-3"><b>(c)</b> What is the smallest number of zeros $L \ge 0$ that accomplishes the goal of part (b)?</p>
+<pl-integer-input answers-name="Lmin" label="$L =$"></pl-integer-input>
+
+<p class="mt-3"><b>(d)</b> Pad with the smallest $L$ of part (c), so that $Y[k]$ is a DFT of length $M = {{params.N}} + L$.
+  {{#params.dig}}Find the index $k$ with $Y[k] = X_d\left({{params.wb_tex}}\right)$ and the index $k'$, $0 \le k' \le M - 1$, with
+  $Y[k'] = X_d^*\left({{params.wb_tex}}\right)$.{{/params.dig}}
+  {{#params.hz}}Find the index $k$, $0 \le k \le M - 1$, at which $Y[k]$ evaluates the spectrum at $+{{params.Fb}}$ Hz, and the index
+  $k'$, $0 \le k' \le M - 1$, at which it evaluates the spectrum at $-{{params.Fb}}$ Hz.{{/params.hz}}</p>
+<div class="mb-1"><pl-integer-input answers-name="k" label="$k =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="kc" label="$k' =$"></pl-integer-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="The DFT evaluates the DTFT">
+    For a signal of length at most $N$, $X[k] = X_d\left(\frac{2\pi k}{N}\right)$: the bins are $\frac{2\pi}{N}$ apart. $X_d$ is
+    $2\pi$-periodic, and for a real $x$, $X_d(-\omega) = X_d^*(\omega)$. Zero padding to length $M$ does not change $X_d$; it evaluates it
+    at $\frac{2\pi k}{M}$ instead.{{#params.hz}} An analog frequency $f$ in Hz is the digital frequency $\omega = \frac{2\pi f}{f_s}$.{{/params.hz}}
+  </pl-hint>
+  <pl-hint hint-name="Divisibility" show-after-submission="1">
+    $\omega$ is a bin of the length-$M$ DFT when $k = M\cdot\frac{\omega}{2\pi}$ is an integer. Work with $\frac{\omega}{2\pi}$, not
+    $\frac{\omega}{\pi}$, and test <b>both</b> frequencies: $M$ must be a multiple of both denominators. It is the total length $M$ that
+    matters, not the number $L$ of zeros.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> $X[k] = X_d(\omega_k)$ with $\omega_k = \frac{2\pi k}{ {{params.N}} } = {{params.dw_tex}}\,k$; $X_d$ is $2\pi$-periodic, and
+    $x$ is real, so $X_d(-\omega) = X_d^*(\omega)$.</p>
+  <ul>
+    {{#params.rel_lines}}<li>${{rel_tex}}$: <b>{{verdict}}</b>. {{{why_html}}}</li>{{/params.rel_lines}}
+  </ul>
+  <p><b>(b)</b> Zero padding keeps $X_d$ and evaluates it at $\frac{2\pi k}{M}$, $M = {{params.N}} + L$.
+    {{#params.dig}}$X_d(\omega)$ is a value $Y[k]$ only if $k = M\cdot\frac{\omega}{2\pi}$ is an integer. Here
+    $\frac{\omega_1}{2\pi} = {{params.f1_tex}}$ and $\frac{\omega_2}{2\pi} = {{params.f2_tex}}$,{{/params.dig}}
+    {{#params.hz}}The bins are $\frac{f_s}{M}$ Hz apart, so $f$ sits on bin $k = \frac{M f}{f_s}$ when that is an integer
+    ($\omega = \frac{2\pi f}{f_s}$, $k = M\frac{\omega}{2\pi}$). Here $\frac{f_1}{f_s} = \frac{ {{params.F1}} }{ {{params.fs}} } = {{params.f1_tex}}$ and
+    $\frac{f_2}{f_s} = \frac{ {{params.F2}} }{ {{params.fs}} } = {{params.f2_tex}}$,{{/params.hz}}
+    so $M$ must be a multiple of ${{params.q1}}$ and of ${{params.q2}}$, i.e. of $\operatorname{lcm}({{params.q1}}, {{params.q2}}) = {{params.q}}$:</p>
+  {{{params.cand_table_html}}}
+  {{#params.pi_note}}<p>Slip to avoid: requiring only $M\cdot\frac{\omega}{\pi}$ to be an integer asks for a multiple of ${{params.d}}$ instead of
+    ${{params.q}}$; e.g. $L = {{params.pi_trap_L}}$ ($M = {{params.pi_trap_M}}$) passes that test but lands halfway between two bins.</p>{{/params.pi_note}}
+  <p><b>(c)</b> The smallest multiple of ${{params.q}}$ that is at least ${{params.N}}$ is $M = {{params.Lmin_M}}$, so
+    $$L = {{params.Lmin_M}} - {{params.N}} = {{params.Lmin}}.$$</p>
+  <p><b>(d)</b> With $M = {{params.Lmin_M}}$:
+    {{#params.dig}}$k = M\cdot\frac{\omega_{ {{params.b}} }}{2\pi} = {{params.Lmin_M}}\cdot {{params.fb_tex}} = {{params.kb}}$.
+    Because $x$ is real, $X_d^*\left({{params.wb_tex}}\right) = X_d\left({{params.wbneg_tex}}\right) = X_d\left({{params.wbc_tex}}\right)$, which is
+    bin $k' = M - k = {{params.Lmin_M}} - {{params.kb}} = {{params.kbc}}$ (the upper half of the DFT holds the negative frequencies).{{/params.dig}}
+    {{#params.hz}}$k = \frac{M f_{ {{params.b}} }}{f_s} = {{params.Lmin_M}}\cdot {{params.fb_tex}} = {{params.kb}}$. The negative frequency
+    $-{{params.Fb}}$ Hz is $\omega = -2\pi\cdot{{params.fb_tex}} \equiv 2\pi - 2\pi\cdot{{params.fb_tex}}$, bin
+    $k' = M - k = {{params.Lmin_M}} - {{params.kb}} = {{params.kbc}}$; $x$ is real, so $Y[k'] = Y^*[k]$.{{/params.hz}}</p>
+  <p class="text-muted"><small>Same shape as FA2025 Midterm 2 #6 ((a) five relations for a real length-32 signal, (b) which of
+    $L = 4, 16, 22, 40, 48$ make $Y[k]$ evaluate $X_d(\frac{\pi}{3})$ and $X_d(\frac{4\pi}{9})$: $32 + L$ divisible by $18$),
+    FA2024 #7 (smallest $N$ capturing $X_d(\frac{2\pi}{5})$ and $X_d(\frac{\pi}{3})$: $\operatorname{lcm}(5, 6) = 30$),
+    FA2023 #1(h) ($X[11] = X_d(-\frac{3\pi}{7})$ for $N = 14$){{#params.hz}} and FA2019 #2 (bins in hertz: $k = 300, 800$ of a
+    1000-point DFT at $40$ kHz are $12$ kHz and $-8$ kHz){{/params.hz}}.</small></p>
+</pl-answer-panel>

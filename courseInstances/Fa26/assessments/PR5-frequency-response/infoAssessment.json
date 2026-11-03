@@ -68,6 +68,29 @@
           "triesPerVariant": 3
         }
       ]
+    },
+    {
+      "title": "New: Midterm 2 shapes (Nov 2026)",
+      "questions": [
+        {
+          "id": "freqresp/noncausal-fir",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/phase-jump-test",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        },
+        {
+          "id": "freqresp/response-from-plots",
+          "autoPoints": 2,
+          "maxAutoPoints": 6,
+          "triesPerVariant": 3
+        }
+      ]
     }
   ]
 }

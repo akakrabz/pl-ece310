@@ -1,0 +1,150 @@
+<pl-question-panel>
+  <p><small><em>Lectures 20&ndash;21; also on past Midterm 2 exams (their notation).</em></small></p>
+  <p>
+    The $N$-point DFT of a length-$N$ signal $\{x[n]\}_{n=0}^{N-1}$ is
+    $X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn}$, $k = 0, 1, \dots, N-1$, and $\langle n\rangle_N$ denotes $n$ modulo $N$
+    (a number in $\{0, 1, \dots, N-1\}$).
+  </p>
+  {{#params.k_fa23}}
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</small></p>
+  {{/params.k_fa23}}
+  {{#params.k_sp21}}
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</small></p>
+  {{/params.k_sp21}}
+</pl-question-panel>
+
+{{#params.k_fa23}}
+<p><b>(a)</b> Let $\{b[n]\}_{n=0}^{N-1}$ be a length-$N$ <b>complex-valued</b> sequence and let $\{B[k]\}_{k=0}^{N-1}$ be its $N$-point DFT.
+  Which sequence is the $N$-point DFT of the conjugated sequence $\{b^*[n]\}_{n=0}^{N-1}$?</p>
+<pl-multiple-choice answers-name="conj" hide-letter-keys="true">
+  {{#params.conj_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.conj_choices}}
+</pl-multiple-choice>
+
+<p class="mt-3"><b>(b)</b> Let $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$ and $\{y[n]\}_{n=0}^{ {{params.Nm1}} }$ be two <b>real-valued</b> sequences with
+  ${{params.N}}$-point DFTs $X[k]$ and $Y[k]$. The complex-valued sequence $z[n] = x[n] + jy[n]$ has the ${{params.N}}$-point DFT
+  $$\{Z[k]\}_{k=0}^{ {{params.Nm1}} } = {{params.Z_tex}}.$$
+  Using $x[n] = \tfrac12\big(z[n] + z^*[n]\big)$, $y[n] = \tfrac{1}{2j}\big(z[n] - z^*[n]\big)$, the linearity of the DFT and the property of part (a),
+  find $X[{{params.k1}}]$ and $Y[{{params.k1}}]$.</p>
+<div class="mb-1"><pl-number-input answers-name="reX" label="$\mathrm{Re}\{X[{{params.k1}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="imX" label="$\mathrm{Im}\{X[{{params.k1}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="reY" label="$\mathrm{Re}\{Y[{{params.k1}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="imY" label="$\mathrm{Im}\{Y[{{params.k1}}]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> With the same $Z[k]$, find $X[{{params.k2}}]$ and $Y[{{params.k2}}]$.</p>
+<div class="mb-1"><pl-number-input answers-name="Xs" label="$X[{{params.k2}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Ys" label="$Y[{{params.k2}}] =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+{{/params.k_fa23}}
+
+{{#params.k_sp21}}
+<p><b>(a)</b> Each list below is the ${{params.N}}$-point DFT $\{X[k]\}_{k=0}^{ {{params.Nm1}} }$ of some signal $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$.
+  For which of them is $x[n]$ <b>real-valued</b>? Select all that apply.</p>
+<pl-checkbox answers-name="real" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.real_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.real_choices}}
+</pl-checkbox>
+
+<p class="mt-3">Parts (b) and (c): let
+  $$\{X[k]\}_{k=0}^{ {{params.Nm1}} } = {{params.XL_tex}}$$
+  be the ${{params.N}}$-point DFT of a signal $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$.</p>
+<p><b>(b)</b> Compute $x[0]$.</p>
+<div class="mb-1"><pl-number-input answers-name="rex0" label="$\mathrm{Re}\{x[0]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="imx0" label="$\mathrm{Im}\{x[0]\} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(c)</b> Is $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$ real? Choose the answer with the right justification.</p>
+<pl-multiple-choice answers-name="isreal" order="fixed" hide-letter-keys="true">
+  {{#params.isreal_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.isreal_choices}}
+</pl-multiple-choice>
+{{/params.k_sp21}}
+
+{{#params.k_fa25}}
+<p>Let $\{x[n]\}_{n=0}^{ {{params.Nm1}} }$ be a <b>real-valued</b> length-${{params.N}}$ signal with DFT $\{X[k]\}_{k=0}^{ {{params.Nm1}} }$
+  and DTFT $X_d(\omega) = \sum_{n} x[n]\,e^{-j\omega n}$.</p>
+<p><b>(a)</b> Which of the following relationships are true? Select all that apply.</p>
+<pl-checkbox answers-name="rel" partial-credit="net-correct" order="fixed" hide-letter-keys="true">
+  {{#params.rel_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.rel_choices}}
+</pl-checkbox>
+
+<p class="mt-3"><b>(b)</b> Find the index $k \in \{0, 1, \dots, {{params.Nm1}}\}$ for which
+  (i) $X[k] = X_d^*\!\left({{params.wa_tex}}\right)$, and (ii) $X[k] = X_d^*\!\left({{params.wb_tex}}\right)$.</p>
+<div class="mb-1"><pl-integer-input answers-name="ka" label="$\text{(i)}\; k =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="kb" label="$\text{(ii)}\; k =$"></pl-integer-input></div>
+{{/params.k_fa25}}
+
+<pl-hidden-hints>
+  {{#params.k_fa23}}
+  <pl-hint hint-name="Conjugate the definition">
+    Write $\sum_{n} b^*[n]\,e^{-j\frac{2\pi}{N}kn} = \Big(\sum_n b[n]\,e^{+j\frac{2\pi}{N}kn}\Big)^*$ and multiply inside by
+    $e^{-j\frac{2\pi}{N}Nn} = e^{-j2\pi n} = 1$: the exponent becomes $-j\frac{2\pi}{N}(N-k)n$. The DFT index lives on a circle of $N$ points.
+  </pl-hint>
+  <pl-hint hint-name="Two DFTs for the price of one" show-after-submission="1">
+    $X[k] = \tfrac12\big(Z[k] + Z^*[\langle -k\rangle_N]\big)$ and $Y[k] = \tfrac{1}{2j}\big(Z[k] - Z^*[\langle -k\rangle_N]\big)$: the partner
+    of bin $k$ is bin $N - k$, not bin $k$ (so $X[k] \ne \mathrm{Re}\{Z[k]\}$ in general), and $\frac{1}{2j} = -\frac{j}{2}$.
+  </pl-hint>
+  {{/params.k_fa23}}
+  {{#params.k_sp21}}
+  <pl-hint hint-name="The test for a real signal">
+    $x[n]$ is real $\iff$ $X[k] = X^*[\langle -k\rangle_N]$ for every $k$: $X[0]$ real, $X[N/2]$ real for even $N$, and $X[k]$, $X[N-k]$
+    complex conjugates. The partner of $k$ is $N - k$ (circular), not $N - 1 - k$ (a plain flip of the list).
+  </pl-hint>
+  <pl-hint hint-name="x[0] from the DFT" show-after-submission="1">
+    The inverse DFT at $n = 0$ is $x[0] = \frac1N\sum_{k=0}^{N-1} X[k]$. A complex $x[0]$ settles the question; a real $x[0]$ proves nothing.
+  </pl-hint>
+  {{/params.k_sp21}}
+  {{#params.k_fa25}}
+  <pl-hint hint-name="Which frequency is bin k?">
+    For a signal of length $N$, $X[k] = X_d(\omega_k)$ with $\omega_k = \frac{2\pi k}{N}$ (here multiples of ${{params.wk_tex}}$), and $X_d$ is $2\pi$-periodic.
+  </pl-hint>
+  <pl-hint hint-name="The conjugate" show-after-submission="1">
+    For a real $x[n]$, $X_d^*(\omega) = X_d(-\omega)$: a conjugated DTFT value is the DTFT at the negative frequency.
+  </pl-hint>
+  {{/params.k_fa25}}
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.k_fa23}}
+  <p><b>(a)</b> Conjugate the definition and multiply by $e^{-j\frac{2\pi}{N}Nn} = e^{-j2\pi n} = 1$:
+    $$\sum_{n=0}^{N-1} b^*[n]\,e^{-j\frac{2\pi}{N}kn} = \Big(\sum_{n=0}^{N-1} b[n]\,e^{j\frac{2\pi}{N}kn}\,e^{-j\frac{2\pi}{N}Nn}\Big)^*
+      = \Big(\sum_{n=0}^{N-1} b[n]\,e^{-j\frac{2\pi}{N}(N-k)n}\Big)^* = B^*[\langle N-k\rangle_N] = B^*[\langle -k\rangle_N].$$
+    So the answer is $\{ {{params.conj_right_tex}} \}_{k=0}^{N-1}$. (The exam writes $B^*[N-k]$; at $k = 0$ that is $B^*[N] = B^*[0]$, since the DFT is $N$-periodic in $k$.)
+    The others: $B^*[k]$ is the DFT of $b^*[\langle -n\rangle_N]$; $B[\langle -k\rangle_N]$ is the DFT of $b[\langle -n\rangle_N]$; $B^*[N+k] = B^*[k]$
+    by periodicity; $-B[k]$ is the DFT of $-b[n]$; $B^*[N-1-k]$ is a plain flip of the list, not a circular one.</p>
+  <p><b>(b)</b> By linearity and part (a), $X[k] = \tfrac12\big(Z[k] + Z^*[\langle -k\rangle_N]\big)$ and $Y[k] = \tfrac{1}{2j}\big(Z[k] - Z^*[\langle -k\rangle_N]\big)$.
+    For $k = {{params.k1}}$ the partner is $\langle -{{params.k1}}\rangle_{ {{params.N}} } = {{params.k1m}}$: $Z[{{params.k1}}] = {{params.Zk1_tex}}$,
+    $Z[{{params.k1m}}] = {{params.Zk1m_tex}}$, $Z^*[{{params.k1m}}] = {{params.Zk1mc_tex}}$.
+    $$\begin{aligned} &amp;{{params.X_line_tex}}, \\ &amp;{{params.Y_line_tex}}. \end{aligned}$$
+    Note $X[{{params.k1}}] \ne \mathrm{Re}\{Z[{{params.k1}}]\} = {{params.ReZk1_tex}}$ and $Y[{{params.k1}}] \ne \mathrm{Im}\{Z[{{params.k1}}]\} = {{params.ImZk1_tex}}$:
+    $X[k]$ and $Y[k]$ are complex.</p>
+  <p><b>(c)</b> {{#params.k2_zero}}At $k = 0$ the partner is $\langle -0\rangle_{ {{params.N}} } = 0$ (the exam's $Z^*[N - 0] = Z^*[{{params.N}}]$ is $Z^*[0]$ by periodicity):{{/params.k2_zero}}{{#params.k2_mid}}At $k = {{params.k2}} = \frac{N}{2}$ the partner is $\langle -{{params.k2}}\rangle_{ {{params.N}} } = {{params.k2}}$, the bin itself:{{/params.k2_mid}}
+    $$X[{{params.k2}}] = \tfrac12\left(Z[{{params.k2}}] + Z^*[{{params.k2}}]\right) = \mathrm{Re}\{Z[{{params.k2}}]\} = {{params.Xs_tex}},\qquad
+      Y[{{params.k2}}] = \tfrac{1}{2j}\left(Z[{{params.k2}}] - Z^*[{{params.k2}}]\right) = \mathrm{Im}\{Z[{{params.k2}}]\} = {{params.Ys_tex}},$$
+    with $Z[{{params.k2}}] = {{params.Zk2_tex}}$. Both are real, as $X[0]$ and $X[N/2]$ of a real signal must be. Only at these self-paired bins is $X[k] = \mathrm{Re}\{Z[k]\}$.</p>
+  <p class="text-muted"><small>Same shape as FA2023 Midterm 2 #7: (a) the conjugation property $\{b^*[n]\} \leftrightarrow \{B^*[N-k]\}$, (b) $B^*[N] = B^*[0]$,
+    (c) $X[k] = \tfrac12\big(Z[k] + Z^*[N-k]\big)$, $Y[k] = \tfrac{1}{2j}\big(Z[k] - Z^*[N-k]\big)$, here with numbers. Lecture 21, Table 1 (conjugation).</small></p>
+  {{/params.k_fa23}}
+
+  {{#params.k_sp21}}
+  <p><b>(a)</b> A real $x[n]$ has a Hermitian DFT, $X[k] = X^*[\langle -k\rangle_{ {{params.N}} }]$: $X[0]$ is real{{#params.N_even}} (and so is
+    $X[{{params.h}}]$, which pairs with itself){{/params.N_even}}, and $X[k]$, $X[{{params.N}} - k]$ are complex conjugates. Check every pair:</p>
+  <ul>
+    {{#params.real_reasons}}<li>${{list_tex}}$: <b>{{verdict}}</b>. {{{why_html}}}</li>{{/params.real_reasons}}
+  </ul>
+  <p><b>(b)</b> The inverse DFT at $n = 0$ is the average of the DFT values:
+    $${{params.x0_line_tex}}.$$</p>
+  <p><b>(c)</b> <b>{{params.isreal_verdict}}</b>. {{{params.isreal_why_html}}}</p>
+  <p class="text-muted"><small>Same shape as SP2021 Midterm 2 #5: $\{X[k]\}_{k=0}^{6} = \{-2, -4j, 3, 5, 3, 4j, -2j\}$, is $x[n]$ real? Key: no,
+    $x[0] = \frac{9 - 2j}{7}$ is complex, and $X[1] = -4j \ne X^*[6] = 2j$ (the list pairs $k$ with $6 - k$, a plain flip). Lecture 21, Table 1 (conjugation).</small></p>
+  {{/params.k_sp21}}
+
+  {{#params.k_fa25}}
+  <p><b>(a)</b> $X[k] = X_d(\omega_k)$ with $\omega_k = \frac{2\pi k}{ {{params.N}} }$ (bins ${{params.wk_tex}}$ apart), $X_d$ is $2\pi$-periodic,
+    and for a real $x[n]$, $X_d^*(\omega) = X_d(-\omega)$. Compare frequencies modulo $2\pi$:</p>
+  <ul>
+    {{#params.rel_lines}}<li>${{rel_tex}}$: <b>{{verdict}}</b>. {{{why_html}}}</li>{{/params.rel_lines}}
+  </ul>
+  <p><b>(b)</b> (i) ${{params.wa_chain_tex}}$, so $\frac{2\pi k}{ {{params.N}} } = {{params.wa_red_tex}}$: $\;{{params.ka_line_tex}}$.
+    (ii) ${{params.wb_chain_tex}}$, so $\frac{2\pi k}{ {{params.N}} } = {{params.wb_red_tex}}$: $\;{{params.kb_line_tex}}$.
+    Without the conjugate you would land on the mirror bin $N - k$.</p>
+  <p class="text-muted"><small>Same shape as FA2025 Midterm 2 #6(a): $N = 32$, $X[0] = X_d(2\pi)$ true, $X[2] = X_d(\frac{\pi}{8})$ true,
+    $X[4] = X_d(\frac{\pi}{8})$ false (bin 4 is $\frac{\pi}{4}$), $X[6] = X_d^*(-\frac{3\pi}{8})$ and $X[8] = X_d^*(-\frac{\pi}{2})$ true (they need $x$ real).
+    Lecture 20 ($X[k] = X_d(\frac{2\pi k}{N})$); Lecture 14 (symmetry of the DTFT of a real signal).</small></p>
+  {{/params.k_fa25}}
+</pl-answer-panel>

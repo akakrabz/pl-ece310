@@ -1,0 +1,113 @@
+<pl-question-panel>
+  {{#params.is_fa25}}<p>Suppose that you perform spectral analysis of a continuous-time signal $x_a(t) = A_1\cos(\Omega_1 t) + A_2\cos(\Omega_2 t)$
+    by sampling the signal with the sampling period $T = {{params.T_tex}}$ (sec) to obtain $x[n]$ and then taking the DFT. Suppose that the
+    unknown frequencies satisfy $0 \lt \Omega_i \lt 100\pi$ for $i = 1, 2$. You perform the following analyses with $N = 16$:</p>{{/params.is_fa25}}
+  {{#params.is_fa24}}<p>A continuous-time signal $x_c(t) = A_1\cos(\Omega_1 t) + A_2\cos(\Omega_2 t)$ is sampled at a rate of ${{params.fs}}$ Hz for
+    ${{params.D_tex}}$ {{params.D_unit}} to produce a discrete-time signal $\{x[n]\}_{n=0}^{31}$; both frequencies are below $\frac{f_s}{2} = {{params.fs_half}}$ Hz,
+    so there is no aliasing. You perform the following analyses with $N = 16$:</p>{{/params.is_fa24}}
+  {{#params.is_sp23}}<p>An analog signal $x_a(t)$ is known to be composed of two spectral components such that $x_a(t) = \sum_{m=1}^{2}A_m\cos(\Omega_m t)$.
+    The analog signal is sampled with sampling period $T = {{params.T_tex}}$ s to create the digital signal $\{x[n]\}_{n=0}^{31} = \{x_a(nT)\}_{n=0}^{31}$.
+    You may assume that $x_a(t)$ is sampled above the Nyquist rate and thus no aliasing occurs. You perform the following analyses with $N = 16$:</p>{{/params.is_sp23}}
+  {{#params.is_lecture}}<p>A discrete-time signal $x[n] = A_1\cos(\omega_1 n) + A_2\cos(\omega_2 n)$ with unknown amplitudes $A_1, A_2 \gt 0$ and unknown
+    frequencies $0 \lt \omega_1 \lt \omega_2 \lt \pi$ is recorded for $0 \le n \le 31$. You perform the following analyses with $N = 16$:</p>{{/params.is_lecture}}
+  <ul>
+    <li>(i) Compute the length-$N$ DFT of the signal $\{x[n]\}_{n=0}^{N-1}$. <b>(DFT I)</b></li>
+    <li>(ii) Zero pad $\{x[n]\}_{n=0}^{N-1}$ from part (i) to length $2N$ and take the length-$2N$ DFT. <b>(DFT II)</b></li>
+    <li>(iii) Compute the DFT at length $2N$ of the original sampled signal $\{x[n]\}_{n=0}^{2N-1}$. <b>(DFT III)</b></li>
+    <li>(iv) Apply a Hamming window $h[n] = 0.54 - 0.46\cos\left(\frac{2\pi n}{2N-1}\right)$, $0 \le n \le 2N-1$, to the signal in part (iii),
+      and compute its length-$2N$ DFT. <b>(DFT IV)</b></li>
+  </ul>
+  <p>The magnitudes $\lvert X[k]\rvert$ of the four resulting DFTs are plotted below, all on the same vertical scale. But, unfortunately, you mixed up
+    the order of the four plots!</p>
+  <p class="mb-0"><b>Plot (a)</b></p>
+  {{{params.fig_a_html}}}
+  <p class="mb-0"><b>Plot (b)</b></p>
+  {{{params.fig_b_html}}}
+  <p class="mb-0"><b>Plot (c)</b></p>
+  {{{params.fig_c_html}}}
+  <p class="mb-0"><b>Plot (d)</b></p>
+  {{{params.fig_d_html}}}
+</pl-question-panel>
+
+<p class="mt-3"><b>(a)</b> Match the DFT plots to one of the four DFTs, i.e. DFT I, DFT II, DFT III, or DFT IV.</p>
+<div class="mb-1">Plot (a):
+  <pl-multiple-choice answers-name="plot_a" display="dropdown" order="fixed" hide-letter-keys="true">
+    {{#params.ch_a}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.ch_a}}
+  </pl-multiple-choice></div>
+<div class="mb-1">Plot (b):
+  <pl-multiple-choice answers-name="plot_b" display="dropdown" order="fixed" hide-letter-keys="true">
+    {{#params.ch_b}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.ch_b}}
+  </pl-multiple-choice></div>
+<div class="mb-1">Plot (c):
+  <pl-multiple-choice answers-name="plot_c" display="dropdown" order="fixed" hide-letter-keys="true">
+    {{#params.ch_c}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.ch_c}}
+  </pl-multiple-choice></div>
+<div class="mb-1">Plot (d):
+  <pl-multiple-choice answers-name="plot_d" display="dropdown" order="fixed" hide-letter-keys="true">
+    {{#params.ch_d}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.ch_d}}
+  </pl-multiple-choice></div>
+
+<p class="mt-3"><b>(b)</b>
+  {{#params.is_fa25}}Estimate the unknown signal spectral parameters $A_1$, $A_2$, $\Omega_1$, $\Omega_2$ (numbered so that $\Omega_1 \lt \Omega_2$)
+    from the plot you matched to DFT III.{{/params.is_fa25}}
+  {{#params.is_fa24}}Assuming that $A_1$ and $A_2$ are integers and $A_1 \gt A_2$, find the values of $A_1$, $A_2$, $\Omega_1$ and $\Omega_2$
+    from the plot you matched to DFT III.{{/params.is_fa24}}
+  {{#params.is_sp23}}Determine the amplitudes $A_1, A_2$ and the analog radial frequencies $\Omega_1, \Omega_2$ of the spectral components
+    from the plot you matched to DFT III (use consistent subscripts, numbered so that $\Omega_1 \lt \Omega_2$).{{/params.is_sp23}}
+  {{#params.is_lecture}}Find $A_1$, $A_2$ and the digital frequencies $\omega_1 \lt \omega_2$ from the plot you matched to DFT III.{{/params.is_lecture}}
+  {{#params.analog}}Enter $\Omega$ in rad/s as a multiple of $\pi$ (type <code>7/3</code> for $\tfrac{7\pi}{3}$ rad/s).{{/params.analog}}
+  {{#params.is_lecture}}Enter $\omega$ as a multiple of $\pi$ (type <code>7/3</code> for $\tfrac{7\pi}{3}$).{{/params.is_lecture}}
+  Readings within 5 % are accepted; fractions such as <code>3/4</code> are fine.</p>
+<div class="mb-1"><pl-number-input answers-name="A1" label="$A_1 =$" comparison="relabs" rtol="0.05" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="A2" label="$A_2 =$" comparison="relabs" rtol="0.05" atol="1e-6"></pl-number-input></div>
+{{#params.analog}}
+<div class="mb-1"><pl-number-input answers-name="W1" label="$\Omega_1 =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="0.05" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="W2" label="$\Omega_2 =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="0.05" atol="1e-6"></pl-number-input></div>
+{{/params.analog}}
+{{#params.is_lecture}}
+<div class="mb-1"><pl-number-input answers-name="W1" label="$\omega_1 =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="0.05" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="W2" label="$\omega_2 =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="0.05" atol="1e-6"></pl-number-input></div>
+{{/params.is_lecture}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Tell the plots apart">
+    Count the bins first: only one DFT has $16$. Zero padding adds no data: the padded DFT evaluates the same DTFT at twice as many
+    frequencies, so every second stem repeats the $16$-point DFT. Twice as many real samples make the peaks twice as tall and the main
+    lobes half as wide. A Hamming window lowers the side lobes and widens the main lobes.
+  </pl-hint>
+  <pl-hint hint-name="Reading a peak" show-after-submission="1">
+    A cosine $A\cos\left(\frac{2\pi k_0}{M}n\right)$ with a whole number of periods in $M$ samples gives $\lvert X[k_0]\rvert = \lvert X[M - k_0]\rvert = \frac{MA}{2}$
+    and zeros elsewhere ($M$ = number of real samples). Bin $k$ of a $32$-point DFT sits at $\omega_k = \frac{2\pi k}{32}$, and $\Omega = \frac{\omega}{T}$.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> Count the bins, then compare heights and lobes:</p>
+  <ul>
+    {{#params.sol_items}}<li>Plot ({{letter}}) is <b>DFT {{dft}}</b>: {{why}}</li>{{/params.sol_items}}
+  </ul>
+  <p><b>(b)</b> Read plot ({{params.III_letter}}), DFT III ($32$ samples, no window). Its stems sit at $k = {{params.ka}}$ (mirror ${{params.mka}}$) with height
+    ${{params.ha}}$ and at $k = {{params.kb}}$ (mirror ${{params.mkb}}$) with height ${{params.hb}}$. A whole number of periods in $32$ samples gives
+    $\lvert X[k_0]\rvert = \frac{32A}{2} = 16A$:
+    $$A_1 = \frac{ {{params.ha}} }{16} = {{params.Aa_tex}},\qquad A_2 = \frac{ {{params.hb}} }{16} = {{params.Ab_tex}}.$$
+    {{#params.analog}}Bin $k$ is $\omega_k = \frac{2\pi k}{32}$ and $\Omega = \frac{\omega}{T} = \frac{2\pi k}{32}\cdot {{params.inv_T}} = {{params.Om_bin_tex}}\,k$ rad/s:
+    $$\Omega_1 = {{params.Om_bin_tex}}\cdot {{params.ka}} = {{params.Wa_tex}}\ \text{rad/s}\ ({{params.fa_hz}}\ \text{Hz}),\qquad
+      \Omega_2 = {{params.Om_bin_tex}}\cdot {{params.kb}} = {{params.Wb_tex}}\ \text{rad/s}\ ({{params.fb_hz}}\ \text{Hz}),$$
+    both below $\frac{\pi}{T} = {{params.nyq_tex}}$ rad/s.{{/params.analog}}
+    {{#params.is_lecture}}Bin $k$ is $\omega_k = \frac{2\pi k}{32} = \frac{\pi k}{16}$:
+    $$\omega_1 = \frac{ {{params.ka}}\pi}{16} = {{params.Wa_tex}},\qquad \omega_2 = \frac{ {{params.kb}}\pi}{16} = {{params.Wb_tex}}.$${{/params.is_lecture}}</p>
+  <p>Plot ({{params.II_letter}}) (DFT II, $16$ samples) gives about $8A$: ${{params.II_peak_a}}$ at $k = {{params.ka}}$
+    {{#params.dk_even}}(exactly $8A_1$ here: the tones are an even number of bins apart, so each sits on the other's 16-sample nulls){{/params.dk_even}}{{#params.dk_odd}}(the other tone's
+    side lobes add or subtract: the tones are an odd number of bins apart){{/params.dk_odd}}. Never read amplitudes off plot ({{params.IV_letter}}) (Hamming): its peak is
+    $\frac{A}{2}\sum_n h[n] = {{params.sum_h}}\cdot\frac{A}{2}$, here ${{params.IV_peak_a}}$.</p>
+  {{#params.is_fa25}}<p class="text-muted"><small>Same shape as FA2025 MT2 #8 (key: plot (a) DFT I, (b) DFT IV, (c) DFT II, (d) DFT III for the exam's order).
+    {{#params.exam_case}}These amplitudes and frequencies are the key's readings ($A_1 \approx 1$, $A_2 \approx \tfrac34$, $\Omega_1 \approx \tfrac{175\pi}{4}$, $\Omega_2 \approx \tfrac{125\pi}{2}$);
+    the exam's tones ($45\pi$, $65\pi$ rad/s) sat just off the grid, so its plots leaked and "reasonably close answers" got full credit.{{/params.exam_case}}
+    Lectures 22–23: zero padding, lobe width $\frac{4\pi}{N}$, Hamming window.</small></p>{{/params.is_fa25}}
+  {{#params.is_fa24}}<p class="text-muted"><small>Plot matching as in FA2025 MT2 #8; the reading in (b) is FA2024 MT2 #9 (64 Hz for 0.5 s, peaks $48$ and $32$ at $k = 3, 8$:
+    $A_1 = 3$, $A_2 = 2$, $\Omega_1 = 12\pi$, $\Omega_2 = 32\pi$ rad/s){{#params.exam_case}}, whose numbers this variant uses{{/params.exam_case}}.</small></p>{{/params.is_fa24}}
+  {{#params.is_sp23}}<p class="text-muted"><small>Plot matching as in FA2025 MT2 #8; the reading in (b) is SP2023 MT2 #10 ($T = \tfrac{1}{12{,}000}$ s, a 24-point DFT with
+    heights $12A$: $\Omega = 1000\pi k$ rad/s).</small></p>{{/params.is_sp23}}
+  {{#params.is_lecture}}<p class="text-muted"><small>Plot matching as in FA2025 MT2 #8 on the digital signal of Lecture 22, eq. 16 (there $A_1 = 1$, $A_2 = \tfrac12$,
+    $\omega = 0.55\pi, 0.65\pi$, $N = 32$, where zero padding revealed the second lobe).</small></p>{{/params.is_lecture}}
+</pl-answer-panel>

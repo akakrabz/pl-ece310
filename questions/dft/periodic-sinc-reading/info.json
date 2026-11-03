@@ -1,0 +1,8 @@
+{
+  "uuid": "1aed84dd-450b-4676-aed6-25d929da2b43",
+  "title": "Periodic sinc: ω₀, N and A from a finite cosine's |X_d(ω)|; lobe height, nulls and width",
+  "topic": "DFT",
+  "tags": ["L22", "hw9", "midterm2", "fam2-spectral", "numeric", "integer", "MC", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

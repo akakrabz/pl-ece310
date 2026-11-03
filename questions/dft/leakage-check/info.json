@@ -1,0 +1,8 @@
+{
+  "uuid": "c953ae08-9a30-4117-9ef3-9d135d33a57f",
+  "title": "DFT of a truncated cosine: two nonzero bins or leakage; bin values; the tallest leaky bin",
+  "topic": "DFT",
+  "tags": ["L22", "hw9", "midterm2", "fam2-spectral", "checkbox", "integer", "numeric", "medium"],
+  "type": "v3",
+  "singleVariant": false
+}

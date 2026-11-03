@@ -1,0 +1,100 @@
+<pl-question-panel>
+  <p>
+    Consider the ideal sampling system below, with a digital filter $H_d(\omega)$ between ideal A/D and D/A converters that share
+    the sampling period $T$. Let $x_a(t) \leftrightarrow X_a(\Omega)$, $y_a(t) \leftrightarrow Y_a(\Omega)$ (CTFTs, $\Omega$ in rad/s) and
+    $x[n] \leftrightarrow X_d(\omega)$, $y[n] \leftrightarrow Y_d(\omega)$ (DTFTs).
+  </p>
+  {{{params.chain_html}}}
+  {{#params.is_fa19}}
+  <p>The input $x_a(t)$ is band-limited to $\Omega_{\max} = {{params.Omax_tex}}$ rad/s ($B = {{params.B_tex}}$ Hz); its CTFT is the triangle
+    below, of height $1$, reaching $0$ at $\lvert\Omega\rvert = \Omega_{\max}$. The filter is the ideal {{params.kind_word}} filter
+    $${{params.hd_tex}}$$</p>
+  {{/params.is_fa19}}
+  {{^params.is_fa19}}
+  <p>We are given $T = {{params.T_tex}}$ s and the ideal {{params.kind_word}} filter
+    $${{params.hd_tex}}$$
+    The CTFT $X_a(\Omega)$ is the triangle below, of height $1$, where $B$ is the bandlimit (in Hz) of $x_a(t)$: $X_a(\Omega) = 0$ for
+    $\lvert\Omega\rvert \ge 2\pi B$.</p>
+  {{/params.is_fa19}}
+  {{{params.xa_svg_html}}}
+  {{{params.hd_svg_html}}}
+  <p><small>Enter exact values: fractions such as <code>75/2</code> are accepted; decimals need 4 significant digits.
+    Enter frequencies as multiples of $\pi$: for $\tfrac{2\pi}{3}$ type <code>2/3</code>, for $20\pi$ rad/s type <code>20</code>.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> Let {{#params.is_fa19}}$T = {{params.T_tex}}$ s{{/params.is_fa19}}{{^params.is_fa19}}$B = {{params.B_tex}}$ Hz{{/params.is_fa19}}.
+  The DTFT of the samples: its value at $\omega = 0$, the band edge $\omega_B$ of the spectral copy centred at $\omega = 0$ (that copy is zero
+  for $\lvert\omega\rvert \ge \omega_B$; $\omega_B$ may exceed $\pi$), and its value at $\omega = {{params.u1_tex}}$.</p>
+<div class="mb-1"><pl-number-input answers-name="Xd0" label="$X_d(0) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="wB" label="$\omega_B =$" suffix="$\cdot\,\pi$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Xd1" label="$X_d\!\left({{params.u1_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+<p class="mt-3"><b>(b)</b> Same {{#params.is_fa19}}$T${{/params.is_fa19}}{{^params.is_fa19}}$B${{/params.is_fa19}}.
+  The filtered DTFT at the cutoff (the cutoff itself belongs to the passband, $H_d(\omega_c) = 1$), the cutoff frequency $\Omega_c \gt 0$ of the
+  output spectrum ({{#params.lp}}$Y_a(\Omega) = 0$ for $\lvert\Omega\rvert \gt \Omega_c${{/params.lp}}{{^params.lp}}$Y_a(\Omega) = 0$ for
+  $\lvert\Omega\rvert \lt \Omega_c${{/params.lp}}), in rad/s, and the value of $Y_a$ there (on the passband side).</p>
+<div class="mb-1"><pl-number-input answers-name="Ydc" label="$Y_d\!\left({{params.wc_tex}}\right) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Omc" label="$\Omega_c =$" suffix="$\cdot\,\pi\ \text{rad/s}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="Yac" label="$Y_a(\Omega_c) =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<p>Is $y_a(t)$ exactly $x_a(t)$ passed through an ideal analog {{params.kind_word}} filter with cutoff $\tfrac{\omega_c}{T}$ rad/s (i.e. does the
+  whole system act on this input as the LTI system $H_a(\Omega) = H_d(\Omega T)$)?</p>
+<pl-multiple-choice answers-name="lti" order="fixed" hide-letter-keys="true">
+  {{#params.lti_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.lti_choices}}
+</pl-multiple-choice>
+
+{{#params.is_fa19}}
+<p class="mt-3"><b>(c)</b> Now let the period $T$ vary (same input, same $H_d$). Find the Nyquist period $T_{\text{NYQ}}$ of $x_a(t)$, and the
+  <b>largest</b> $T$ for which $Y_d(\omega)$ has no aliasing, so that the overall system is still LTI. (If your condition is a strict
+  inequality $T \lt T_0$, enter $T_0$.)</p>
+<div class="mb-1"><pl-number-input answers-name="c_x" label="$T_{\text{NYQ}} =$" suffix="$\text{s}$" comparison="relabs" rtol="1e-3" atol="1e-9"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="c_y" label="$T_{\max} =$" suffix="$\text{s}$" comparison="relabs" rtol="1e-3" atol="1e-9"></pl-number-input></div>
+{{/params.is_fa19}}
+{{^params.is_fa19}}
+<p class="mt-3"><b>(c)</b> Keep $T$ and $H_d(\omega)$ and let the bandlimit $B$ vary. Find the <b>largest</b> $B$ (in Hz) such that there is no
+  aliasing present in $Y_d(\omega)$, and the largest $B$ such that there is no aliasing in $X_d(\omega)$. (If your condition is a strict
+  inequality $B \lt B_0$, enter $B_0$.)</p>
+<div class="mb-1"><pl-number-input answers-name="c_y" label="$B_{\max}\ \text{for}\ Y_d =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+<div class="mb-1"><pl-number-input answers-name="c_x" label="$B_{\max}\ \text{for}\ X_d =$" suffix="$\text{Hz}$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+{{/params.is_fa19}}
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Three scalings">
+    A/D: $X_d(\omega) = \tfrac{1}{T}\sum_k X_a\!\left(\tfrac{\omega - 2\pi k}{T}\right)$ (axis $\omega = \Omega T$, height $\times\tfrac1T$,
+    a copy every $2\pi$, overlapping copies <b>add</b>). Filter: $Y_d = H_d X_d$, with $H_d$ repeating every $2\pi$ too. D/A:
+    $Y_a(\Omega) = T\,Y_d(\Omega T)$ for $\lvert\Omega\rvert \lt \tfrac{\pi}{T}$ and $0$ beyond: one copy, height back $\times T$.
+  </pl-hint>
+  <pl-hint hint-name="Where is the aliasing?" show-after-submission="1">
+    The copy centred at $2\pi$ starts at $2\pi - \omega_B$. $X_d$ is aliased when that is below $\pi$; $Y_d$ only when it is inside the
+    passband of $H_d$ (below $\omega_c$ for a low-pass, below $\pi$ for a high-pass, whose band reaches $\pi$).
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  {{#params.named}}<p>These are the numbers of {{params.src_html}}.</p>{{/params.named}}
+  <p><b>(a)</b> The A/D scales the frequency axis by $\omega = \Omega T$ and every height by ${{params.H_work_tex}}$:
+    $X_d(0) = {{params.H_work_tex}}$ (the copy at $2\pi$ does not reach $0$). The analog band edge $\Omega_B = 2\pi B$ moves to
+    $${{params.b_work_tex}}.$$
+    {{#params.overlap}}This is more than $\pi$: the copies overlap on $\lvert\omega\rvert \ge 2\pi - \omega_B = {{params.ov_tex}}$ (near
+    $\pm\pi$) and must be added there.{{/params.overlap}}
+    {{^params.overlap}}This is at most $\pi$: the copies do not overlap.{{/params.overlap}}
+    The copy centred at $0$ is $${{params.central_tex}},$$ the others are shifted by multiples of $2\pi$, so
+    $${{params.X1_line}}$$</p>
+  <p><b>(b)</b> $Y_d = H_d X_d$, and the cutoff belongs to the passband:
+    $${{params.Yd_line}}$$
+    The ideal D/A gives $Y_a(\Omega) = T\,Y_d(\Omega T)$ for $\lvert\Omega\rvert \lt \tfrac{\pi}{T}$ (a single copy, height multiplied by $T$),
+    so the digital cutoff $\omega_c$ appears at
+    $${{params.Omc_tex}}\ \text{rad/s},\qquad {{params.Ya_tex}}.$$
+    {{{params.lti_html}}}</p>
+  {{{params.sol_svg_html}}}
+  <p><b>(c)</b> {{{params.c_html}}}</p>
+  <p class="text-muted"><small>
+    {{#params.is_fa25}}Same shape as FA2025 Midterm 2 #5: $T = \tfrac{1}{60}$ s, $\omega_c = \tfrac{\pi}{3}$, $B = 20$ Hz gives $X_d$ of height
+    $60$ with edge $\tfrac{2\pi}{3}$, $Y_d = 30$ at the cut, $Y_a$ cut at $20\pi$ rad/s with value $\tfrac12$; no aliasing in $Y_d$ for
+    $B \lt 50$ Hz (key: $50$), in $X_d$ for $B \le 30$ Hz. Part (a)&ndash;(b) is also SP2025 #5(a) ($T = \tfrac{1}{300}$ s, $B = 100$ Hz).{{/params.is_fa25}}
+    {{#params.is_fa19}}Same shape as FA2019 Midterm 2 #9: $\Omega_{\max} = 1000\pi$ rad/s, $\omega_c = \tfrac{\pi}{3}$: $T_{\text{NYQ}} = 1$ ms, the
+    overall system is LTI for $T \lt T_{\text{NYQ}}$ with cutoff $\tfrac{\pi}{3T}$, and still LTI up to $T = \tfrac{1}{600}$ s (#9(c)); the
+    value questions are those of FA2025 #5(a).{{/params.is_fa19}}
+    {{#params.is_hpf}}The FA2025 #5 setup with a high-pass filter: the lesson of FA2023 #5(b) (a high-pass needs the Nyquist rate, the
+    low-pass trick fails) and FA2021 #4 (after undersampling, a high-pass passes an aliased image).{{/params.is_hpf}}
+    Background: Lecture 17 (the sampled spectrum), the 2019 notes &sect;3.2 and &sect;5.3 (ideal D/A, $H_a(\Omega) = H_d(\Omega T)$).</small></p>
+</pl-answer-panel>

@@ -1,0 +1,8 @@
+{
+  "uuid": "42bfd0a9-a3d0-46ea-88d5-7dfb436b562a",
+  "title": "Four DFT plots mixed up: 16-point, zero-padded, 32 samples, Hamming; read off the tones",
+  "topic": "DFT",
+  "tags": ["L22", "L23", "hw9", "midterm2", "fam2-spectral", "MC", "numeric", "hard"],
+  "type": "v3",
+  "singleVariant": false
+}

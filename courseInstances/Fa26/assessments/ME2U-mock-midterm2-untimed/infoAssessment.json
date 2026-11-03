@@ -1,0 +1,417 @@
+{
+  "uuid": "0f940c54-a585-4a24-a87b-3248cd5b770f",
+  "type": "Exam",
+  "title": "Mock Midterm 2 (untimed, every question)",
+  "set": "Mock exam",
+  "number": "2U",
+  "multipleInstance": true,
+  "text": "<p>Every Midterm 2 question in the course — 43 problems, grouped by unit and problem family as on the past exams — untimed, with fresh random numbers every time you start a new instance. Each problem has three attempts worth 10, 7 and 4 points; the worked solutions are visible once you finish. Use it to find your weak families, then drill them in the practice sets (each question there regenerates as often as you like).</p><p>The last zone (computing circular convolution) is not on the Fall 2026 Midterm 2.</p>",
+  "accessControl": [
+    {
+      "dateControl": {
+        "release": {
+          "date": "2026-08-24T00:00:01"
+        },
+        "due": {
+          "date": null
+        }
+      },
+      "afterComplete": {
+        "questions": {
+          "hidden": false
+        }
+      }
+    }
+  ],
+  "zones": [
+    {
+      "title": "True/False",
+      "questions": [
+        {
+          "id": "dtft/true-false",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/true-false",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/true-false",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 3 · DTFTs and inverse DTFTs",
+      "questions": [
+        {
+          "id": "dtft/inverse-dtft-ideal",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/modulation",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/dtft-quantities",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/symmetry-and-existence",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/dtft-of-finite-sequence",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/dtft-properties",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/parseval-inner-product",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/real-valued-test",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/dtft-at-frequency",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/periodicity",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 3 · Magnitude, phase and group delay",
+      "questions": [
+        {
+          "id": "freqresp/magnitude-phase-fir",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "freqresp/phase-and-group-delay",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "freqresp/principal-phase",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "freqresp/noncausal-fir",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "freqresp/phase-jump-test",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 3 · LTI response to sinusoids",
+      "questions": [
+        {
+          "id": "freqresp/sinusoidal-response",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "freqresp/response-from-plots",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dtft/frequency-response",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 4 · Sampling, aliasing and reconstruction",
+      "questions": [
+        {
+          "id": "sampling/sampled-spectrum",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/sketch-sampled-spectrum",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/nyquist-rate",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/sinusoid-aliasing",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/ideal-reconstruction",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/two-rate-system",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 4 · A/D → digital filter → D/A",
+      "questions": [
+        {
+          "id": "sampling/ad-filter-da",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "sampling/max-bandwidth-filter",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 5 · DFT values, zero padding and DFT properties",
+      "questions": [
+        {
+          "id": "dft/dft-values",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/dft-and-dtft",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/zero-padding-bins",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/modulo-indexing",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/dft-properties",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/dft-manipulations",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/conjugate-symmetry",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Unit 5 · Spectral analysis and windows",
+      "questions": [
+        {
+          "id": "dft/spectral-analysis",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/periodic-sinc-reading",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/leakage-check",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/frequency-resolution",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/window-functions",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        },
+        {
+          "id": "dft/dft-plot-matching",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Not on the Fall 2026 Midterm 2 (computing circular convolution) — optional",
+      "questions": [
+        {
+          "id": "dft/circular-convolution",
+          "autoPoints": [
+            10,
+            7,
+            4
+          ]
+        }
+      ]
+    }
+  ]
+}

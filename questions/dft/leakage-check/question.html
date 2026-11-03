@@ -1,0 +1,88 @@
+<pl-question-panel>
+  <p><small><em>Lecture 22 (DFT of a finite-length sinusoid, spectral leakage); the shapes of past Midterm 2 problems.</em></small></p>
+  <p>
+    Throughout, the $N$-point DFT of $\{x[n]\}_{n=0}^{N-1}$ is $X[k] = \sum_{n=0}^{N-1} x[n]\,e^{-j\frac{2\pi}{N}kn}$, $k = 0, 1, \dots, N-1$.
+  </p>
+  <p><small>Enter exact values: fractions such as <code>-7/3</code> are accepted; decimals need 4 significant digits.</small></p>
+</pl-question-panel>
+
+<p><b>(a)</b> Which of the following statements are true? Select all that apply.</p>
+<pl-checkbox answers-name="stmt" partial-credit="net-correct" hide-letter-keys="true">
+  {{#params.stmt_choices}}<pl-answer correct="{{correct}}">{{text}}</pl-answer>{{/params.stmt_choices}}
+</pl-checkbox>
+
+{{#params.l22}}
+<p class="mt-3">For parts (b) and (c), let $x[n] = {{params.x_tex}}$.</p>
+<p><b>(b)</b> Determine the DFT of the truncated sequence $\{x[n]\}_{n=0}^{ {{params.N1m1}} }$ (a ${{params.N1}}$-point DFT): it is nonzero at
+  exactly two indices $0 \le k_1 \lt k_2 \le {{params.N1m1}}$. Find them and the magnitude $\lvert X[k_1]\rvert = \lvert X[k_2]\rvert$.</p>
+{{/params.l22}}
+{{#params.fa21}}
+<p class="mt-3">For parts (b) and (c), a continuous-time signal $x_c(t) = {{params.xc_tex}}$ is sampled at a rate of ${{params.fs}}$ Hz for
+  ${{params.D_tex}}$ {{params.D_unit}} to produce a discrete-time signal $x[n]$ with length $L = {{params.L}}$.</p>
+<p><b>(b)</b> Let $X[k]$ be the $L$-point DFT of $x[n]$. At which two values $0 \le k_1 \lt k_2 \le {{params.Lm1}}$ will $X[k]$ have the greatest
+  magnitude, and what is that magnitude?</p>
+{{/params.fa21}}
+<div class="mb-1"><pl-integer-input answers-name="k1" label="$k_1 =$"></pl-integer-input></div>
+<div class="mb-1"><pl-integer-input answers-name="k2" label="$k_2 =$"></pl-integer-input></div>
+<div class="mb-1"><pl-number-input answers-name="Xk" label="$\lvert X[k_1]\rvert =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+
+{{#params.l22}}
+<p class="mt-3"><b>(c)</b> The same cosine is instead truncated to $\{x[n]\}_{n=0}^{ {{params.N2m1}} }$ and its ${{params.N2}}$-point DFT is computed.
+  How many periods of the cosine does this record hold (a fraction is fine), and at which index $0 \le k \le {{params.N2half}}$ is $\lvert X[k]\rvert$ largest?</p>
+<div class="mb-1"><pl-number-input answers-name="kap" label="$\text{periods} =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+{{/params.l22}}
+{{#params.fa21}}
+<p class="mt-3"><b>(c)</b> Suppose that $x[n]$ is zero-padded to a total length of $N = {{params.Np}}$. The $N$-point DFT evaluates the DTFT at
+  $\frac{2\pi k}{N}$. At which (generally fractional) index $\kappa$ is $\frac{2\pi\kappa}{N}$ equal to the digital frequency of the cosine,
+  and at which index $0 \le k \le {{params.Np_half}}$ does the $N$-point DFT have its greatest magnitude?</p>
+<div class="mb-1"><pl-number-input answers-name="kap" label="$\kappa =$" comparison="relabs" rtol="1e-3" atol="1e-6"></pl-number-input></div>
+{{/params.fa21}}
+<div class="mb-1"><pl-integer-input answers-name="kmax" label="$k_{\max} =$"></pl-integer-input></div>
+
+<pl-hidden-hints>
+  <pl-hint hint-name="Count the periods">
+    For $A\cos(\omega_0 n)$ on $N$ samples, $k_0 = \frac{\omega_0 N}{2\pi}$ is the number of periods in the record. The DFT evaluates
+    $X_d(\omega) = \frac A2 C(\omega - \omega_0) + \frac A2 C(\omega + \omega_0)$ at $\frac{2\pi k}{N}$, and $C$ is zero at every nonzero multiple of $\frac{2\pi}{N}$.
+  </pl-hint>
+  <pl-hint hint-name="Whole periods or leakage" show-after-submission="1">
+    $k_0$ an integer: only $X[k_0] = X[N - k_0] = \frac{AN}{2}$ are nonzero ($\omega_0 = \pi$ gives a single bin $k = \frac N2$; a sine gives
+    $\mp j\frac{AN}{2}$). $k_0$ not an integer: (almost) every bin is nonzero and the tallest one is the bin nearest $k_0$. Zero padding keeps the DTFT
+    and only changes where it is evaluated.
+  </pl-hint>
+</pl-hidden-hints>
+
+<pl-answer-panel>
+  <p><b>(a)</b> A sinusoid $\cos(\omega_0 n)$ or $\sin(\omega_0 n)$ with $0 \lt \omega_0 \lt \pi$ gives exactly two nonzero DFT values when
+    $k_0 = \frac{\omega_0 N}{2\pi}$ (the number of periods in the record) is an integer, and leaks into (almost) every bin otherwise; a sum
+    needs this for every term.</p>
+  <ul>
+    {{#params.stmt_lines}}<li>{{text}} <b>{{verdict}}</b>: {{why}}.</li>{{/params.stmt_lines}}
+  </ul>
+  {{#params.l22}}
+  <p><b>(b)</b> $\omega_0 = {{params.w0_tex}}$ (period ${{params.P}}$): $k_0 = \frac{\omega_0 N_1}{2\pi} = {{params.k01}}$ whole periods. The DFT evaluates both
+    lobes at their peaks and every other bin at a zero:
+    $$X[{{params.k01}}] = X[{{params.N1mk01}}] = \frac{A N_1}{2} = {{params.H_tex}},\qquad X[k] = 0 \text{ otherwise},$$
+    so $k_1 = {{params.k01}}$, $k_2 = {{params.N1}} - {{params.k01}} = {{params.N1mk01}}$ (the mirror, not $-{{params.k01}}$) and $\lvert X[k_1]\rvert = {{params.H_tex}}$.</p>
+  <p><b>(c)</b> $\frac{\omega_0 N_2}{2\pi} = \frac{ {{params.N2}} }{ {{params.P}} } = {{params.k02_tex}} \approx {{params.k02_dec}}$ periods: not an integer, so the
+    periodic extension has a jump, the DFT misses the peaks and zeros of the lobes, and the energy leaks into (almost) every bin. The largest bin is the
+    one nearest ${{params.k02_tex}}$: $k_{\max} = {{params.kmax}}$, with $\lvert X[{{params.kmax}}]\rvert \approx {{params.peak2}}$, {{params.peak2_rel}}
+    $\frac{A N_2}{2} = {{params.peak2_full_tex}}$ (no bin sits on the peak of the lobe).</p>
+  <p class="text-muted"><small>Same shape as SP2025 MT2 #9 (DFT of $\{\cos(\frac{\pi}{2}n)\}_{n=0}^{15}$: $X[4] = X[12] = 8$) and Lecture 22 eqs. 13&ndash;14
+    ($\cos(\frac{\pi}{3}n)$ kept for $24$ samples: $X[4] = X[20] = 12$; for $22$ samples: $3\frac23$ periods, leakage, tallest bin $k = 4$).</small></p>
+  {{/params.l22}}
+  {{#params.fa21}}
+  <p><b>(b)</b> $x[n] = x_c\!\left(\frac{n}{ {{params.fs}} }\right)$ is a cosine at $\omega_0 = \frac{\Omega_0}{f_s} = \frac{ {{params.W0_tex}} }{ {{params.fs}} } = {{params.w0_tex}}$,
+    i.e. $f_0 = {{params.f0_tex}}$ Hz. $\frac{2\pi k}{L} = \omega_0$ at $k = \frac{\omega_0 L}{2\pi} = f_0\cdot D = {{params.k0}}$ (a whole number of cycles),
+    and the mirror is $L - {{params.k0}} = {{params.Lmk0}}$; every other bin is zero:
+    $$k_1 = {{params.k0}},\quad k_2 = {{params.Lmk0}},\qquad \lvert X[k_1]\rvert = \lvert X[k_2]\rvert = \frac{A L}{2} = {{params.H_tex}}.$$</p>
+  <p><b>(c)</b> Zero padding leaves the DTFT unchanged; the $N$-point DFT evaluates it at $\frac{2\pi k}{N}$, so
+    $$\kappa = \frac{\omega_0 N}{2\pi} = \frac{f_0 N}{f_s} = \frac{ {{params.f0_tex}}\cdot {{params.Np}} }{ {{params.fs}} } = {{params.kap_tex}}\ (\approx {{params.kap_dec}}),$$
+    between two bins. The greatest magnitude is at the nearest bin, $k_{\max} = {{params.kmax}}$ (and its mirror ${{params.kmax_mirror}}$), with
+    $\lvert X[{{params.kmax}}]\rvert \approx {{params.peak_pad}}$, {{params.peak_pad_rel}} $\frac{AL}{2} = {{params.H_tex}}$: no bin lands exactly on the peak of the lobe
+    (the main lobe is $\frac{4\pi}{L}$ wide, ${{params.lobe_bins}}$ bins of the padded DFT).</p>
+  <p class="text-muted"><small>Same shape as FA2021 MT2 #7 ($\cos(10\pi t)$ sampled at 100 Hz for 5 s, $L = 500$: peaks at $k = 25$ and $475$, $\lvert X\rvert = 250$;
+    zero-padded to $1024$: $\kappa = 51.2$, peaks at $k = 51$ and $973$).</small></p>
+  {{/params.fa21}}
+  <p class="text-muted"><small>Part (a) follows the True/False items FA2019 MT2 #1(f), FA2023 MT2 #1(g), SP2025 MT2 #1(e) and Lecture 22 slide Example 2
+    ($\sin(\frac{\pi}{11}n)$, $N = 33$; $\sin(\frac{3\pi}{5}n)$, $N = 20$; $\cos(\frac{\pi}{4}n) + \cos(\frac{\pi}{3}n)$, $N = 48$).</small></p>
+</pl-answer-panel>

@@ -180,9 +180,19 @@
       "description": "Lecture 21"
     },
     {
+      "name": "L22",
+      "color": "gray1",
+      "description": "Lecture 22"
+    },
+    {
+      "name": "L23",
+      "color": "gray1",
+      "description": "Lecture 23"
+    },
+    {
       "name": "ahead",
       "color": "orange1",
-      "description": "Ahead of the lectures: Midterm 2 material taught after Lecture 21, learned from past Midterm 2 exams and the 2019 course notes"
+      "description": "Taught after the question was written (L22–L23 in Fall 2026); kept for history, no longer used"
     },
     {
       "name": "hw1",
@@ -218,6 +228,16 @@
       "name": "hw7",
       "color": "gray2",
       "description": "Modelled on Fall 2026 Homework 7"
+    },
+    {
+      "name": "hw8",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 8"
+    },
+    {
+      "name": "hw9",
+      "color": "gray2",
+      "description": "Modelled on Fall 2026 Homework 9"
     },
     {
       "name": "quiz2",
@@ -287,7 +307,7 @@
     {
       "name": "midterm2",
       "color": "red3",
-      "description": "In the scope of Midterm 2 as set on the seven past exams (Lectures 13 on: DTFT, frequency response, sampling, the DFT)"
+      "description": "In the scope of Fall 2026 Midterm 2 (Lectures 13–23, HW5–9: DTFT, frequency response, sampling, the DFT, spectral analysis); computing circular convolution and the FFT are not on it"
     },
     {
       "name": "fam2-tf",
